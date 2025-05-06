@@ -1,57 +1,54 @@
-# 🛍️ eCommerce Application
+# React + TypeScript + Vite
 
-Welcome to our **eCommerce Application**, a modern single-page shopping platform designed to replicate real-world online purchasing experiences in a sleek, responsive, and engaging environment 🌐. Built with TypeScript and optionally powered by React, this application showcases best practices in frontend development, UI/UX design, and API integration with CommerceTools.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 📌 Overview
+Currently, two official plugins are available:
 
-This project offers a complete online shopping journey — from product discovery to secure checkout — designed for performance, responsiveness, and intuitive interaction. The platform supports:
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-- 👤 User Registration & Login  
-- 🛒 Product Browsing & Categorization  
-- 🔍 Search & Filtering  
-- 📋 Detailed Product Descriptions  
-- 💳 Basket & Checkout Flow  
-- 👤 User Profile Management  
-- 🙋 About Us Section  
+## Expanding the ESLint configuration
 
-All pages are optimized for devices with a minimum resolution of 390px and offer a seamless user experience across desktops, tablets, and mobile devices.
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## 🚧 Team Collaboration
+```js
+export default tseslint.config({
+  extends: [
+    // Remove ...tseslint.configs.recommended and replace with this
+    ...tseslint.configs.recommendedTypeChecked,
+    // Alternatively, use this for stricter rules
+    ...tseslint.configs.strictTypeChecked,
+    // Optionally, add this for stylistic rules
+    ...tseslint.configs.stylisticTypeChecked,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-- Teams of **three developers** collaborate on this project.
-- Each member submits their individual contributions to mentors.
-- The **team lead** submits the final consolidated version for cross-check reviews.
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-## 🧰 Tech Stack
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-- **TypeScript** (required) – Ensures type safety and scalable code.
-- **SPA Architecture** – Application runs within a single-page environment.
-- **Modern Framework (optional):**
-  - React ⚛️
-- **CommerceTools** – For robust backend commerce APIs.
-- **No jQuery** – Focus on native JS and framework-based logic.
-- **No eCommerce templates or commercetools-sunrise-data** – Emphasis on originality and creativity.
-
-## 📁 Core Pages
-
-- Login / Registration 📝
-- Main Page 🏠
-- Catalog / Product Listing 📚
-- Product Details 🔎
-- User Profile 👤
-- Shopping Basket 🛒
-- About Us 🙋
-
-## 📱 Responsive Design
-
-Designed to work flawlessly on screens **≥390px**, ensuring accessibility on smartphones, tablets, and desktops alike.
-
-## 📦 Getting Started
-
-To set up the project locally:
-
-```bash
-git clone https://github.com/your-team/ecommerce-app.git
-cd ecommerce-app
-npm install
-npm start
+export default tseslint.config({
+  plugins: {
+    // Add the react-x and react-dom plugins
+    'react-x': reactX,
+    'react-dom': reactDom,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended typescript rules
+    ...reactX.configs['recommended-typescript'].rules,
+    ...reactDom.configs.recommended.rules,
+  },
+})
+```
