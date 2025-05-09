@@ -1,3 +1,17 @@
+# About the project
+
+This project is a collaborative team application developed as part of the final task for the Rolling Scopes School course by Reactive team. It represents an e-commerce platform designed to provide users with a smooth shopping experience, including features such as product browsing, search, filtering, detailed product views, a shopping cart, and a checkout process.
+
+The purpose of this project is to apply and demonstrate the skills we have gained during the course, including teamwork, frontend development, API integration, and version control. This project simulates a real-world development environment where team members work together to build a functional, user-friendly web application.
+
+### Project Purposes
+
+✅ To demonstrate the ability to work effectively in a team on a shared codebase.
+✅ To apply modern frontend development practices learned during the course.
+✅ To build an interactive, responsive e-commerce web app that showcases a complete user journey, from browsing products to placing an order.
+✅ To practice using GitHub, and pull requests in a collaborative workflow.
+✅ To gain experience working with external APIs or mock data, ensuring smooth data handling and dynamic rendering.
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
