@@ -2,16 +2,16 @@
 
 <!-- Completed tasks from the board -->
 
-- [x] RSS-ECOMM-1_01  
-- [x] RSS-ECOMM-1_03  
-- [x] RSS-ECOMM-1_21  
-- [ ] RSS-ECOMM-1_02  
-- [ ] RSS-ECOMM-1_08  
-- [ ] RSS-ECOMM-1_09  
-- [ ] RSS-ECOMM-1_10  
-- [ ] RSS-ECOMM-1_11  
-- [ ] RSS-ECOMM-1_12  
-- [ ] RSS-ECOMM-1_13  
+- [x] RSS-ECOMM-1_01
+- [x] RSS-ECOMM-1_03
+- [x] RSS-ECOMM-1_21
+- [ ] RSS-ECOMM-1_02
+- [ ] RSS-ECOMM-1_08
+- [ ] RSS-ECOMM-1_09
+- [ ] RSS-ECOMM-1_10
+- [ ] RSS-ECOMM-1_11
+- [ ] RSS-ECOMM-1_12
+- [ ] RSS-ECOMM-1_13
 
 ## ⚙️ Description
 
