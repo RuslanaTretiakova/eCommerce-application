@@ -25,7 +25,7 @@ module.exports = [
       'react/react-in-jsx-scope': 'off',
       'import/prefer-default-export': 'off',
       'prettier/prettier': 'warn',
-      'no-irregular-whitespace': 'warn',
+      
     },
     settings: {
       react: {
