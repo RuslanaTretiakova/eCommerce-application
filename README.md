@@ -21,6 +21,25 @@ The purpose of this project is to apply and demonstrate the skills we have gaine
 ✅ Linting & Style Guide: ESLint with Airbnb Style Guide
 ✅ Formatter: Prettier
 
+## 🚀 Getting Started
+Before using the project, please install the npm packages:
+```bash
+npm install
+```
+If you encounter dependency errors, try installing with:
+```bash
+npm install --legacy-peer-deps
+```
+
+## 📜 Available Scripts
+
+- `npm run dev` — Runs the app in development mode.
+- `npm run build` — Builds the app for production.
+- `npm run preview` — Serves the production build locally.
+- `npm run lint` — Checks code with ESLint.
+- `npm run lint:fix` — Fixes linting errors automatically.
+- `npm run format` — Formats code with Prettier.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
