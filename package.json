@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "prepare": "husky install",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
   },
   "dependencies": {
@@ -44,6 +45,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "globals": "^16.0.0",
     "node-polyfill": "^1.0.0",
+    "husky": "^9.1.7",
     "prettier": "^3.5.3",
     "rollup-plugin-node-polyfills": "^0.2.1",
     "typescript": "~5.8.3",
