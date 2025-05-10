@@ -13,10 +13,22 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
   },
   "dependencies": {
+    "@commercetools/history-sdk": "^4.10.0",
+    "@commercetools/importapi-sdk": "^5.20.0",
+    "@commercetools/platform-sdk": "^7.25.1",
+    "@commercetools/sdk-auth": "^4.0.1",
+    "@commercetools/sdk-client-v2": "^2.5.0",
+    "@commercetools/sdk-middleware-auth": "^7.0.1",
+    "@commercetools/sdk-middleware-http": "^7.0.4",
+    "@commercetools/ts-client": "^3.3.0",
+    "dotenv": "^16.5.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "@types/node": "^22.15.17",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@typescript-eslint/eslint-plugin": "^8.32.0",
@@ -30,11 +42,15 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
     "globals": "^16.0.0",
+    "node-polyfill": "^1.0.0",
     "husky": "^9.1.7",
     "prettier": "^3.5.3",
+    "rollup-plugin-node-polyfills": "^0.2.1",
     "typescript": "~5.8.3",
-    "vite": "^6.3.5"
+    "util": "^0.12.5",
+    "vite": "^6.3.5",
+    "vite-plugin-node-polyfills": "^0.23.0"
   }
 }
