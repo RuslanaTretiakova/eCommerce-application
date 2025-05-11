@@ -20,9 +20,23 @@ The purpose of this project is to apply and demonstrate the skills we have gaine
 ✅ Build Tools: Vite
 ✅ Linting & Style Guide: ESLint with Airbnb Style Guide
 ✅ Formatter: Prettier
+✅ Testing: Vitest
+✅ Git Hooks: Husky
 
 ## 🚀 Getting Started
-Before using the project, please install the npm packages:
+### 1. Prerequisites
+Make sure you have the following installed on your machine:
+- **[Node.js](https://nodejs.org/)** – Recommended version: **18 or higher**
+- **[npm](https://www.npmjs.com/)** – Comes bundled with Node.js
+- **[Git](https://git-scm.com/)** – Required for cloning the repository
+
+### 2. Clone the repository:
+   ```bash
+   git clone https://github.com/DzmitryAliakseyeu/online-store
+```
+### 3. Navigate to the project directory: **cd online-store**
+
+### 4. Install dependencies:
 ```bash
 npm install
 ```
@@ -31,14 +45,19 @@ If you encounter dependency errors, try installing with:
 npm install --legacy-peer-deps
 ```
 
-## 📜 Available Scripts
+### 5. Run Scripts:
+📜 Available Scripts
 
-- `npm run dev` — Runs the app in development mode.
+- `npm run dev` — **Runs the app in development mode.**
 - `npm run build` — Builds the app for production.
 - `npm run preview` — Serves the production build locally.
 - `npm run lint` — Checks code with ESLint.
 - `npm run lint:fix` — Fixes linting errors automatically.
 - `npm run format` — Formats code with Prettier.
+- `npm run prepare` — Initializes Husky Git hooks. Runs automatically after installing packages.
+- `npm run test` — Runs unit tests with Vitest.
+- `npm run test:coverage` — Runs tests with code coverage reporting.
+- `npm run test:ui` — Opens Vitest UI for interactive test debugging (includes coverage).
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
