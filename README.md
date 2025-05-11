@@ -19,7 +19,8 @@ The purpose of this project is to apply and demonstrate the skills we have gaine
 ✅ Framework: React
 ✅ Build Tools: Vite
 ✅ Linting & Style Guide: ESLint with Airbnb Style Guide
-✅ Formatter: Prettier
+✅ Formatter: Vitest
+✅ Git Hooks: Husky
 
 ## 🚀 Getting Started
 ### 1. Prerequisites
