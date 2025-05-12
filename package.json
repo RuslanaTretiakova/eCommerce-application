@@ -26,7 +26,8 @@
     "@commercetools/ts-client": "^3.3.0",
     "dotenv": "^16.5.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "sass": "^1.88.0"
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
@@ -53,9 +54,9 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.2",
     "globals": "^16.0.0",
+    "husky": "^9.1.7",
     "jsdom": "^26.1.0",
     "node-polyfill": "^1.0.0",
-    "husky": "^9.1.7",
     "prettier": "^3.5.3",
     "rollup-plugin-node-polyfills": "^0.2.1",
     "typescript": "~5.8.3",
