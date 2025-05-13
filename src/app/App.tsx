@@ -1,7 +1,8 @@
+import MainPage from '../pages/main/main'
 import './App.scss'
 
 function App() {
-  return <h1>Hell o </h1>;
+  return <MainPage />
 }
 
 export default App;
