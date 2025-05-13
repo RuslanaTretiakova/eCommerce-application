@@ -1,0 +1,8 @@
+.navigation__list {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    .navigation__tab {
+        list-style-type: none;
+    }
+}
