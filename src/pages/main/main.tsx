@@ -2,6 +2,7 @@ import type React from "react";
 import Header from "../../components/header/header";
 import HomePage from "../home-page/home-page";
 import './main.scss'
+import Footer from "../../components/footer/footer";
 
 const MainPage: React.FC<{}> = () => {
     return (
@@ -9,6 +10,7 @@ const MainPage: React.FC<{}> = () => {
 
         <Header />
         <HomePage/>
+        <Footer/>
        
       </div>
     )
