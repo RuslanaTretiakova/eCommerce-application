@@ -1,0 +1,24 @@
+.navigation-button {
+    width: 20px;
+    height: 20px;
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    hr {
+        width: 100%;
+        margin: 0;
+        background-color: black;
+        border: 0;
+        color: black;
+        height: 1px;
+    }
+}
+
+@media (max-width: 768px){
+    .navigation-button {
+        display: flex;
+    }
+}
