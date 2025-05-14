@@ -19,9 +19,15 @@
 
 @media (max-width: 768px) {
     .navigation {
+        display: none;
+      
+    }
+
+    .navigation-open {
+        display: flex;
         position: absolute;
         right: 0;
-        width: 100%;
+        width: 100dvw;
         height: calc(100dvh - 100px);
         top: 50px;
         background-color: #fff;
@@ -29,6 +35,7 @@
             flex-direction: column;
             justify-content: center;
             height: inherit;
+            width: 100%;
             .navigation__tab {
                 text-align: center;
                 font-size: 2em;
