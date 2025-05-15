@@ -7,7 +7,6 @@ const PartnersSection: React.FC<{}> = () => {
     return <section className="parnters-section">
         <h2>Our brands:</h2>
         <div className="brands">
-            
             <div className="brand-box brand-box__bianchi"></div>
             <div className="brand-box brand-box__ktm"></div>
             <div className="brand-box brand-box__bmc"></div>
