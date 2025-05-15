@@ -3,17 +3,22 @@ import { useForm } from 'react-hook-form';
 import BaseForm from '../../ui/base-form/BaseForm';
 import BaseInput from '../../ui/base-input/BaseInput';
 import BaseSelect from '../../ui/base-select/BaseSelect';
+import BaseButton from '../../ui/base-button/BaseButton';
 import { registrationFields } from './fieldsConfig';
 import type { IFormData } from '../../../types/interfaces';
 
 function RegistrationForm(): JSX.Element {
-  const { register, handleSubmit } = useForm<IFormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm<IFormData>({
     mode: 'onBlur',
     reValidateMode: 'onChange',
   }); // todo: implement error handling
 
   const handleRegistrationSubmit = (data: IFormData): void => {
-    console.log(data);
+    console.log(data); //todo add logic transform formdata, api;
   };
 
   return (
@@ -51,6 +56,16 @@ function RegistrationForm(): JSX.Element {
           />
         );
       })}
+
+      <BaseButton
+        className="button--submit"
+        type="submit"
+        title="Create Account"
+        onClick={() => console.log('hi')} //todo the same comment like in interface file for BaseButton component;
+        disabled={!isValid}
+      >
+        Create Account
+      </BaseButton>
     </BaseForm>
   );
 }

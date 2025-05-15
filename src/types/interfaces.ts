@@ -1,4 +1,4 @@
-import type { InputType } from './types';
+import type { ButtonType, InputType } from './types';
 import type { ChangeEventHandler, FocusEventHandler } from 'react';
 
 // Form
@@ -28,4 +28,14 @@ export interface IBaseInputProps extends IBaseFieldProps<HTMLInputElement> {
 
 export interface IBaseSelectProps extends IBaseFieldProps<HTMLSelectElement> {
   options: { value: string; label: string }[];
+}
+
+//Button
+export interface IBaseButtonProps {
+  type: ButtonType;
+  children: React.ReactNode;
+  className: string;
+  title: string;
+  disabled: boolean;
+  onClick: () => void; //todo ask how to fix this issue
 }
