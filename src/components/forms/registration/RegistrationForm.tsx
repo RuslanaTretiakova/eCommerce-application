@@ -2,6 +2,7 @@ import type { JSX } from 'react';
 import { useForm } from 'react-hook-form';
 import BaseForm from '../../ui/base-form/BaseForm';
 import BaseInput from '../../ui/base-input/BaseInput';
+import BaseSelect from '../../ui/base-select/BaseSelect';
 import { registrationFields } from './fieldsConfig';
 import type { IFormData } from '../../../types/interfaces';
 
@@ -17,12 +18,29 @@ function RegistrationForm(): JSX.Element {
 
   return (
     <BaseForm className="form" onSubmit={handleSubmit(handleRegistrationSubmit)} title="Register">
-      {registrationFields.map(({ name, label, type, placeholder, rules }) => {
+      {registrationFields.map((field) => {
+        const { name, label, type, placeholder, rules, options = [] } = field;
+
         const { ref, onChange, onBlur, name: fieldName } = register(name, rules);
+
+        if (type === 'select') {
+          return (
+            <BaseSelect
+              key={name}
+              name={fieldName}
+              label={label}
+              options={options}
+              onChange={onChange}
+              onBlur={onBlur}
+              placeholder={placeholder}
+              ref={ref}
+            />
+          );
+        }
 
         return (
           <BaseInput
-            key={fieldName}
+            key={name}
             name={fieldName}
             label={label}
             type={type}
