@@ -9,6 +9,7 @@ export interface IFieldConfig {
   type: InputType;
   placeholder: string;
   rules: RegisterOptions<IFormData, keyof IFormData>;
+  options?: { value: string; label: string }[];
 }
 
 export const registrationFields: IFieldConfig[] = [
@@ -94,6 +95,19 @@ export const registrationFields: IFieldConfig[] = [
     },
   },
   {
+    name: 'city',
+    label: 'City',
+    type: 'text',
+    placeholder: 'New York',
+    rules: {
+      required: 'City is required',
+      pattern: {
+        value: /^[A-Za-z\s]+$/,
+        message: 'Only letters allowed, no numbers or special characters',
+      },
+    },
+  },
+  {
     name: 'postalCode',
     label: 'Postal Code',
     type: 'text',
@@ -105,5 +119,23 @@ export const registrationFields: IFieldConfig[] = [
         message: 'Invalid postal code format',
       },
     },
+  },
+  {
+    name: 'country',
+    label: 'Country',
+    type: 'select',
+    placeholder: 'Select country...',
+    rules: {
+      required: 'Country is required',
+      pattern: {
+        value: /^[A-Z]{2}$/,
+        message: 'Choose country from the list',
+      },
+    },
+    options: [
+      { value: 'PL', label: 'Poland' },
+      { value: 'US', label: 'United States' },
+      { value: 'CA', label: 'Canada' },
+    ],
   },
 ];

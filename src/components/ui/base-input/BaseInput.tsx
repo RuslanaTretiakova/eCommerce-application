@@ -1,17 +1,7 @@
-import React, { forwardRef, type JSX } from 'react';
-import type { InputType } from '../../../types/types';
-import type { IFormData } from '../../../types/interfaces';
+import { forwardRef, type JSX } from 'react';
+import type { IBaseInputProps } from '../../../types/interfaces';
 
-import './_base-intut.scss'; //todo add styles
-
-interface IBaseInputProps {
-  name: keyof IFormData;
-  label: string;
-  type: InputType;
-  placeholder: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  onBlur: React.FocusEventHandler<HTMLInputElement>;
-}
+import './_base-intut.scss';
 
 const BaseInput = forwardRef<HTMLInputElement, IBaseInputProps>(
   ({ label, name, type, placeholder, onChange, onBlur }, ref): JSX.Element => {

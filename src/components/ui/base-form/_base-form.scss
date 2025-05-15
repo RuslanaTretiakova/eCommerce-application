@@ -4,7 +4,7 @@
   width: 100%;
   padding: 20px;
   border: 1px solid #e0e0e0;
-  border-radius: var(--border-radius); //add 8px to :root ;
+  border-radius: var(--border-radius);
   border-radius: 8px;
 
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -16,6 +16,6 @@
   &__title {
     margin: 1px;
     text-align: center;
-    color: var(--text-color); //add to :root ;
+    color: var(--text-color);
   }
 }
