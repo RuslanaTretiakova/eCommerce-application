@@ -1,0 +1,21 @@
+.base-input {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  &__label {
+    color: var(--text-color);
+  }
+
+  &__select,
+  input {
+    border: 1px solid var(--border-color);
+    padding: 2px;
+    transition: border-color 0.5s ease-in;
+
+    &:focus {
+      border-color: var(--border-focus-color);
+      outline: none;
+    }
+  }
+}
