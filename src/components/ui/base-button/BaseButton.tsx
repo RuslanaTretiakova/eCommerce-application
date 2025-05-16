@@ -13,10 +13,10 @@ function BaseButton({
 }: IBaseButtonProps): JSX.Element {
   return (
     <button
-      type={type === 'submit' ? 'submit' : 'button'} //todo not sure about this syntax;
+      type={type === 'submit' ? 'submit' : 'button'}
       className={`button ${className}`}
-      disabled={disabled}
       title={title}
+      disabled={disabled}
       onClick={onClick}
     >
       {children}

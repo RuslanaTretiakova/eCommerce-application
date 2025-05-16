@@ -18,7 +18,7 @@ function RegistrationForm(): JSX.Element {
   }); // todo: implement error handling
 
   const handleRegistrationSubmit = (data: IFormData): void => {
-    console.log(data); //todo add logic transform formdata, api;
+    console.log(data); //todo add logic transform formdata, api, remove whitespases;
   };
 
   return (
@@ -58,10 +58,9 @@ function RegistrationForm(): JSX.Element {
       })}
 
       <BaseButton
-        className="button--submit"
         type="submit"
+        className="button--submit"
         title="Create Account"
-        onClick={() => console.log('hi')} //todo the same comment like in interface file for BaseButton component;
         disabled={!isValid}
       >
         Create Account

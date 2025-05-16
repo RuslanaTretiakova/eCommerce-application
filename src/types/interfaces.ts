@@ -36,6 +36,6 @@ export interface IBaseButtonProps {
   children: React.ReactNode;
   className: string;
   title: string;
-  disabled: boolean;
-  onClick: () => void; //todo ask how to fix this issue
+  disabled?: boolean;
+  onClick?: () => void;
 }
