@@ -9,7 +9,7 @@ export default defineConfig({
     nodePolyfills({
       protocolImports: true,
     }),
-    svgr()
+    svgr(),
   ],
   resolve: {
     alias: {

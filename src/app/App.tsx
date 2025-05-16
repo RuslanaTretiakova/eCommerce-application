@@ -1,8 +1,8 @@
-import MainPage from '../pages/main/main'
-import './App.scss'
+import MainPage from '../pages/main/main';
+import './App.scss';
 
 function App() {
-  return <MainPage />
+  return <MainPage />;
 }
 
 export default App;
