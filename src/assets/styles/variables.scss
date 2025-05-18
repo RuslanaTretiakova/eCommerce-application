@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+// ===== COLORS ===== //
+$primary: #000000;       //  black
+$secondary: #e8e5e5;     // Light gray background
+$accent: #FF3D00;        // orange accent
+$white: #FFFFFF;
+$text-dark: #333333;
+$text-light: #777777;
+$border-color: #E0E0E0;
+
+// ===== TYPOGRAPHY ===== //
+$font-primary: 'Manrope', sans-serif;
+
+$text-xs: 0.75rem;   // 12px
+$text-sm: 0.875rem;  // 14px
+$text-base: 1rem;    // 16px
+$text-lg: 1.125rem;  // 18px
+$text-xl: 1.25rem;   // 20px
+$text-2xl: 1.5rem;   // 24px
+$text-3xl: 2rem;     // 32px
+$text-4xl: 2.5rem;   // 40px
+
+// ===== SPACING ===== //
+$spacing-1: 0.25rem;   // 4px
+$spacing-2: 0.5rem;    // 8px
+$spacing-3: 1rem;      // 16px
+$spacing-4: 1.5rem;    // 24px
+$spacing-5: 2rem;      // 32px
+$spacing-6: 3rem;      // 48px
+
+
+// ===== SHADOWS ===== //
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+// ===== TRANSITIONS ===== //
+$transition-fast: 0.2s ease;
+$transition-medium: 0.3s ease;

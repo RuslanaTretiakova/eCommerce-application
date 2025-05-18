@@ -1,0 +1,86 @@
+@use './variables' as *;
+
+// ===== BASE STYLES ===== //
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $font-primary;
+  color: $text-dark;
+  background-color: $white;
+  line-height: 1.6;
+}
+
+// ===== TYPOGRAPHY ===== //
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: $spacing-3;
+}
+
+h1 { font-size: $text-4xl; }
+h2 { font-size: $text-3xl; }
+h3 { font-size: $text-2xl; }
+h4 { font-size: $text-xl; }
+
+p {
+  margin-bottom: $spacing-3;
+  color: $text-light;
+}
+
+a {
+  color: $primary;
+  cursor: pointer;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $accent;
+  }
+}
+
+// ===== BUTTONS ===== //
+.button {
+  display: inline-block;
+  padding: $spacing-3 $spacing-5;
+  background-color: $primary;
+  color: $white;
+  border: none;
+  border-radius: 0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: $secondary;
+    color: $primary;
+  }
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+// ===== LAYOUT UTILITIES ===== //
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-4;
+}
+
+.section {
+  padding: $spacing-6 0;
+}
+
+// ===== FORM ELEMENTS ===== //
+input, textarea, select {
+  width: 100%;
+  padding: $spacing-3;
+  border: 1px solid $border-color;
+  font-family: $font-primary;
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+  }
+}
