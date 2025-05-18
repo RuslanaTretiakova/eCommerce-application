@@ -1,29 +1,35 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite';
+import path from 'path';
 import react from '@vitejs/plugin-react';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 export default defineConfig({
-  plugins: [react()],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/tests/setup.ts',
-    coverage: {
-      provider: 'v8',
-      all: true,
-      include: ['src/**/*.tsx', 'src/**/*.ts'],
-      exclude: [
-        'node_modules/',
-        'coverage/',
-        '**/*.test.tsx',
-        '**/*.test.ts',
-        '**/*.spec.tsx',
-        '**/*.spec.ts',
-        'src/tests/setup.ts',
-        'src/tests/mocks.ts',
-      ],
-      reportsDirectory: './coverage',
-      clean: false,
-      reporter: ['text', 'json', 'html'],
+  plugins: [
+    react(),
+    nodePolyfills({
+      protocolImports: true,
+    }),
+  ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+        @use "@/assets/styles/variables.scss";
+      `,
+      },
+    },
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      util: 'util/',
+    },
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      define: {
+        global: 'globalThis',
+      },
     },
   },
 });

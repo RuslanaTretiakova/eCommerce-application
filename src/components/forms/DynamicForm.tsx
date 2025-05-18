@@ -8,6 +8,7 @@ import BaseButton from '../../components/ui/base-button/BaseButton';
 
 import type { IFieldConfig } from '../../components/forms/registration/fieldsConfig';
 
+
 interface DynamicFormProps<TFormData extends FieldValues> {
   fields: IFieldConfig<TFormData>[];
   onSubmit: SubmitHandler<TFormData>;
