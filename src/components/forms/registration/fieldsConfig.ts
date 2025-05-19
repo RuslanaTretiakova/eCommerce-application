@@ -1,18 +1,19 @@
-import type { RegisterOptions } from 'react-hook-form';
+import type { RegisterOptions, Path, FieldValues } from 'react-hook-form';
 import type { InputType } from '../../../types/types';
-import type { IFormData } from '../../../types/interfaces';
+import type { IFormData, IFormDataAuth } from '../../../types/interfaces';
 import { isOldEnough } from '../../../utils/formUtils/formatting';
 
-export interface IFieldConfig {
-  name: keyof IFormData;
+export interface IFieldConfig<TFormData extends FieldValues> {
+  name: Path<TFormData>;
   label: string;
   type: InputType;
   placeholder: string;
-  rules: RegisterOptions<IFormData, keyof IFormData>;
+  // rules: RegisterOptions<IFormData, keyof IFormData>;
+  rules?: RegisterOptions<TFormData, Path<TFormData>>;
   options?: { value: string; label: string }[];
 }
 
-export const registrationFields: IFieldConfig[] = [
+export const registrationFields: IFieldConfig<IFormData>[] = [
   {
     name: 'email',
     label: 'Email',
@@ -137,5 +138,38 @@ export const registrationFields: IFieldConfig[] = [
       { value: 'US', label: 'United States' },
       { value: 'CA', label: 'Canada' },
     ],
+  },
+];
+
+export const authenticationFields: IFieldConfig<IFormDataAuth>[] = [
+  {
+    name: 'email',
+    label: 'Email',
+    type: 'email',
+    placeholder: 'example@email.com',
+    rules: {
+      required: 'Email is required',
+      pattern: {
+        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        message: 'Invalid email address',
+      },
+    },
+  },
+  {
+    name: 'password',
+    label: 'Password',
+    type: 'password',
+    placeholder: 'At least 8 characters',
+    rules: {
+      required: 'Password is required',
+      minLength: {
+        value: 8,
+        message: 'Minimum 8 characters',
+      },
+      pattern: {
+        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
+        message: 'Must include upper, lower, number',
+      },
+    },
   },
 ];
