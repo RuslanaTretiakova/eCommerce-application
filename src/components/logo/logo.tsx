@@ -1,11 +1,15 @@
-import logo from '../../assets/img/logo.svg';
+import logo from '../../assets/img/header/logo2.svg';
 import './logo.scss';
 
-function Logo() {
+interface LogoProps {
+  way: string;
+}
+
+function Logo({way}: LogoProps) {
   return (
     <div className="logo">
       <a href="/homePage">
-        <img src={logo} alt="logo_bike" />
+        <img src={way} alt="logo_bike" />
       </a>
     </div>
   );
