@@ -23,8 +23,7 @@
       margin: 30px;
       margin-left: 0;
     }
-    h2 {
-    }
+    
   }
 }
 
@@ -36,6 +35,7 @@
       margin-left: 0;
     }
     h2 {
+      // width: 100%;
     }
   }
 }
@@ -46,9 +46,11 @@
     img {
       margin: 0;
     }
+    
     h2 {
-      width: 100%;
-      text-align: center;
+      width: 80%;
+      text-align:justify;
+      margin-right: 0;
     }
   }
 }
