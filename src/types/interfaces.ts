@@ -20,6 +20,7 @@ export interface IBaseFieldProps<TElement extends HTMLElement = HTMLElement> {
   placeholder: string;
   onChange: ChangeEventHandler<TElement>;
   onBlur: FocusEventHandler<TElement>;
+  error?: string;
 }
 
 export interface IBaseInputProps extends IBaseFieldProps<HTMLInputElement> {

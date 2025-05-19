@@ -11,7 +11,7 @@ function RegistrationForm(): JSX.Element {
   const {
     register,
     handleSubmit,
-    formState: { isValid },
+    formState: { errors },
   } = useForm<IFormData>({
     mode: 'onBlur',
     reValidateMode: 'onChange',
@@ -52,17 +52,13 @@ function RegistrationForm(): JSX.Element {
             placeholder={placeholder}
             onChange={onChange}
             onBlur={onBlur}
+            error={errors[name]?.message}
             ref={ref}
           />
         );
       })}
 
-      <BaseButton
-        type="submit"
-        className="button--submit"
-        title="Create Account"
-        disabled={!isValid}
-      >
+      <BaseButton type="submit" className="button--submit" title="Create Account">
         Create Account
       </BaseButton>
     </BaseForm>

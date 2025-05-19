@@ -8,12 +8,12 @@
 
   &--submit {
     width: 100%;
-    background-color: grey; // todo change to var()
+    background-color: var(--button-primary);
     color: white;
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {
-        background-color: darkgray; // todo change to var()
+        background-color: var(--button-primary-hover);
       }
     }
 
