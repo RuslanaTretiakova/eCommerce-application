@@ -1,10 +1,9 @@
-import type React from 'react';
 import Header from '../../components/header/header';
-import HomePage from '../home-page/home-page';
+import HomePage from '../homePage/homePage';
 import './main.scss';
 import Footer from '../../components/footer/footer';
 
-const MainPage: React.FC<{}> = () => {
+function MainPage() {
   return (
     <div className="container">
       <Header />
@@ -12,6 +11,6 @@ const MainPage: React.FC<{}> = () => {
       <Footer />
     </div>
   );
-};
+}
 
 export default MainPage;
