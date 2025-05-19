@@ -115,7 +115,7 @@ export const registrationFields: IFieldConfig[] = [
     rules: {
       required: 'Postal code is required',
       pattern: {
-        value: /^\d{5}$/,
+        value: /^(\d{5}(-\d{4})?|\d{2}-\d{3})$/,
         message: 'Invalid postal code format',
       },
     },

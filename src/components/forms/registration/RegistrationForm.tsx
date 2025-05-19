@@ -11,7 +11,7 @@ function RegistrationForm(): JSX.Element {
   const {
     register,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm<IFormData>({
     mode: 'onBlur',
     reValidateMode: 'onChange',
@@ -52,6 +52,7 @@ function RegistrationForm(): JSX.Element {
             placeholder={placeholder}
             onChange={onChange}
             onBlur={onBlur}
+            error={errors[name]?.message}
             ref={ref}
           />
         );

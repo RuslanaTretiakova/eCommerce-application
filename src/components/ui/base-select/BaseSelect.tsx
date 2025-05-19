@@ -1,7 +1,7 @@
 import { forwardRef, type JSX } from 'react';
 import type { IBaseSelectProps } from '../../../types/interfaces';
 
-import '../base-input/_base-intut.scss';
+import '../base-input/_base-input.scss';
 
 const BaseSelect = forwardRef<HTMLSelectElement, IBaseSelectProps>(
   ({ name, label, options, onChange, onBlur, placeholder }, ref): JSX.Element => {
