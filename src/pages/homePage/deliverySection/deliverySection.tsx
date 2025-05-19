@@ -1,5 +1,5 @@
-import delivery from '../../../assets/img/delivry-section.jpg';
-import './delivery-section.scss';
+import delivery from '../../../assets/img/homePage/delivry-section.jpg';
+import './deliverySection.scss';
 
 function DeliverySection() {
   return (

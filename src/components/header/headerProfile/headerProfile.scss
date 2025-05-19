@@ -6,15 +6,12 @@
     width: 45px;
     justify-content: center;
     align-items: center;
-    img {
-    }
   }
   .profile-block__list {
     display: flex;
     flex-direction: row;
     gap: 20px;
     height: fit-content;
-    .profile-block__tab {
-    }
+  
   }
 }

@@ -1,4 +1,4 @@
-import './header-navigation.scss';
+import './headerNavigation.scss';
 
 function HeaderNavigation() {
   return (

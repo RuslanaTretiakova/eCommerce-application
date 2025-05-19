@@ -2,7 +2,7 @@ import HeroSection from './heroSection/heroSection';
 import PartnersSection from './partnersSection/partnersSection';
 import DeliverySection from './deliverySection/deliverySection';
 import LocationSection from './locationSection/locationSection';
-import './home-page.scss';
+import './homePage.scss';
 
 function HomePage() {
   return (

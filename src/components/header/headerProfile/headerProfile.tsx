@@ -1,5 +1,5 @@
-import './header-profile.scss';
-import profile from '../../../assets/img/profile.svg';
+import './headerProfile.scss';
+import profile from '../../../assets/img/header/profile.svg';
 
 function HeaderProfile() {
   return (

@@ -1,5 +1,4 @@
-import type React from 'react';
-import './location-section.scss';
+import './locationSection.scss';
 
 function LocationSection() {
   return (

@@ -1,4 +1,4 @@
-import './navigation-button.scss';
+import './navigationButton.scss';
 
 function NavigationButton() {
   const setMenuOpen = () => {

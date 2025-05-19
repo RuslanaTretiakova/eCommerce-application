@@ -1,5 +1,5 @@
-import cart from '../../../assets/img/cart.svg';
-import './header-cart.scss';
+import cart from '../../../assets/img/header/cart.svg';
+import './headerCart.scss';
 
 function HeaderCart() {
   return (

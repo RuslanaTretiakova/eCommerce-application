@@ -1,4 +1,4 @@
-import './hero-section.scss';
+import './heroSection.scss';
 
 function HeroSection() {
   return (

@@ -1,6 +1,6 @@
 import HeaderProfile from '../headerProfile/headerProfile';
 import HeaderCart from '../headerCart/headerCart';
-import './header-profile-and-cart-block.scss';
+import './headerProfileAndCartBlock.scss';
 
 function HeaderProfileAndCartBlock() {
   return (

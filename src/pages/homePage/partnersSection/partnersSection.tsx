@@ -1,4 +1,4 @@
-import './partners-section.scss';
+import './partnersSection.scss';
 
 function PartnersSection() {
   return (

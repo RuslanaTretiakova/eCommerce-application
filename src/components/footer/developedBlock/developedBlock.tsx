@@ -1,5 +1,5 @@
 import './developedBlock.scss';
-import gitLogo from '../../../assets/img/github-logo.svg';
+import gitLogo from '../../../assets/img/footer/github-logo.svg';
 
 function DevelopedBlock() {
   return (
