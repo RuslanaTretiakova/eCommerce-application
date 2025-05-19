@@ -1,15 +1,16 @@
 .hero-section {
+ 
   height: 615px;
-  width: 100%;
+  width: 100vw;
   background-image: url('../../../assets/img/homePage/hero-section.png');
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
   h1 {
     color: white;
-    font-size: 3em;
+    font-size: clamp(1.2em, 3vw, 3em);
 
     .slogan-2 {
       margin-left: 50px;
