@@ -26,10 +26,11 @@
 
   &__wrapper {
     position: relative;
+    height: 50px;
 
     input {
       width: 100%;
-      padding: 0.5rem 0rem;
+      padding: 0.5rem;
       border: 1px solid var(--border-color);
       transition: border-color 0.5s ease-in;
 
@@ -41,9 +42,10 @@
 
     &::after {
       content: '⚠️';
+      line-height: 1;
       position: absolute;
-      top: 40%;
-      right: 20px;
+      top: 33%;
+      right: 35px;
       transform: translateY(-50%);
       font-size: 1rem;
       pointer-events: none;
@@ -53,6 +55,16 @@
     .base-input--error &::after {
       display: block;
     }
+  }
+
+  &__toggle {
+    position: absolute;
+    top: 80%;
+    right: 0;
+    cursor: pointer;
+    padding: 0 8px;
+    font-size: 0.85rem;
+    color: var(--text-color);
   }
 
   &--error input {

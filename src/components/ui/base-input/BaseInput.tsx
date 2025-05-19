@@ -6,7 +6,6 @@ import type { FieldValues } from 'react-hook-form';
 
 import './_base-input.scss';
 
-
 function BaseInputInner<TFormData extends FieldValues>(
   { label, name, type, placeholder, onChange, onBlur, error }: IBaseInputProps<TFormData>,
   ref: React.Ref<HTMLInputElement>,
@@ -32,17 +31,19 @@ function BaseInputInner<TFormData extends FieldValues>(
           ref={ref}
           aria-invalid={hasError}
         />
-        {isPasswordType && (
-          <button
-            type="button"
-            className="base-input__toggle"
-            onClick={() => setShowPassword((prev) => !prev)}
-          >
-            {showPassword ? 'Hide password' : 'Show password'}
-          </button>
-        )}
+        <div>
+          {isPasswordType && (
+            <button
+              type="button"
+              className="base-input__toggle"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? 'Hide password' : 'Show password'}
+            </button>
+          )}
+        </div>
+        {hasError && <span className="base-input__error">{error}</span>}
       </div>
-      {hasError && <span className="">{error}</span>}
     </div>
   );
 }
