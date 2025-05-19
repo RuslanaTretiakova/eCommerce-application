@@ -27,6 +27,7 @@ export interface IBaseFieldProps<TElement extends HTMLElement = HTMLElement> {
   placeholder: string;
   onChange: ChangeEventHandler<TElement>;
   onBlur: FocusEventHandler<TElement>;
+  error?: string;
 }
 
 // export interface IBaseInputProps extends IBaseFieldProps<HTMLInputElement> {
@@ -39,6 +40,7 @@ export interface IBaseInputProps<TFormData extends FieldValues = FieldValues> {
   placeholder?: string;
   onChange: ChangeHandler;
   onBlur: ChangeHandler;
+  error?: string;
 }
 
 // export interface IBaseSelectProps extends IBaseFieldProps<HTMLSelectElement> {

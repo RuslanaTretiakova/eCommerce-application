@@ -24,7 +24,7 @@ function DynamicForm<TFormData extends FieldValues>({
   const {
     register,
     handleSubmit,
-    formState: { isValid },
+    formState: { errors },
   } = useForm<TFormData>({
     mode: 'onBlur',
     reValidateMode: 'onChange',
@@ -60,12 +60,13 @@ function DynamicForm<TFormData extends FieldValues>({
             placeholder={placeholder}
             onChange={onChange}
             onBlur={onBlur}
+            error={errors[name]?.message as string | undefined}
             ref={ref}
           />
         );
       })}
 
-      <BaseButton type="submit" className="button--submit" disabled={!isValid} title={title}>
+      <BaseButton type="submit" className="button--submit" title={title}>
         {submitText}
       </BaseButton>
     </BaseForm>
