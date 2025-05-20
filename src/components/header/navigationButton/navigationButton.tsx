@@ -7,11 +7,11 @@ function NavigationButton() {
     if (!navigationOpen) {
       const navigation = document.querySelector('.navigation');
       navigation?.classList.add('navigation-open');
-   
-      body.classList.add('no-scroll')
+
+      body.classList.add('no-scroll');
     } else {
       navigationOpen?.classList.remove('navigation-open');
-      body.classList.remove('no-scroll')
+      body.classList.remove('no-scroll');
     }
   };
 

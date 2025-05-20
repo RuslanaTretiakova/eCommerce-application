@@ -6,7 +6,6 @@ import type { FieldValues } from 'react-hook-form';
 
 import './_base-input.scss';
 
-
 function BaseInputInner<TFormData extends FieldValues>(
   { label, name, type, placeholder, onChange, onBlur, error }: IBaseInputProps<TFormData>,
   ref: React.Ref<HTMLInputElement>,

@@ -8,7 +8,7 @@ import headerLogo from '../../assets/img/header/logo2.svg';
 function Header() {
   return (
     <header className="header">
-      <Logo way= {headerLogo}/>
+      <Logo way={headerLogo} />
       <HeaderNavigation />
       <HeaderProfileAndCartBlock />
       <NavigationButton />

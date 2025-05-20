@@ -8,11 +8,12 @@
     margin: 30px;
     margin-left: 0;
   }
-  h2 {
-    min-width: 340px;
-    width: 50%;
-    justify-self: right;
-    margin-right: 40px;
+  p {
+    // min-width: 340px;
+    // width: 50%;
+    // justify-self: right;
+    // margin-right: 40px;
+    font-size: 1.5em;
   }
 }
 
@@ -34,9 +35,6 @@
       margin: 30px;
       margin-left: 0;
     }
-    h2 {
-      font-size: 1.5em;
-    }
   }
 }
 
@@ -48,10 +46,11 @@
       width: 100%;
     }
 
-    h2 {
-      width: 80%;
+    p {
+   
       text-align:justify;
-      margin-right: 0;
+      font-size: 1.3em;
+   
     }
   }
 }
