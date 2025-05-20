@@ -1,7 +1,14 @@
+import { useEffect, useState } from 'react';
 import './navigationButton.scss';
 
 function NavigationButton() {
-  const setMenuOpen = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(prev => !prev);
+  }
+
+  useEffect(()=> {
     let navigationOpen = document.querySelector('.navigation-open');
     const body = document.querySelector('body') as HTMLBodyElement;
     const button = document.querySelector('.navigation-button') as HTMLElement;
@@ -19,13 +26,13 @@ function NavigationButton() {
       button.children[0].classList.remove('first-line__open');
       button.children[1].classList.remove('second-line__open');
       button.classList.remove('navigation-button_clicked');
-    }
-  };
+  }
+}, [menuOpen]);
 
   return (
     <button
       className="navigation-button"
-      onClick={setMenuOpen}
+      onClick={toggleMenu}
       type="button"
       aria-label="Toggle navigation menu"
     >

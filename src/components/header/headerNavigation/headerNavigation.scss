@@ -30,12 +30,9 @@
   .navigation-open {
     display: flex;
     position: absolute;
-   
     width: 100vw;
-    // height: calc(100dvh - 100px);
     top: 120px;
     height: 100vh;
-   
     overflow-y: hidden;
     background-color: #fff;
     .navigation__list {

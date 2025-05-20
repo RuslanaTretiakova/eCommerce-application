@@ -1,7 +1,5 @@
 .hero-section {
- 
   height: 615px;
-  // width: 100vw;
   background-image: url('../../../assets/img/homePage/hero-section.png');
   background-repeat: no-repeat;
   background-size: cover;
@@ -11,11 +9,9 @@
   h1 {
     color: white;
     font-size: clamp(1.2em, 3vw, 3em);
-
     .slogan-2 {
       margin-left: 50px;
     }
-
     .slogan-3 {
       margin-left: 100px;
     }
