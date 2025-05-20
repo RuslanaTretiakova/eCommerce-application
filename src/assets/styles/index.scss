@@ -4,3 +4,8 @@ body {
     list-style-type: none;
   }
 }
+
+body.no-scroll {
+  overflow: hidden;
+  height: 100dvh;
+}

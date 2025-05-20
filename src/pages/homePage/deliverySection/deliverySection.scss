@@ -27,7 +27,7 @@
   }
 }
 
-@media (max-width: 950px) {
+@media (max-width: 980px) {
   .delivery-section {
     img {
       width: 400px;
@@ -35,7 +35,7 @@
       margin-left: 0;
     }
     h2 {
-      // width: 100%;
+      font-size: 1.5em;
     }
   }
 }
@@ -45,8 +45,9 @@
     flex-direction: column;
     img {
       margin: 0;
+      width: 100%;
     }
-    
+
     h2 {
       width: 80%;
       text-align:justify;
