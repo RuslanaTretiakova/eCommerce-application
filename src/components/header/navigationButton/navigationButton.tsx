@@ -5,10 +5,10 @@ function NavigationButton() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
-    setMenuOpen(prev => !prev);
-  }
+    setMenuOpen((prev) => !prev);
+  };
 
-  useEffect(()=> {
+  useEffect(() => {
     let navigationOpen = document.querySelector('.navigation-open');
     const body = document.querySelector('body') as HTMLBodyElement;
     const button = document.querySelector('.navigation-button') as HTMLElement;
@@ -26,8 +26,8 @@ function NavigationButton() {
       button.children[0].classList.remove('first-line__open');
       button.children[1].classList.remove('second-line__open');
       button.classList.remove('navigation-button_clicked');
-  }
-}, [menuOpen]);
+    }
+  }, [menuOpen]);
 
   return (
     <button
