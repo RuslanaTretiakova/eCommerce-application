@@ -4,7 +4,6 @@ import type { IBaseSelectProps } from '../../../types/interfaces';
 
 import '../base-input/_base-input.scss';
 
-
 function BaseSelectInner<TFormData extends FieldValues>(
   { name, label, options, onChange, onBlur, placeholder }: IBaseSelectProps<TFormData>,
   ref: React.Ref<HTMLSelectElement>,

@@ -1,0 +1,45 @@
+.navigation-button {
+  width: 40px;
+  height: 40px;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: inherit;
+  border: none;
+  transition: transform 0.3s ease;
+  position: relative;
+
+  hr {
+    width: 100%;
+    margin: 0;
+    background-color: black;
+    border: 0;
+    color: black;
+    height: 1px;
+    transition: transform 0.3s ease;
+  }
+
+  .first-line__open {
+    transform: rotate(45deg);
+    margin-bottom: 1px;
+    position: absolute;
+  }
+
+  .second-line__open {
+    transform: rotate(-45deg);
+    position: absolute;
+  }
+}
+.navigation-button_clicked {
+  gap: 0px;
+  
+}
+
+@media (max-width: 768px) {
+  .navigation-button {
+    display: flex;
+  }
+}
