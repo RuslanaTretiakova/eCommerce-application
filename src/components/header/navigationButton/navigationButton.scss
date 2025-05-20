@@ -22,20 +22,15 @@
     transition: transform 0.3s ease;
   }
 
-  
-
   .first-line__open {
     transform: rotate(45deg);
     margin-bottom: 1px;
     position: absolute;
-   
   }
 
   .second-line__open {
     transform: rotate(-45deg);
     position: absolute;
-   
-
   }
 }
 .navigation-button_clicked {
