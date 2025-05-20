@@ -1,5 +1,5 @@
 import React from 'react';
-import './assets/styles/index.css';
+import './assets/styles/index.scss';
 import App from './app/App';
 import './api/authorithation/call-anonym-flow';
 import { BrowserRouter } from 'react-router-dom';

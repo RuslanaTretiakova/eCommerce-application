@@ -65,6 +65,7 @@
     "util": "^0.12.5",
     "vite": "^6.3.5",
     "vite-plugin-node-polyfills": "^0.23.0",
+    "vite-plugin-svgr": "^4.3.0",
     "vitest": "^3.1.3"
   }
 }
