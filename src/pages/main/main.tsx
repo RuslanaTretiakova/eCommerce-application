@@ -1,13 +1,13 @@
 import Header from '../../components/header/header';
-import HomePage from '../homePage/homePage';
 import './main.scss';
 import Footer from '../../components/footer/footer';
+import { Outlet } from 'react-router-dom';
 
 function MainPage() {
   return (
     <div className="container">
       <Header />
-      <HomePage />
+      <Outlet />
       <Footer />
     </div>
   );

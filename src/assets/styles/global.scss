@@ -77,6 +77,10 @@ a {
   margin: 0 auto;
   padding: 0 $spacing-4;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
 }
 
 .section {
