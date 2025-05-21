@@ -18,8 +18,8 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/about" element={<About />} />
         <Route path="/profile-access-block" element={<ProfileAccessBlock />} />
-          <Route path="/login" element={<AuthenticationPage />} />
-          <Route path="/registration" element={<RegistratontionPageDraft />} />
+        <Route path="/login" element={<AuthenticationPage />} />
+        <Route path="/registration" element={<RegistratontionPageDraft />} />
       </Route>
     </Routes>
   );

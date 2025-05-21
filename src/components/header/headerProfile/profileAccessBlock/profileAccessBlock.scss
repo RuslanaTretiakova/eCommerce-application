@@ -1,11 +1,8 @@
 .profile-access-block {
     display: flex;
     flex-direction: column;
-    width: 300px;
-    height: 50px;
+    width: 100%;
+    height: inherit;
     background-color: #fff;
-    li{
-        background-color: black;
-        height: 20px;
-    }
+    
 }
