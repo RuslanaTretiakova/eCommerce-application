@@ -8,7 +8,7 @@ interface LogoProps {
 function Logo({ way }: LogoProps) {
   return (
     <div className="logo">
-      <Link to="/" className='logo-block'>
+      <Link to="/" className="logo-block">
         <img src={way} alt="logo_bike" />
       </Link>
     </div>

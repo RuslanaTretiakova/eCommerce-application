@@ -9,6 +9,7 @@ import About from '../pages/aboutUs/aboutUs';
 import ProfileAccessBlock from '../components/header/headerProfile/profileAccessBlock/profileAccessBlock';
 import AuthenticationPage from '../pages/authorisation-page/AuthenticationPage';
 import RegistratontionPageDraft from '../pages/authorisation-page/RegistrationPage-draft';
+import Cart from '../pages/cart/cart';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/profile-access-block" element={<ProfileAccessBlock />} />
         <Route path="/login" element={<AuthenticationPage />} />
         <Route path="/registration" element={<RegistratontionPageDraft />} />
+        <Route path="/cart" element={<Cart />} />
       </Route>
     </Routes>
   );
