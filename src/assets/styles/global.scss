@@ -1,5 +1,15 @@
 @use './variables' as *;
 
+:root {
+--border-color: #e0e0e0;
+--border-radius: 8px;
+--border-focus-color: rgb(137, 138, 138);
+--text-color: black;
+--error-color: #ef4444;
+--button-primary: grey;
+--button-primary-hover: darkgray;
+}
+
 // ===== BASE STYLES ===== //
 html {
   scroll-behavior: smooth;
@@ -90,6 +100,4 @@ input, textarea, select {
   }
 }
 
-.base-input__toggle {
-  font-size: $text-xxs
-}
+
