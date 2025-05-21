@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './logo.scss';
 
 interface LogoProps {
@@ -7,9 +8,9 @@ interface LogoProps {
 function Logo({ way }: LogoProps) {
   return (
     <div className="logo">
-      <a href="/homePage">
+      <Link to="/" className='logo-block'>
         <img src={way} alt="logo_bike" />
-      </a>
+      </Link>
     </div>
   );
 }
