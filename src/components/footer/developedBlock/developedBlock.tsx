@@ -7,19 +7,19 @@ function DevelopedBlock() {
       <h3>Developed by:</h3>
       <ul>
         <li>
-          <a href="https://github.com/dzmitryaliakseyeu">
+          <a href="https://github.com/dzmitryaliakseyeu" target="_blank" rel="noreferrer">
             <img src={gitLogo} alt="github-logo" />
             <p>Dzmitry Aliakseyeu</p>
           </a>
         </li>
         <li>
-          <a href="https://github.com/ruslanatretiakova">
+          <a href="https://github.com/ruslanatretiakova" target="_blank" rel="noreferrer">
             <img src={gitLogo} alt="github-logo" />
             <p>Ruslana Tretiakova</p>
           </a>
         </li>
         <li>
-          <a href="https://github.com/nikanorra">
+          <a href="https://github.com/nikanorra" target="_blank" rel="noreferrer">
             <img src={gitLogo} alt="github-logo" />
             <p>Olga Nikanorova</p>
           </a>
