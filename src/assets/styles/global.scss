@@ -1,13 +1,13 @@
 @use './variables' as *;
 
 :root {
---border-color: #e0e0e0;
---border-radius: 8px;
---border-focus-color: rgb(137, 138, 138);
---text-color: black;
---error-color: #ef4444;
---button-primary: grey;
---button-primary-hover: darkgray;
+  --border-color: #e0e0e0;
+  --border-radius: 8px;
+  --border-focus-color: rgb(137, 138, 138);
+  --text-color: black;
+  --error-color: #ef4444;
+  --button-primary: grey;
+  --button-primary-hover: darkgray;
 }
 
 // ===== BASE STYLES ===== //
@@ -23,16 +23,29 @@ body {
 }
 
 // ===== TYPOGRAPHY ===== //
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: $spacing-3;
 }
 
-h1 { font-size: $text-4xl; }
-h2 { font-size: $text-3xl; }
-h3 { font-size: $text-2xl; }
-h4 { font-size: $text-xl; }
+h1 {
+  font-size: $text-4xl;
+}
+h2 {
+  font-size: $text-3xl;
+}
+h3 {
+  font-size: $text-2xl;
+}
+h4 {
+  font-size: $text-xl;
+}
 
 p {
   margin-bottom: $spacing-3;
@@ -88,7 +101,9 @@ a {
 }
 
 // ===== FORM ELEMENTS ===== //
-input, textarea, select {
+input,
+textarea,
+select {
   width: 100%;
   padding: $spacing-3;
   border: 1px solid $border-color;
@@ -99,5 +114,3 @@ input, textarea, select {
     border-color: $primary;
   }
 }
-
-

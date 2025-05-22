@@ -2,9 +2,15 @@
   padding: 10px 20px;
   border: transparent;
   border-radius: 30px;
-  transition: background-color 0.5s ease-in-out; // todo consider about, var for this line;
+  transition: background-color 0.5s ease-in-out;
   text-align: center;
   cursor: pointer;
+
+  &--login {
+    background-color: var(--button-primary);
+    color: white;
+    padding: 5px 10px;
+  }
 
   &--submit {
     width: 100%;

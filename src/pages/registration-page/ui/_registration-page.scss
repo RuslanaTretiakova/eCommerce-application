@@ -2,10 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 100vh;
 
   &__image {
     flex: 1;
-    height: 100vh; //todo to be revised during layout integration
+    height: 100%;
     overflow: hidden;
 
     img {
@@ -16,11 +17,23 @@
   }
 
   &__form {
-    padding: 10px;
+    padding: 10px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 50%;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+
+  &__link-to-auth {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
   }
 
   @media (max-width: 1250px) {
@@ -35,5 +48,5 @@
     &__form {
       max-width: 100%;
     }
-  } // todo: replace with CSS variables
+  }
 }
