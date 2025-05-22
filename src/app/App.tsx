@@ -7,7 +7,7 @@ import MainPage from '../pages/main/main';
 import Products from '../pages/products/products';
 import About from '../pages/aboutUs/aboutUs';
 import AuthenticationPage from '../pages/authorisation-page/AuthenticationPage';
-import RegistratontionPageDraft from '../pages/authorisation-page/RegistrationPage-draft';
+import RegistratontionPage from '../pages/registration-page/ui/RegistrationPage';
 import Cart from '../pages/cart/cart';
 import ProfileAccess from '../pages/profileAccess/profileAccess';
 
@@ -20,7 +20,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/profile-access-block" element={<ProfileAccess />} />
         <Route path="/login" element={<AuthenticationPage />} />
-        <Route path="/registration" element={<RegistratontionPageDraft />} />
+        <Route path="/registration" element={<RegistratontionPage />} />
         <Route path="/cart" element={<Cart />} />
       </Route>
     </Routes>
