@@ -3,34 +3,33 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from '../../app/App';
 
-// Helper to render App at specific route
 function renderWithRouter(route: string) {
   return render(
     <MemoryRouter initialEntries={[route]}>
       <App />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 }
 
 describe('App Routing', () => {
   it('renders HomePage on /', () => {
     renderWithRouter('/');
-    expect(screen.getByText(/Ride with ReMotionX/i)).toBeInTheDocument(); // Adjust to actual text in HomePage
+    expect(screen.getByText(/Ride with ReMotionX/i)).toBeInTheDocument();
   });
 
   it('renders Products page on /products', () => {
     renderWithRouter('/products');
-    expect(screen.getByText(/Products page/i)).toBeInTheDocument(); // Adjust to actual text
+    expect(screen.getByText(/Products page/i)).toBeInTheDocument();
   });
 
   it('renders About page on /about', () => {
     renderWithRouter('/about');
-    expect(screen.getByText(/About us page/i)).toBeInTheDocument(); // Adjust to actual text
+    expect(screen.getByText(/About us page/i)).toBeInTheDocument();
   });
 
   it('renders Login page on /login', () => {
     renderWithRouter('/login');
-    expect(screen.getByText(/Email/i)).toBeInTheDocument(); // Adjust
+    expect(screen.getByText(/Email/i)).toBeInTheDocument();
   });
 
   it('renders Registration page on /registration', () => {
@@ -40,11 +39,11 @@ describe('App Routing', () => {
 
   it('renders Cart page on /cart', () => {
     renderWithRouter('/cart');
-    expect(screen.getByText(/Cart page/i)).toBeInTheDocument(); // Adjust
+    expect(screen.getByText(/Cart page/i)).toBeInTheDocument();
   });
 
   it('renders ProfileAccess page on /profile-access-block', () => {
     renderWithRouter('/profile-access-block');
-    expect(screen.getByText(/Time to ride!/i)).toBeInTheDocument(); // Adjust
+    expect(screen.getByText(/Time to ride!/i)).toBeInTheDocument();
   });
 });
