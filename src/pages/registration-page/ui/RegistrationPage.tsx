@@ -1,8 +1,8 @@
 import type { JSX } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import DynamicForm from '../../../components/forms/DynamicForm.tsx';
 import type { IFormData } from '../../../types/interfaces.ts';
-import DynamicForm from '../../../components/forms/DynamicForm.ts';
 import { registrationFields } from '../../../components/forms/registration/fieldsConfig.ts';
 import { handleRegistration } from '../../../api/authorithation/handleRegistration.ts';
 
