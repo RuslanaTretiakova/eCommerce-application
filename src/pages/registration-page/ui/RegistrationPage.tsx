@@ -1,14 +1,20 @@
 import type { JSX } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import type { IFormData } from '../../../types/interfaces';
-import DynamicForm from '../../../components/forms/DynamicForm';
-import { registrationFields } from '../../../components/forms/registration/fieldsConfig';
+import type { IFormData } from '../../../types/interfaces.ts';
+import DynamicForm from '../../../components/forms/DynamicForm.ts';
+import { registrationFields } from '../../../components/forms/registration/fieldsConfig.ts';
+import { handleRegistration } from '../../../api/authorithation/handleRegistration.ts';
 
 import './_registration-page.scss';
 
 function RegistrationPage(): JSX.Element {
-  const handleRegistration = async (formData: IFormData) => {
-    console.log(formData);
+  const [status, setStatus] = useState<'initial' | 'submitting'>('initial');
+
+  const onSubmit = async (formData: IFormData) => {
+    setStatus('submitting');
+    await handleRegistration(formData);
+    setStatus('initial');
   };
 
   return (
@@ -18,16 +24,17 @@ function RegistrationPage(): JSX.Element {
       </div>
       <div className="registration-page__form">
         <div className="registration-page__link-to-auth">
-          <p> Already have an account?</p>
+          <p>Already have an account?</p>
           <Link to="/login" className="button button--login">
             Login
           </Link>
         </div>
+
         <DynamicForm<IFormData>
           fields={registrationFields}
-          onSubmit={handleRegistration}
+          onSubmit={onSubmit}
           title="Registration"
-          submitText="Sign Up"
+          submitText={status === 'submitting' ? 'Registering...' : 'Sign Up'}
         />
       </div>
     </div>
