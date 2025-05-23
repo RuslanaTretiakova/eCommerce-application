@@ -14,7 +14,6 @@ import ProfileAccess from '../pages/profileAccess/profileAccess';
 function App() {
   return (
     <Routes>
-      
       <Route path="/" element={<MainPage />}>
         <Route index element={<HomePage />} />
         <Route path="/products" element={<Products />} />
