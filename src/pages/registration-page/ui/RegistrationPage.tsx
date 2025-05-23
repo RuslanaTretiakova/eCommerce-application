@@ -20,7 +20,7 @@ function RegistrationPage(): JSX.Element {
   return (
     <div className="registration-page">
       <div className="registration-page__image">
-        <img src="./src/assets/images/register_page.jpeg.png" alt="Register illustration" />
+        <img src="/img/registration/register_page.jpeg" alt="Register illustration" />
       </div>
       <div className="registration-page__form">
         <div className="registration-page__link-to-auth">

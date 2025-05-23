@@ -3,6 +3,10 @@
   align-items: center;
   justify-content: space-between;
 
+  &--auth {
+    height: 100%;
+  }
+
   &__image {
     flex: 1;
     height: 100%;
