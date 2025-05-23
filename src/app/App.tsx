@@ -10,11 +10,11 @@ import AuthenticationPage from '../pages/authorisation-page/AuthenticationPage';
 import RegistratontionPageDraft from '../pages/authorisation-page/RegistrationPage-draft';
 import Cart from '../pages/cart/cart';
 import ProfileAccess from '../pages/profileAccess/profileAccess';
+import NotFoundPage from '../pages/404/404';
 
 function App() {
   return (
     <Routes>
-      
       <Route path="/" element={<MainPage />}>
         <Route index element={<HomePage />} />
         <Route path="/products" element={<Products />} />
@@ -23,6 +23,7 @@ function App() {
         <Route path="/login" element={<AuthenticationPage />} />
         <Route path="/registration" element={<RegistratontionPageDraft />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );
