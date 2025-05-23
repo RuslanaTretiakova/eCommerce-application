@@ -13,7 +13,6 @@ function renderWithRouter(route: string) {
 }
 
 describe('App Routing', () => {
-
   it('clicking on logo redirects to home page', async () => {
     renderWithRouter('/about');
 
