@@ -1,5 +1,5 @@
 // import type { ButtonType, InputType } from './types';
-import type { ButtonType } from './types';
+import type { ButtonType, NotificationType } from './types';
 import type { ChangeEventHandler, FocusEventHandler } from 'react';
 import type { ChangeHandler, FieldValues, Path } from 'react-hook-form';
 
@@ -63,4 +63,12 @@ export interface IBaseButtonProps {
   title: string;
   disabled?: boolean;
   onClick?: () => void;
+}
+
+//Notification
+export interface INotification {
+  text: string;
+  type?: NotificationType;
+  duration?: number;
+  position?: 'left' | 'right' | 'center';
 }
