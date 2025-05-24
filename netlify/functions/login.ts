@@ -7,11 +7,10 @@ import {
   CTP_PROJECT_KEY,
   CTP_SCOPE,
   CTP_AUTH_URL,
-} from '../../src/types/constantsCopy';
+} from '../../src/types/constants';
 
 const handler: Handler = async (e) => {
   const { email, password } = JSON.parse(e.body || '{}');
-  debugger;
   const authUrl = `${CTP_AUTH_URL}/oauth/${CTP_PROJECT_KEY}/customers/token`;
   const clientId = CTP_CLIENT_ID;
   const clientSecret = CTP_CLIENT_SECRET;

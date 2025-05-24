@@ -11,10 +11,9 @@ import {
   CTP_API_URL,
   CTP_AUTH_URL,
   CTP_SCOPE,
-} from '../types/constantsCopy';
+} from '../types/constants';
 
 export const getCustomerApi = (email: string, password: string) => {
-  debugger;
   const client = createClient({
     middlewares: [
       createAuthMiddlewareForPasswordFlow({
