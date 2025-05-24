@@ -4,6 +4,10 @@
   justify-content: space-between;
   height: 100vh;
 
+  &--auth {
+    height: 100%;
+  }
+
   &__image {
     flex: 1;
     height: 100%;
