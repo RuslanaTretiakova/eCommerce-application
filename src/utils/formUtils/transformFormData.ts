@@ -13,13 +13,19 @@ export function transformFormData(formData: IFormData) {
     dateOfBirth: trimmedData.dateOfBirth,
     addresses: [
       {
-        streetName: trimmedData.street,
-        city: trimmedData.city,
-        postalCode: trimmedData.postalCode,
-        country: trimmedData.country.toUpperCase(),
+        streetName: trimmedData.billingStreet,
+        city: trimmedData.billingCity,
+        postalCode: trimmedData.billingPostalCode,
+        country: trimmedData.billingCountry.toUpperCase(),
+      },
+      {
+        streetName: trimmedData.shippingStreet,
+        city: trimmedData.shippingCity,
+        postalCode: trimmedData.shippingPostalCode,
+        country: trimmedData.shippingCountry.toUpperCase(),
       },
     ],
-    defaultShippingAddress: 0,
     defaultBillingAddress: 0,
+    defaultShippingAddress: 1,
   };
 }
