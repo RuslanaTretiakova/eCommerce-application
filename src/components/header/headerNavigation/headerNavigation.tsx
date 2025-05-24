@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './headerNavigation.scss';
 import { useEffect } from 'react';
-import closeMobileMenu from '../../../utils/navigation/navigation';
+import closeMobileMenu from '../../../utils/closeMobileNavigation/closeMobileNavigation';
 
 function HeaderNavigation() {
   // const closeMobileMenu = () => {

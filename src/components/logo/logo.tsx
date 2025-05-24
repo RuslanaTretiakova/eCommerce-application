@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import './logo.scss';
-import closeMobileMenu from '../../utils/navigation/navigation';
+import closeMobileMenu from '../../utils/closeMobileNavigation/closeMobileNavigation';
 
 interface LogoProps {
   way: string;

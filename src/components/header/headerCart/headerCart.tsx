@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import cart from '../../../assets/img/header/cart.svg';
 import './headerCart.scss';
-import closeMobileMenu from '../../../utils/navigation/navigation';
+import closeMobileMenu from '../../../utils/closeMobileNavigation/closeMobileNavigation';
 
 function HeaderCart() {
   return (

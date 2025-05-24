@@ -1,7 +1,7 @@
 import './headerProfile.scss';
 import profile from '../../../assets/img/header/profile.svg';
 import { Link } from 'react-router-dom';
-import closeMobileMenu from '../../../utils/navigation/navigation';
+import closeMobileMenu from '../../../utils/closeMobileNavigation/closeMobileNavigation';
 
 function HeaderProfile() {
   // const [openProfileAccesBlock, setOpenProfileAccesBlock] = useState(false);
