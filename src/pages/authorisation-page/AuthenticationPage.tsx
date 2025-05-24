@@ -23,7 +23,7 @@ function AuthenticationPage(): JSX.Element {
         <img src="/img/registration/register_page.jpeg" alt="Register illustration" />
       </div>
       <div className="registration-page__form">
-        <div className='registration-page__link-to-auth'>
+        <div className="registration-page__link-to-auth">
           <p>New here? Create an account!</p>
           <Link to="/registration" className="button button--login">
             Registration
