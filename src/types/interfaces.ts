@@ -1,5 +1,5 @@
 // import type { ButtonType, InputType } from './types';
-import type { ButtonType, NotificationType } from './types';
+import type { ButtonType, NotificationType, RegistrationErrorType } from './types';
 import type { ChangeEventHandler, FocusEventHandler } from 'react';
 import type { ChangeHandler, FieldValues, Path } from 'react-hook-form';
 
@@ -71,4 +71,31 @@ export interface INotification {
   type?: NotificationType;
   duration?: number;
   position?: 'left' | 'right' | 'center';
+}
+
+//Errors
+export interface IJsonSuccessResponse {
+  success: true;
+  customerId: string;
+}
+
+export interface IJsonErrorResponse {
+  success: false;
+  error: string;
+}
+
+export interface ICommercetoolsErrorDetail {
+  code: string;
+  field?: string;
+  message: string;
+}
+
+export interface IRegistrationError extends Error {
+  code?: RegistrationErrorType;
+  statusCode?: number;
+  body?: {
+    statusCode: number;
+    message: string;
+    errors?: ICommercetoolsErrorDetail[];
+  };
 }

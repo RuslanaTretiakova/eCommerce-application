@@ -1,39 +1,32 @@
 import { Handler } from '@netlify/functions';
 import { registerCustomer } from '../../src/api/registerCustomer';
+import { responses } from '../../src/utils/errors/responses';
+import { IRegistrationError } from '../../src/types/interfaces';
 
 export const handler: Handler = async (event) => {
   if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ error: 'Method Not Allowed' }),
-    };
+    return responses.invalidInput();
   }
 
   try {
     const data = JSON.parse(event.body || '{}');
+
     const customer = await registerCustomer(data);
 
-    console.log('Registration successful:', customer);
+    return responses.registrationSuccess(customer.id);
+  } catch (error) {
+    console.error('Registration error caught:', error);
 
-    return {
-      statusCode: 201,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        success: true,
-        customerId: customer.id,
-      }),
-    };
-  } catch (error: unknown) {
-    console.error('Registration failed:', error);
+    const err = error as IRegistrationError;
 
-    return {
-      statusCode: 500,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        success: false,
-        message: 'Registration failed. Please try again later.',
-      }),
-    };
+    switch (err.code) {
+      case 'EMAIL_EXISTS':
+        console.warn('Email already exists error triggered');
+        return responses.emailExists();
+
+      default:
+        console.error('Unhandled server error');
+        return responses.serverError();
+    }
   }
 };
