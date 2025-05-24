@@ -10,6 +10,7 @@ import AuthenticationPage from '../pages/authorisation-page/AuthenticationPage';
 import RegistratontionPage from '../pages/registration-page/ui/RegistrationPage';
 import Cart from '../pages/cart/cart';
 import ProfileAccess from '../pages/profileAccess/profileAccess';
+import NotFoundPage from '../pages/404/404';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/login" element={<AuthenticationPage />} />
         <Route path="/registration" element={<RegistratontionPage />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );
