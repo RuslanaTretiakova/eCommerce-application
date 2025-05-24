@@ -1,4 +1,3 @@
-// import type { ButtonType, InputType } from './types';
 import type { ButtonType, NotificationType, RegistrationErrorType } from './types';
 import type { ChangeEventHandler, FocusEventHandler } from 'react';
 import type { ChangeHandler, FieldValues, Path } from 'react-hook-form';
@@ -15,6 +14,7 @@ export interface IFormData {
   postalCode: string;
   country: string;
 }
+
 // Auth form
 export interface IFormDataAuth {
   email: string;
@@ -30,9 +30,6 @@ export interface IBaseFieldProps<TElement extends HTMLElement = HTMLElement> {
   error?: string;
 }
 
-// export interface IBaseInputProps extends IBaseFieldProps<HTMLInputElement> {
-//   type: InputType;
-// }
 export interface IBaseInputProps<TFormData extends FieldValues = FieldValues> {
   name: Path<TFormData>;
   label: string;
@@ -43,9 +40,6 @@ export interface IBaseInputProps<TFormData extends FieldValues = FieldValues> {
   error?: string;
 }
 
-// export interface IBaseSelectProps extends IBaseFieldProps<HTMLSelectElement> {
-//   options: { value: string; label: string }[];
-// }
 export interface IBaseSelectProps<TFormData extends FieldValues = FieldValues> {
   name: Path<TFormData>;
   label: string;
