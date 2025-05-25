@@ -18,6 +18,7 @@ export interface IFormData {
   shippingCity: string;
   shippingPostalCode: string;
   shippingCountry: string;
+  sameAddress?: boolean;
 }
 
 // Auth form

@@ -2,7 +2,10 @@ import type { IFormData } from '../../types/interfaces';
 
 export function transformFormData(formData: IFormData) {
   const trimmedData = Object.fromEntries(
-    Object.entries(formData).map(([key, value]) => [key, value.trim()]),
+    Object.entries(formData).map(([key, value]) => [
+      key,
+      typeof value === 'string' ? value.trim() : value,
+    ]),
   ) as IFormData;
 
   return {
