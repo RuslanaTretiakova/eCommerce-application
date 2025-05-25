@@ -4,7 +4,7 @@ import { authenticationFields } from '../../components/forms/registration/fields
 import type { IFormDataAuth } from '../../types/interfaces';
 import { fetchCustomerToken } from '../../api/sdkClient';
 import { showNotification } from '../../utils/toastify/showNotification';
-import type { IRegistrationError } from '../types/interfaces';
+import type { IRegistrationError } from '../../types/interfaces';
 import { useAuth } from '../../api/authorithation/AuthToken';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
