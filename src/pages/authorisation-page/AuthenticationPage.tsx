@@ -5,16 +5,19 @@ import type { IFormDataAuth } from '../../types/interfaces';
 import { fetchCustomerToken } from '../../api/sdkClient';
 import { showNotification } from '../../utils/toastify/showNotification';
 import type { IRegistrationError } from '../types/interfaces';
+import { useAuth } from '../../api/authorithation/AuthToken';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 function AuthenticationPage(): JSX.Element {
+  const { setToken } = useAuth();
   const navigate = useNavigate();
   const handleLogin = async (data: IFormDataAuth) => {
     console.log('Login:', data);
     // logic
     try {
       const token = await fetchCustomerToken(data.email, data.password);
+      setToken(token);
       showNotification({
         text: 'Authentication successful!',
         type: 'success',
