@@ -10,7 +10,15 @@ import {
 } from '../../src/types/constants';
 
 const handler: Handler = async (e) => {
+  if (e.httpMethod !== 'POST') {
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ message: 'Method Not Allowed' }),
+    };
+  }
+
   const { email, password } = JSON.parse(e.body || '{}');
+
   const authUrl = `${CTP_AUTH_URL}/oauth/${CTP_PROJECT_KEY}/customers/token`;
   const clientId = CTP_CLIENT_ID;
   const clientSecret = CTP_CLIENT_SECRET;
