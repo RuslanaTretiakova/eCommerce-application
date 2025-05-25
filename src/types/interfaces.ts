@@ -10,11 +10,17 @@ export interface IFormData {
   firstName: string;
   lastName: string;
   dateOfBirth: string;
-  street: string;
-  city: string;
-  postalCode: string;
-  country: string;
+  billingStreet: string;
+  billingCity: string;
+  billingPostalCode: string;
+  billingCountry: string;
+  shippingStreet: string;
+  shippingCity: string;
+  shippingPostalCode: string;
+  shippingCountry: string;
+  sameAddress?: boolean;
 }
+
 // Auth form
 export interface IFormDataAuth {
   email: string;

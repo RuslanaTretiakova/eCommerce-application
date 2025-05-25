@@ -8,7 +8,6 @@ export interface IFieldConfig<TFormData extends FieldValues> {
   label: string;
   type: InputType;
   placeholder: string;
-  // rules: RegisterOptions<IFormData, keyof IFormData>;
   rules?: RegisterOptions<TFormData, Path<TFormData>>;
   options?: { value: string; label: string }[];
 }
@@ -82,9 +81,10 @@ export const registrationFields: IFieldConfig<IFormData>[] = [
       },
     },
   },
+
   {
-    name: 'street',
-    label: 'Street',
+    name: 'billingStreet',
+    label: 'Billing Street',
     type: 'text',
     placeholder: 'Main Street',
     rules: {
@@ -96,21 +96,21 @@ export const registrationFields: IFieldConfig<IFormData>[] = [
     },
   },
   {
-    name: 'city',
-    label: 'City',
+    name: 'billingCity',
+    label: 'Billing City',
     type: 'text',
     placeholder: 'New York',
     rules: {
       required: 'City is required',
       pattern: {
         value: /^[A-Za-z\s]+$/,
-        message: 'Only letters allowed, no numbers or special characters',
+        message: 'Only letters allowed',
       },
     },
   },
   {
-    name: 'postalCode',
-    label: 'Postal Code',
+    name: 'billingPostalCode',
+    label: 'Billing Postal Code',
     type: 'text',
     placeholder: '12345',
     rules: {
@@ -122,8 +122,8 @@ export const registrationFields: IFieldConfig<IFormData>[] = [
     },
   },
   {
-    name: 'country',
-    label: 'Country',
+    name: 'billingCountry',
+    label: 'Billing Country',
     type: 'select',
     placeholder: 'Select country...',
     rules: {
@@ -138,6 +138,71 @@ export const registrationFields: IFieldConfig<IFormData>[] = [
       { value: 'US', label: 'United States' },
       { value: 'CA', label: 'Canada' },
     ],
+  },
+
+  {
+    name: 'shippingStreet',
+    label: 'Shipping Street',
+    type: 'text',
+    placeholder: 'Main Street',
+    rules: {
+      required: 'Street is required',
+      minLength: {
+        value: 1,
+        message: 'Street must contain at least 1 character',
+      },
+    },
+  },
+  {
+    name: 'shippingCity',
+    label: 'Shipping City',
+    type: 'text',
+    placeholder: 'New York',
+    rules: {
+      required: 'City is required',
+      pattern: {
+        value: /^[A-Za-z\s]+$/,
+        message: 'Only letters allowed',
+      },
+    },
+  },
+  {
+    name: 'shippingPostalCode',
+    label: 'Shipping Postal Code',
+    type: 'text',
+    placeholder: '12345',
+    rules: {
+      required: 'Postal code is required',
+      pattern: {
+        value: /^(\d{5}(-\d{4})?|\d{2}-\d{3})$/,
+        message: 'Invalid postal code format',
+      },
+    },
+  },
+  {
+    name: 'shippingCountry',
+    label: 'Shipping Country',
+    type: 'select',
+    placeholder: 'Select country...',
+    rules: {
+      required: 'Country is required',
+      pattern: {
+        value: /^[A-Z]{2}$/,
+        message: 'Choose country from the list',
+      },
+    },
+    options: [
+      { value: 'PL', label: 'Poland' },
+      { value: 'US', label: 'United States' },
+      { value: 'CA', label: 'Canada' },
+    ],
+  },
+  {
+    name: 'sameAddress',
+    label: 'Use same address for shipping and billing',
+    type: 'checkbox',
+    placeholder: '',
+    rules: {},
   },
 ];
 

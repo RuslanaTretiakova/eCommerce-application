@@ -16,7 +16,9 @@ function BaseInputInner<TFormData extends FieldValues>(
   const inputType = isPasswordType && showPassword ? 'text' : type;
 
   return (
-    <div className={`base-input ${hasError ? 'base-input--error' : ''}`}>
+    <div
+      className={`base-input ${hasError ? 'base-input--error' : ''} ${type === 'checkbox' ? 'base-input--inline' : ''}`}
+    >
       <label htmlFor={name} className="base-input__label">
         {label}
       </label>
