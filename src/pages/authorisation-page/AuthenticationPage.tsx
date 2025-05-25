@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 import DynamicForm from '../../components/forms/DynamicForm';
 import { authenticationFields } from '../../components/forms/registration/fieldsConfig';
 import type { IFormDataAuth } from '../../types/interfaces';
-import { getCustomerApi } from '../../api/sdkClient';
+import { fetchCustomerToken } from '../../api/sdkClient';
 import { Link } from 'react-router-dom';
 
 function AuthenticationPage(): JSX.Element {
@@ -10,9 +10,8 @@ function AuthenticationPage(): JSX.Element {
     console.log('Login:', data);
     // logic
     try {
-      const apiRoot = getCustomerApi(data.email, data.password);
-      const response = await apiRoot.me().get().execute();
-      console.log(response.body);
+      const token = await fetchCustomerToken(data.email, data.password);
+      console.log('Token received (not stored):', token);
     } catch (error) {
       console.error(error);
     }
