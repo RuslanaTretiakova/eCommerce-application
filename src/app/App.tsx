@@ -13,7 +13,6 @@ import Cart from '../pages/cart/cart';
 import ProfileAccess from '../pages/profileAccess/profileAccess';
 import NotFoundPage from '../pages/404/404';
 
-
 function App() {
   return (
     <TokenProvider>
@@ -23,7 +22,7 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/about" element={<About />} />
           <Route path="/profile-access-block" element={<ProfileAccess />} />
-          <Route path="/login" element={<AuthenticationPage />}/>
+          <Route path="/login" element={<AuthenticationPage />} />
           <Route path="/registration" element={<RegistratontionPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<NotFoundPage />} />
