@@ -1,43 +1,14 @@
-import { createClient } from '@commercetools/sdk-client-v2';
-import { createAuthMiddlewareForPasswordFlow } from '@commercetools/sdk-middleware-auth';
-import { createHttpMiddleware } from '@commercetools/sdk-middleware-http';
-import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
-import fetch from 'cross-fetch';
-
-import {
-  CTP_CLIENT_ID,
-  CTP_CLIENT_SECRET,
-  CTP_PROJECT_KEY,
-  CTP_API_URL,
-  CTP_AUTH_URL,
-  CTP_SCOPE,
-} from '../types/constants';
-
-export const getCustomerApi = (email: string, password: string) => {
-  const client = createClient({
-    middlewares: [
-      createAuthMiddlewareForPasswordFlow({
-        host: CTP_AUTH_URL,
-        projectKey: CTP_PROJECT_KEY,
-        credentials: {
-          clientId: CTP_CLIENT_ID,
-          clientSecret: CTP_CLIENT_SECRET,
-          user: {
-            username: email,
-            password: password,
-          },
-        },
-        scopes: [CTP_SCOPE],
-        fetch,
-      }),
-      createHttpMiddleware({
-        host: CTP_API_URL,
-        fetch,
-      }),
-    ],
+export const fetchCustomerToken = async (email: string, password: string): Promise<string> => {
+  const response = await fetch('/.netlify/functions/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
   });
 
-  return createApiBuilderFromCtpClient(client).withProjectKey({
-    projectKey: CTP_PROJECT_KEY,
-  });
+  const data = await response.json();
+
+  if (!response.ok || !data.access_token) {
+    throw new Error(data.error_description || 'Failed to fetch token');
+  }
+  return data.access_token;
 };
