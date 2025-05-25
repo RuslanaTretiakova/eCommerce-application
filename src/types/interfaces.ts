@@ -1,5 +1,4 @@
-// import type { ButtonType, InputType } from './types';
-import type { ButtonType } from './types';
+import type { ButtonType, NotificationType, RegistrationErrorType } from './types';
 import type { ChangeEventHandler, FocusEventHandler } from 'react';
 import type { ChangeHandler, FieldValues, Path } from 'react-hook-form';
 
@@ -36,9 +35,6 @@ export interface IBaseFieldProps<TElement extends HTMLElement = HTMLElement> {
   error?: string;
 }
 
-// export interface IBaseInputProps extends IBaseFieldProps<HTMLInputElement> {
-//   type: InputType;
-// }
 export interface IBaseInputProps<TFormData extends FieldValues = FieldValues> {
   name: Path<TFormData>;
   label: string;
@@ -49,9 +45,6 @@ export interface IBaseInputProps<TFormData extends FieldValues = FieldValues> {
   error?: string;
 }
 
-// export interface IBaseSelectProps extends IBaseFieldProps<HTMLSelectElement> {
-//   options: { value: string; label: string }[];
-// }
 export interface IBaseSelectProps<TFormData extends FieldValues = FieldValues> {
   name: Path<TFormData>;
   label: string;
@@ -69,4 +62,39 @@ export interface IBaseButtonProps {
   title: string;
   disabled?: boolean;
   onClick?: () => void;
+}
+
+//Notification
+export interface INotification {
+  text: string;
+  type?: NotificationType;
+  duration?: number;
+  position?: 'left' | 'right' | 'center';
+}
+
+//Errors
+export interface IJsonSuccessResponse {
+  success: true;
+  customerId: string;
+}
+
+export interface IJsonErrorResponse {
+  success: false;
+  error: string;
+}
+
+export interface ICommercetoolsErrorDetail {
+  code: string;
+  field?: string;
+  message: string;
+}
+
+export interface IRegistrationError extends Error {
+  code?: RegistrationErrorType;
+  statusCode?: number;
+  body?: {
+    statusCode: number;
+    message: string;
+    errors?: ICommercetoolsErrorDetail[];
+  };
 }
