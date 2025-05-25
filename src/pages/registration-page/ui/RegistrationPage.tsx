@@ -35,6 +35,7 @@ function RegistrationPage(): JSX.Element {
           onSubmit={onSubmit}
           title="Registration"
           submitText={status === 'submitting' ? 'Registering...' : 'Sign Up'}
+          showAddress
         />
       </div>
     </div>

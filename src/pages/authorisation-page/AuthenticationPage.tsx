@@ -27,6 +27,7 @@ function AuthenticationPage(): JSX.Element {
           onSubmit={handleLogin}
           title="Login"
           submitText="Auth"
+          showAddress={false}
         />
       </div>
     </div>
