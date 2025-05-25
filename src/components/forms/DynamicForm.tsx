@@ -59,11 +59,17 @@ function DynamicForm<TFormData extends FieldValues>({
 
   const userFields = fields.filter(
     (f) =>
-      !f.name.startsWith('billing') && !f.name.startsWith('shipping') && f.name !== 'sameAddress',
+      !f.name.startsWith('billing') &&
+      !f.name.startsWith('shipping') &&
+      !['sameAddress', 'setDefaultBilling', 'setDefaultShipping'].includes(f.name),
   );
+
   const billingFields = fields.filter((f) => f.name.startsWith('billing'));
   const shippingFields = fields.filter((f) => f.name.startsWith('shipping'));
+
   const sameAddressField = fields.find((f) => f.name === 'sameAddress');
+  const setDefaultBillingField = fields.find((f) => f.name === 'setDefaultBilling');
+  const setDefaultShippingField = fields.find((f) => f.name === 'setDefaultShipping');
 
   const renderField = (field: IFieldConfig<TFormData>) => {
     const { name, label, type, placeholder, rules, options = [] } = field;
@@ -114,11 +120,13 @@ function DynamicForm<TFormData extends FieldValues>({
           <div className="form__address-container">
             <div>
               <h2 className="form__section-title">Billing Address</h2>
+              {setDefaultBillingField && renderField(setDefaultBillingField)}
               <div>{billingFields.map(renderField)}</div>
             </div>
 
             <div className="form__address-block">
               <h2 className="form__section-title">Shipping Address</h2>
+              {setDefaultShippingField && renderField(setDefaultShippingField)}
               <div>{shippingFields.map(renderField)}</div>
             </div>
           </div>

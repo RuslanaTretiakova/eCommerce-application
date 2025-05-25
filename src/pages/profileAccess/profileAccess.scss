@@ -11,21 +11,13 @@
     .access-button {
       display: block;
       width: 50%;
-      // background-color: #818181;
-      // text-align: center;
-      // padding: 5px;
-      // border-radius: 5px;
-      // color: white;
     }
-   
   }
 }
 
-@media (max-width: 768px){
+@media (max-width: 768px) {
   .profile-access-block {
-
     .access-buttons-container {
-    
       display: flex;
       justify-content: center;
       flex-direction: column;
@@ -36,13 +28,7 @@
       .access-button {
         display: block;
         width: 50%;
-        // background-color: #818181;
-        // text-align: center;
-        // padding: 5px;
-        // border-radius: 5px;
-        // color: white;
       }
-   
     }
   }
 }

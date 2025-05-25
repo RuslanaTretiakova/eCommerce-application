@@ -8,6 +8,8 @@
     flex-direction: row-reverse;
     align-items: center;
     justify-content: left;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 4px;
 
     .base-input__label {
       margin-left: 8px;
