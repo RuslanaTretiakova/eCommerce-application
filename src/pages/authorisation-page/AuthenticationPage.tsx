@@ -3,6 +3,8 @@ import DynamicForm from '../../components/forms/DynamicForm';
 import { authenticationFields } from '../../components/forms/registration/fieldsConfig';
 import type { IFormDataAuth } from '../../types/interfaces';
 import { fetchCustomerToken } from '../../api/sdkClient';
+import { showNotification } from '../../utils/toastify/showNotification';
+import type { IRegistrationError } from '../types/interfaces';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -12,11 +14,23 @@ function AuthenticationPage(): JSX.Element {
     console.log('Login:', data);
     // logic
     try {
+      debugger;
       const token = await fetchCustomerToken(data.email, data.password);
+      showNotification({
+        text: 'Authentication successful!',
+        type: 'success',
+      });
       console.log('Token received (not stored):', token);
       navigate('/');
     } catch (error) {
       console.error(error);
+      if (error instanceof Error) {
+        const errorType = error as IRegistrationError;
+        showNotification({
+          text: errorType.message || 'Network error. Please try again later.',
+          type: 'error',
+        });
+      }
     }
   };
   return (
