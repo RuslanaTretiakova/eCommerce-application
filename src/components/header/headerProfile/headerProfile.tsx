@@ -18,7 +18,7 @@ function HeaderProfile() {
   return (
     <div className="header__profile-block">
       <Link
-        to="/profile-access-block"
+        to="/profile-info"
         onClick={() => {
           if (window.innerWidth <= 768) {
             closeMobileMenu();
