@@ -1,5 +1,4 @@
 export const fetchCustomerToken = async (email: string, password: string): Promise<string> => {
-  // debugger;
   const response = await fetch('/.netlify/functions/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -11,6 +10,5 @@ export const fetchCustomerToken = async (email: string, password: string): Promi
   if (!response.ok || !data.access_token) {
     throw new Error(data.error_description || 'Failed to fetch token');
   }
-
   return data.access_token;
 };
