@@ -14,7 +14,6 @@ function AuthenticationPage(): JSX.Element {
     console.log('Login:', data);
     // logic
     try {
-      debugger;
       const token = await fetchCustomerToken(data.email, data.password);
       showNotification({
         text: 'Authentication successful!',
