@@ -16,13 +16,8 @@
       border-bottom: 2px solid transparent;
       a {
         height: 100%;
-       
       }
     }
-
-    // .navigation__tab a:hover {
-    //   font-weight: 700;
-    // }
   }
 }
 
@@ -48,26 +43,20 @@
       .navigation__tab {
         text-align: center;
         font-size: 2em;
-      
       }
     }
   }
 }
 
 @media (hover: hover) {
-    .navigation-open {
-    
+  .navigation-open {
     .navigation__list {
-      
       .navigation__tab {
-     
-          a:hover, a:active {
-              color: black;
-            }
-      
+        a:hover,
+        a:active {
+          color: black;
+        }
       }
     }
   }
-
-
 }
