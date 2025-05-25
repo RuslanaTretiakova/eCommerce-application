@@ -18,6 +18,8 @@ export interface IFormData {
   shippingPostalCode: string;
   shippingCountry: string;
   sameAddress?: boolean;
+  setDefaultBilling?: boolean;
+  setDefaultShipping?: boolean;
 }
 
 // Auth form

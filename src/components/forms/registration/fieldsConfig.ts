@@ -204,6 +204,27 @@ export const registrationFields: IFieldConfig<IFormData>[] = [
     placeholder: '',
     rules: {},
   },
+  {
+    name: 'sameAddress',
+    label: 'Use same address for shipping and billing',
+    type: 'checkbox',
+    placeholder: '',
+    rules: {},
+  },
+  {
+    name: 'setDefaultBilling',
+    label: 'Set as default',
+    type: 'checkbox',
+    placeholder: '',
+    rules: {},
+  },
+  {
+    name: 'setDefaultShipping',
+    label: 'Set as default',
+    type: 'checkbox',
+    placeholder: '',
+    rules: {},
+  },
 ];
 
 export const authenticationFields: IFieldConfig<IFormDataAuth>[] = [
