@@ -4,14 +4,17 @@ import { authenticationFields } from '../../components/forms/registration/fields
 import type { IFormDataAuth } from '../../types/interfaces';
 import { fetchCustomerToken } from '../../api/sdkClient';
 import { showNotification } from '../../utils/toastify/showNotification';
-import type { IRegistrationError } from '../types/interfaces';
+import type { IRegistrationError } from '../../types/interfaces';
 import { useAuth } from '../../api/authorithation/AuthToken';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function AuthenticationPage(): JSX.Element {
-  const { setToken } = useAuth();
+  const { token, setToken } = useAuth();
+
   const navigate = useNavigate();
+
   const handleLogin = async (data: IFormDataAuth) => {
     console.log('Login:', data);
     // logic
@@ -23,7 +26,7 @@ function AuthenticationPage(): JSX.Element {
         type: 'success',
       });
       console.log('Token received (not stored):', token);
-      navigate('/');
+      // navigate('/');
     } catch (error) {
       console.error(error);
       if (error instanceof Error) {
@@ -35,6 +38,14 @@ function AuthenticationPage(): JSX.Element {
       }
     }
   };
+
+  useEffect(() => {
+    debugger;
+    if (token) {
+      navigate('/');
+    }
+  }, [token, navigate]);
+
   return (
     <div className="registration-page registration-page--auth">
       <div className="registration-page__image">

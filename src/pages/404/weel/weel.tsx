@@ -1,4 +1,3 @@
-import React from 'react';
 import './weel.scss'; // стили для анимации
 
 function Wheel() {
