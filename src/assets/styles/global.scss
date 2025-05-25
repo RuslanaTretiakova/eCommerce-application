@@ -58,7 +58,7 @@ a {
   transition: color $transition-fast;
 
   &:hover {
-    color: $accent;
+    color: $secondary;
   }
 }
 
@@ -114,3 +114,5 @@ select {
     border-color: $primary;
   }
 }
+
+

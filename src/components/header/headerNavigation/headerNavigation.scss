@@ -14,11 +14,15 @@
       font-size: 1.5em;
       box-sizing: border-box;
       border-bottom: 2px solid transparent;
+      a {
+        height: 100%;
+       
+      }
     }
 
-    .navigation__tab:hover {
-      border-bottom: 2px solid black;
-    }
+    // .navigation__tab a:hover {
+    //   font-weight: 700;
+    // }
   }
 }
 
@@ -35,6 +39,7 @@
     height: 100vh;
     overflow-y: hidden;
     background-color: #fff;
+    z-index: 105;
     .navigation__list {
       flex-direction: column;
       justify-content: center;
@@ -43,10 +48,26 @@
       .navigation__tab {
         text-align: center;
         font-size: 2em;
-      }
-      .navigation__tab:hover {
-        border-color: transparent;
+      
       }
     }
   }
+}
+
+@media (hover: hover) {
+    .navigation-open {
+    
+    .navigation__list {
+      
+      .navigation__tab {
+     
+          a:hover, a:active {
+              color: black;
+            }
+      
+      }
+    }
+  }
+
+
 }

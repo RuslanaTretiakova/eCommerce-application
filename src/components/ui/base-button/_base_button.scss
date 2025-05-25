@@ -7,19 +7,20 @@
   cursor: pointer;
 
   &--login {
-    background-color: var(--button-primary);
+    // background-color: var(--button-primary);
     color: white;
     padding: 5px 10px;
+    width: 100%;
   }
 
   &--submit {
     width: 100%;
-    background-color: var(--button-primary);
+    // background-color: var(--button-primary);
     color: white;
 
     @media (hover: hover) and (pointer: fine) {
       &:hover {
-        background-color: var(--button-primary-hover);
+        // background-color: var(--button-primary-hover);
       }
     }
 
