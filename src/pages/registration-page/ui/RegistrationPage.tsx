@@ -1,21 +1,30 @@
 import type { JSX } from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DynamicForm from '../../../components/forms/DynamicForm.tsx';
 import type { IFormData } from '../../../types/interfaces.ts';
 import { registrationFields } from '../../../components/forms/registration/fieldsConfig.ts';
 import { handleRegistration } from '../../../api/authorithation/handleRegistration.ts';
+import { useAuth } from '../../../api/authorithation/AuthToken.tsx';
+import NotFoundPage from '../../404/404.tsx';
 
 import './_registration-page.scss';
 
 function RegistrationPage(): JSX.Element {
+  const navigate = useNavigate();
+  const { token, setToken } = useAuth();
+
   const [status, setStatus] = useState<'initial' | 'submitting'>('initial');
 
   const onSubmit = async (formData: IFormData) => {
     setStatus('submitting');
-    await handleRegistration(formData);
+    await handleRegistration(formData, navigate, setToken);
     setStatus('initial');
   };
+
+  if (token) {
+    return <NotFoundPage />;
+  }
 
   return (
     <div className="registration-page">
