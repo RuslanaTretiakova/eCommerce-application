@@ -3,7 +3,7 @@ import DynamicForm from '../../components/forms/DynamicForm';
 import { authenticationFields } from '../../components/forms/registration/fieldsConfig';
 import type { IFormDataAuth } from '../../types/interfaces';
 import { fetchCustomerToken } from '../../api/sdkClient';
-
+import { Link } from 'react-router-dom';
 
 function AuthenticationPage(): JSX.Element {
   const handleLogin = async (data: IFormDataAuth) => {
@@ -22,6 +22,13 @@ function AuthenticationPage(): JSX.Element {
         <img src="/img/registration/register_page.jpeg" alt="Register illustration" />
       </div>
       <div className="registration-page__form">
+        <div className="registration-page__link-to-auth">
+          <p>New here? Create an account!</p>
+          <Link to="/registration" className="button button--login">
+            Registration
+          </Link>
+        </div>
+
         <DynamicForm<IFormDataAuth>
           fields={authenticationFields}
           onSubmit={handleLogin}
