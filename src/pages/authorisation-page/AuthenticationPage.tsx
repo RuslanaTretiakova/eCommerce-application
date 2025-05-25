@@ -8,19 +8,25 @@ import type { IRegistrationError } from '../types/interfaces';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
+import { useAuth } from '../../api/authorithation/AuthToken';
+import { useEffect } from 'react';
+
 function AuthenticationPage(): JSX.Element {
+  const { token, setToken } = useAuth();
   const navigate = useNavigate();
+
   const handleLogin = async (data: IFormDataAuth) => {
     console.log('Login:', data);
     // logic
     try {
       const token = await fetchCustomerToken(data.email, data.password);
+      setToken(token);
       showNotification({
         text: 'Authentication successful!',
         type: 'success',
       });
       console.log('Token received (not stored):', token);
-      navigate('/');
+      // navigate('/');
     } catch (error) {
       console.error(error);
       if (error instanceof Error) {
@@ -32,6 +38,14 @@ function AuthenticationPage(): JSX.Element {
       }
     }
   };
+
+  useEffect(() => {
+    debugger;
+    if (token) {
+      navigate('/');
+    }
+  }, [token, navigate]);
+
   return (
     <div className="registration-page registration-page--auth">
       <div className="registration-page__image">
