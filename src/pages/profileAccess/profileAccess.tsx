@@ -12,11 +12,10 @@ function ProfileAccess() {
         </Link>
 
         <p>First time here? Welcome — registration is just one click away!</p>
-        <li>
-          <Link to="/registration" className="access-button button">
-            Registration
-          </Link>
-        </li>
+
+        <Link to="/registration" className="access-button button">
+          Registration
+        </Link>
       </div>
     </div>
   );
