@@ -1,0 +1,18 @@
+.logo {
+  height: fit-content;
+  .logo-block {
+    display: block;
+    width: ihgerit;
+    height: 100%;
+  }
+}
+
+@media (max-width: 450px) {
+  .logo {
+    width: 180px;
+
+    img {
+      width: 100%;
+    }
+  }
+}

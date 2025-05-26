@@ -1,0 +1,11 @@
+.profile-and-cart-block {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+@media (max-width: 550px) {
+  .profile-and-cart-block {
+    gap: 5px;
+  }
+}

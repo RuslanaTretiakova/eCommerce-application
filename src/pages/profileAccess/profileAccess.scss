@@ -1,0 +1,34 @@
+.profile-access-block {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: inherit;
+  background-color: #fff;
+  align-items: center;
+  justify-content: center;
+  .access-buttons-container {
+    margin: 10px;
+    .access-button {
+      display: block;
+      width: 50%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-access-block {
+    .access-buttons-container {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      p {
+        text-align: center;
+      }
+      .access-button {
+        display: block;
+        width: 50%;
+      }
+    }
+  }
+}
