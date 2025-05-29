@@ -103,7 +103,7 @@ export interface IRegistrationError extends Error {
 
 //ProductCard
 export interface IProductCard {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   price: string;
