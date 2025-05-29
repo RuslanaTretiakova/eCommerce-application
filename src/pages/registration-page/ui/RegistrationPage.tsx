@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import { useState } from 'react';
-import { Link, useNavigate, Navigate  } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import DynamicForm from '../../../components/forms/DynamicForm.tsx';
 import type { IFormData } from '../../../types/interfaces.ts';
 import { registrationFields } from '../../../components/forms/registration/fieldsConfig.ts';

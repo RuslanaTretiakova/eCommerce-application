@@ -1,0 +1,15 @@
+.item_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-top: 75px;
+}
+.item-title {
+  width: 65%;
+}
+.discounted-price {
+  h2 {
+    margin: 0;
+  }
+}
+

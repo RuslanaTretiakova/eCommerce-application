@@ -13,6 +13,7 @@ import Cart from '../pages/cart/cart';
 import ProfileAccess from '../pages/profileAccess/profileAccess';
 import NotFoundPage from '../pages/404/404';
 import UserLoginProfile from '../pages/userLoginProfile/userLoginProfile';
+import ItemPage from '../pages/item/ItemPage';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/profile-info" element={<UserLoginProfile />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="/item" element={<ItemPage />} />
         </Route>
       </Routes>
     </TokenProvider>
