@@ -1,0 +1,35 @@
+.product-card {
+  width: 300px;
+  height: 500px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 10px;
+  border-bottom: solid 1px rgba(130, 130, 130, 0.121);
+
+  @media (max-width: 480px) {
+    & {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__image {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  &__title {
+    font-size: medium;
+  }
+
+  &__description {
+    text-align: left;
+  }
+
+  &__price {
+    font-weight: 900;
+  }
+}
