@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Thumbs } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper/types';
@@ -9,11 +8,11 @@ import './productSlider.scss';
 
 type ProductGalleryProps = {
   images: string[];
+  thumbsSwiper: SwiperType | null;
+  setThumbsSwiper: (swiper: SwiperType | null) => void;
 };
 
-function ProductGallery({ images = [] }: ProductGalleryProps) {
-  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
-
+function ProductGallery({ images, thumbsSwiper, setThumbsSwiper }: ProductGalleryProps) {
   return (
     <div className="product-gallery">
       <Swiper
@@ -31,7 +30,7 @@ function ProductGallery({ images = [] }: ProductGalleryProps) {
       >
         {images.map((src) => (
           <SwiperSlide key={src}>
-            <img src={src} alt="Bike" className="main-image" />
+            <img src={src} alt="Bike" className="product-image" />
           </SwiperSlide>
         ))}
       </Swiper>

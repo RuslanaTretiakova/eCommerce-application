@@ -1,0 +1,21 @@
+.product-slider {
+  width: 60%;
+}
+.product-image {
+  height: 91vh;
+}
+.thumb-image {
+  height: 70px;
+  width: 100px;
+}
+.swiper.swiper-initialized.swiper-horizontal.swiper-watch-progress.swiper-backface-hidden.thumbs-swiper.swiper-thumbs {
+  position: absolute;
+  top: 100px;
+  left: 62%;
+  width: 40%;
+  height: 70px;
+  display: grid;
+  img {
+    width: 100px;
+  }
+}
