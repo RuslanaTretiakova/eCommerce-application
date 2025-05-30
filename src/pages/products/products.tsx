@@ -13,7 +13,7 @@ function Products() {
         const response = await getProductList();
         setProducts(response.results);
         console.log(response.results);
-        console.log(products)
+        console.log(products);
       } catch (error) {
         console.error('Failed to load products:', error);
       } finally {
