@@ -100,3 +100,12 @@ export interface IRegistrationError extends Error {
     errors?: ICommercetoolsErrorDetail[];
   };
 }
+
+//ProductCard
+export interface IProductCard {
+  id?: string;
+  name: string;
+  description: string;
+  price: string;
+  imageUrl: string;
+}

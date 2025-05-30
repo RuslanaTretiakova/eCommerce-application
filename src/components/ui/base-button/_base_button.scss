@@ -7,22 +7,20 @@
   cursor: pointer;
 
   &--login {
-    // background-color: var(--button-primary);
     color: white;
     padding: 5px 10px;
     width: 100%;
   }
 
+  &--cart {
+    border: solid 1px #ffa909;
+    background-color: transparent;
+    color: var(--text-color);
+  }
+
   &--submit {
     width: 100%;
-    // background-color: var(--button-primary);
     color: white;
-
-    @media (hover: hover) and (pointer: fine) {
-      &:hover {
-        // background-color: var(--button-primary-hover);
-      }
-    }
 
     &:disabled {
       opacity: 0.6;
