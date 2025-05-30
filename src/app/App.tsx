@@ -29,7 +29,7 @@ function App() {
           <Route path="/profile-info" element={<UserLoginProfile />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<NotFoundPage />} />
-          <Route path="/item" element={<ItemPage />} />
+          <Route path="/item/:id" element={<ItemPage />} />
         </Route>
       </Routes>
     </TokenProvider>

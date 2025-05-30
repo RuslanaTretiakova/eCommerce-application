@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import ItemDescription from '../../components/item/itemDesc/ItemDescription';
 import BaseButton from '../../components/ui/base-button/BaseButton';
 import { ProductGallery } from '../../components/item/itemSlider/itemSlider';
@@ -6,7 +7,7 @@ import ItemHeader from '../../components/item/itemHeader/ItemHeader';
 // import ItemSpecification from '../../components/item/itemSpec/itemSpec';
 import './item.scss';
 
-const id = 'e507a429-1b68-455f-bf26-ea1d81da4bf3';
+// const id = 'e507a429-1b68-455f-bf26-ea1d81da4bf3';
 
 type Product = {
   title: string;
@@ -71,11 +72,15 @@ interface ProductResponse {
 
 function Item() {
   debugger;
+  const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!id) {
+      return;
+    }
     const fetchProduct = async () => {
       try {
         const response = await fetch(`/.netlify/functions/getItem?id=${id}`);
@@ -86,7 +91,9 @@ function Item() {
         const staged = data.masterData.staged;
         const variant = current.masterVariant;
         const variants = current.variants || [];
-        const description = staged.description?.en ?? `Are you looking for a perfect bike? Here we are: ${current.name.en}`;
+        const description =
+          staged.description?.en ??
+          `Are you looking for a perfect bike? Here we are: ${current.name.en}`;
 
         const allImages: string[] = [
           ...(variant.images?.map((img) => img.url) || []),
@@ -112,7 +119,7 @@ function Item() {
     };
 
     fetchProduct();
-  }, []);
+  }, [id]);
 
   if (loading) return <p>Loading...</p>;
   if (error || !product) {
