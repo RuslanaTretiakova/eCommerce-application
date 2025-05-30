@@ -1,16 +1,16 @@
-import './itemHeader.scss';
+import './productHeader.scss';
 
-interface ItemHeaderProps {
+interface ProductHeaderProps {
   title: string;
   price: number;
   discount: number;
 }
 
-function ItemHeader({ title, price, discount }: ItemHeaderProps) {
+function ProductHeader({ title, price, discount }: ProductHeaderProps) {
   const discountedPrice = discount ? price - (price * discount) / 100 : price;
   return (
-    <div className="item_header">
-      <h1 className="item-title">{title}</h1>
+    <div className="product-header">
+      <h1 className="product-title">{title}</h1>
       {discount ? (
         <div className="discounted-price">
           <h2 className="">{`$ ${discountedPrice.toFixed(2)}`}</h2>
@@ -24,4 +24,4 @@ function ItemHeader({ title, price, discount }: ItemHeaderProps) {
   );
 }
 
-export default ItemHeader;
+export default ProductHeader;

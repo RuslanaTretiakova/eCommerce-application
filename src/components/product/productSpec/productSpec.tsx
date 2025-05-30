@@ -1,12 +1,12 @@
-import './itemSpec.scss';
+import './productSpec.scss';
 
-interface ItemSpecificationprops {
+interface ProductSpecificationProps {
   specs: Array<Record<string, string>>;
 }
 
-function ItemSpecification({ specs }: ItemSpecificationprops) {
+function ProductSpecification({ specs }: ProductSpecificationProps) {
   return (
-    <div className="item-spec">
+    <div className="product-spec">
       <nav>
         <ul>
           {specs.map((spec) => {
@@ -24,4 +24,4 @@ function ItemSpecification({ specs }: ItemSpecificationprops) {
   );
 }
 
-export default ItemSpecification;
+export default ProductSpecification;

@@ -1,8 +1,8 @@
-.item {
+.product {
   display: flex;
   justify-content: space-between;
   height: 100vh;
-    .item_header {
+    .product-header {
       h1, h2 {
         margin-top: 0;
       }
@@ -17,7 +17,7 @@
       font-size: medium;
     }
 }
-.item-info {
+.product-info {
   margin-left: 40px;
 }
 

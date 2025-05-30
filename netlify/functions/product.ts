@@ -1,5 +1,7 @@
 import { Handler } from '@netlify/functions';
 
+import { CTP_PROJECT_KEY, CTP_API_URL } from '../../src/types/constants';
+
 const handler: Handler = async (event) => {
   const id = event.queryStringParameters?.id;
 
@@ -13,7 +15,7 @@ const handler: Handler = async (event) => {
   try {
     const token = 'wM2dm6fRmwQnuiBqynIHYz6LBpdP_WmO';
 
-    const apiUrl = `https://api.europe-west1.gcp.commercetools.com/reactive_2025/products/${id}`;
+    const apiUrl = `${CTP_API_URL}/${CTP_PROJECT_KEY}/products/${id}`;
     const response = await fetch(apiUrl, {
       headers: {
         Authorization: `Bearer ${token}`,

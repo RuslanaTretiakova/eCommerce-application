@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ItemDescription from '../../components/item/itemDesc/ItemDescription';
+import ProductDescription from '../../components/product/productDesc/productDescription';
 import BaseButton from '../../components/ui/base-button/BaseButton';
-import { ProductGallery } from '../../components/item/itemSlider/itemSlider';
-import ItemHeader from '../../components/item/itemHeader/ItemHeader';
-// import ItemSpecification from '../../components/item/itemSpec/itemSpec';
-import './item.scss';
+import { ProductGallery } from '../../components/product/productSlider/productSlider';
+import ProductHeader from '../../components/product/productHeader/productHeader';
+// import ProductSpecification from '../../components/product/productSpec/productSpecification';
+import './product.scss';
 
 // const id = 'e507a429-1b68-455f-bf26-ea1d81da4bf3';
 
@@ -83,7 +83,7 @@ function Item() {
     }
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`/.netlify/functions/getItem?id=${id}`);
+        const response = await fetch(`/.netlify/functions/product?id=${id}`);
         if (!response.ok) throw new Error('Failed to fetch product');
 
         const data: ProductResponse = await response.json();
@@ -129,13 +129,13 @@ function Item() {
 
   if (product) {
     return (
-      <div className="item">
-        <div className="item_slider">
+      <div className="product">
+        <div className="product-slider">
           <ProductGallery images={product.images} />
         </div>
-        <div className="item-info">
-          <ItemHeader title={product.title} price={product.price} discount={0} />
-          <ItemDescription description={product.description} />
+        <div className="product-info">
+          <ProductHeader title={product.title} price={product.price} discount={0} />
+          <ProductDescription description={product.description} />
           {/* <ItemSpecification specs={[{ frame: 'Al' }, { weight: '15.5kg' }]} /> */}
           <BaseButton type="button" className="button--submit" title="title">
             Add to cart

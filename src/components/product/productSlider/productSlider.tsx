@@ -5,7 +5,7 @@ import type { Swiper as SwiperType } from 'swiper/types';
 import 'swiper/css';
 import 'swiper/css/thumbs';
 import 'swiper/css/navigation';
-import './itemSlider.scss';
+import './productSlider.scss';
 
 type ProductGalleryProps = {
   images: string[];
