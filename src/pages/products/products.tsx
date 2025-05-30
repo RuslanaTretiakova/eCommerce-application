@@ -60,7 +60,7 @@ const products: IProductCard[] = [
   },
 ];
 
-console.log(products)
+console.log(products);
 
 function Products(): JSX.Element {
   const handleAddToCart = (productId: string) => {
