@@ -59,13 +59,17 @@ function Products(): JSX.Element {
               product?.masterData?.current?.description?.['en-US'].indexOf('.'),
             ) ?? '';
           const imageUrl = product?.masterData?.current?.masterVariant?.images?.[0]?.url ?? '';
+
+          const price = product?.masterData?.staged?.masterVariant?.prices?.[0].value.centAmount ?? '';
+
+          console.log(price)
           return (
             <div key={product.id} className="product-list__item" data-id={product.id}>
               <ProductCard
                 id={product.id}
                 name={name}
                 description={description}
-                price="0"
+                price={`${String(price)} EUR`}
                 imageUrl={imageUrl}
               />
               <BaseButton
