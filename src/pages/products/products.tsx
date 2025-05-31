@@ -60,9 +60,10 @@ function Products(): JSX.Element {
             ) ?? '';
           const imageUrl = product?.masterData?.current?.masterVariant?.images?.[0]?.url ?? '';
 
-          const price = product?.masterData?.staged?.masterVariant?.prices?.[0].value.centAmount ?? '';
+          const price =
+            product?.masterData?.staged?.masterVariant?.prices?.[0].value.centAmount ?? '';
 
-          console.log(price)
+          console.log(price);
           return (
             <div key={product.id} className="product-list__item" data-id={product.id}>
               <ProductCard
