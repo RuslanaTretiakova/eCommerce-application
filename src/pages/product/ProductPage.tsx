@@ -96,7 +96,7 @@ function Item() {
         const variants = current.variants || [];
         const description =
           staged.description?.en ??
-          `Are you looking for a perfect bike? Here we are: ${current.name.en}`;
+          `Need a bike that won’t let you down? No flashy gimmicks—just proven durability. Meet ${current.name.en} - no-nonsense durability, built to last.`;
 
         const allImages: string[] = [
           ...(variant.images?.map((img) => img.url) || []),
@@ -136,18 +136,18 @@ function Item() {
         <div className="product-slider">
           <ProductGallery images={product.images} thumbsSwiper={thumbsSwiper} />
         </div>
-        <div className="product-info">
-          <ProductHeader title={product.title} price={product.price} discount={0} />
-          <ProductDescription
-            description={product.description}
-            images={product.images}
-            setThumbsSwiper={setThumbsSwiper}
-          />
-          {/* <ItemSpecification specs={[{ frame: 'Al' }, { weight: '15.5kg' }]} /> */}
-          <BaseButton type="button" className="button--submit" title="title">
-            Add to cart
-          </BaseButton>
-        </div>
+
+        <ProductHeader title={product.title} price={product.price} discount={0} />
+        <ProductDescription
+          images={product.images}
+          setThumbsSwiper={setThumbsSwiper}
+          description={product.description}
+        />
+        {/* <ItemSpecification specs={[{ frame: 'Al' }, { weight: '15.5kg' }]} /> */}
+        <BaseButton type="button" className="button--submit" title="title">
+          Add to cart
+        </BaseButton>
+
       </div>
     );
   }

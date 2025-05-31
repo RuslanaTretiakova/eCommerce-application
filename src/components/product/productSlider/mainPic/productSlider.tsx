@@ -9,10 +9,10 @@ import './productSlider.scss';
 type ProductGalleryProps = {
   images: string[];
   thumbsSwiper: SwiperType | null;
-  setThumbsSwiper: (swiper: SwiperType | null) => void;
+  // setThumbsSwiper: (swiper: SwiperType | null) => void;
 };
 
-function ProductGallery({ images, thumbsSwiper, setThumbsSwiper }: ProductGalleryProps) {
+function ProductGallery({ images, thumbsSwiper }: ProductGalleryProps) {
   return (
     <div className="product-gallery">
       <Swiper
@@ -35,7 +35,7 @@ function ProductGallery({ images, thumbsSwiper, setThumbsSwiper }: ProductGaller
         ))}
       </Swiper>
 
-      <Swiper
+      {/* <Swiper
         onSwiper={setThumbsSwiper}
         spaceBetween={10}
         slidesPerView={4}
@@ -48,7 +48,7 @@ function ProductGallery({ images, thumbsSwiper, setThumbsSwiper }: ProductGaller
             <img src={src} alt={`Thumb ${src + 1}`} className="thumb-image" />
           </SwiperSlide>
         ))}
-      </Swiper>
+      </Swiper> */}
     </div>
   );
 }

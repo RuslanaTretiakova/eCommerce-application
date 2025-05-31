@@ -1,8 +1,16 @@
+.container {
+  min-height: 100vh;
+  height: 100%;
+}
 .product {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  height: 100vh;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  grid-template-rows: 150px 350px 50px;
+  grid-template-areas:
+      "slider header"
+      "slider description"
+      "slider button";
     .product-header {
       h1, h2 {
         margin-top: 0;
@@ -18,13 +26,69 @@
       font-size: medium;
     }
 }
-.product-info {
-  margin-left: 40px;
+.product-slider {
+  grid-area: slider;
+}
+.product-header {
+  grid-area: header;
+}
+.pr {
+  grid-area: description;
+}
+.button.button--submit{
+  grid-area: button;
+  height: 50px;
+  align-self: end;
 }
 
 
+@media (max-width: 850px) {
+  .product {
+    grid-template-rows: 200px 150px auto;
+    grid-template-areas:
+      "slider header"
+      "slider button"
+      "description description";
+  }
+  .product-slider {
+    grid-area: slider;
+  }
+  .product-header {
+    align-self: start;
+  }
+  .pr {
+    grid-area: description;
+    margin-top: 30px;
+  }
+  .button.button--submit {
+    align-self: center;
+  }
+}
 
-
-
-
+@media (max-width: 600px) {
+  .product {
+    grid-template-rows: auto 150px 50px auto;
+    grid-template-areas:
+      "slider slider"
+      "header header"
+      "button button"
+      "description description";
+      height: 100%;
+  }
+  .product-slider {
+    grid-area: slider;
+    margin-right: 0;
+  }
+  .product-header {
+    margin-top: 25px;
+    align-self: start;
+  }
+  .pr {
+    grid-area: description;
+    margin-top: 30px;
+  }
+  .button.button--submit {
+    align-self: center;
+  }
+}
 

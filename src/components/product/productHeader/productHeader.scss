@@ -13,3 +13,8 @@
   }
 }
 
+@media (max-width: 850px) {
+  .product-header {
+    flex-direction: column;
+  }
+}
