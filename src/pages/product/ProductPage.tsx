@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useAuth } from '../../api/authorithation/AuthToken';
+import type { Product, ProductResponse } from '../../types/productTypes';
 
 import ProductHeader from '../../components/product/productHeader/productHeader';
 import ProductDescription from '../../components/product/productDesc/productDescription';
@@ -15,69 +16,9 @@ import './product.scss';
 // const id = 'e507a429-1b68-455f-bf26-ea1d81da4bf3'; - one photo
 // const id = '18c819ea-a29d-497e-817e-b2dfc9e4ad72'; - 6 photos
 
-type Product = {
-  title: string;
-  price: number;
-  images: string[];
-  description: string;
-};
 
-interface Image {
-  url: string;
-  label?: string;
-  dimensions?: {
-    w: number;
-    h: number;
-  };
-}
-
-interface Price {
-  value: {
-    type: string;
-    currencyCode: string;
-    centAmount: number;
-    fractionDigits: number;
-  };
-}
-
-interface Variant {
-  id: number;
-  sku: string;
-  prices?: Price[];
-  images?: Image[];
-}
-
-interface Description {
-  en: string;
-}
-
-interface Staged {
-  description?: Description;
-}
-
-interface Current {
-  name: {
-    en: string;
-  };
-  slug: {
-    en: string;
-  };
-  masterVariant: Variant;
-  variants?: Variant[];
-  description: {
-    en: string;
-  };
-}
-
-interface ProductResponse {
-  masterData: {
-    current: Current;
-    staged: Staged;
-  };
-}
 
 function Item() {
-  // debugger;
   const { token } = useAuth();
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
@@ -90,7 +31,6 @@ function Item() {
       return;
     }
     const fetchProduct = async () => {
-      // debugger;
       try {
         const response = await fetch(`/.netlify/functions/product?id=${id}`, {
           headers: {
@@ -136,7 +76,6 @@ function Item() {
 
   if (loading) return <p>Loading...</p>;
   if (error || !product) {
-    // debugger;
     console.log(error);
   }
 

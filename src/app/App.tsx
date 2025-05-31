@@ -66,7 +66,7 @@ function InnerApp() {
     }
   }, [token]);
 
-   if (isLoading) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 

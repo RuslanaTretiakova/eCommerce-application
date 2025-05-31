@@ -3,8 +3,6 @@ import './main.scss';
 import Footer from '../../components/footer/footer';
 import { Outlet } from 'react-router-dom';
 
-
-
 function MainPage() {
   // useEffect(() => {
   //   fetchAnonymousToken();

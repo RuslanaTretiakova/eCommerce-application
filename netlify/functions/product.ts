@@ -12,7 +12,6 @@ const handler: Handler = async (event) => {
       body: JSON.stringify({ message: 'Product ID or token is missing' }),
     };
   }
-  // debugger;
   const token = authHeader.replace('Bearer ', '');
   console.log(token);
 
