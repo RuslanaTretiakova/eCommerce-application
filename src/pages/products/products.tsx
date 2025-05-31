@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import getProductList from '../../api/getProductList';
 import type { Product } from '@commercetools/platform-sdk';
 import Load from '../load/load';
 
@@ -12,7 +11,7 @@ import type { JSX } from 'react';
 import BaseButton from '../../components/ui/base-button/BaseButton';
 import ProductCard from '../../components/ui/product-card/ProductCard';
 import './product.scss';
-
+import getProductListFromServer from '../../api/getProductListFromServer';
 
 function Products(): JSX.Element {
   const handleAddToCart = (productId: string) => {
@@ -25,10 +24,8 @@ function Products(): JSX.Element {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await getProductList();
+        const response = await getProductListFromServer();
         setProducts(response.results);
-        console.log(response.results);
-        console.log(products);
       } catch (error) {
         console.error('Failed to load products:', error);
       } finally {
@@ -39,7 +36,7 @@ function Products(): JSX.Element {
     fetchProducts();
   }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     console.log('Updated products state:', products);
   }, [products]);
 
@@ -51,32 +48,37 @@ function Products(): JSX.Element {
     <div className="product-page temp">
       <h1>Products page</h1>
       <div className="product-list">
-        {products.map((product) => {console.log(product) 
+        {products.map((product) => {
+          console.log(product);
 
-        const name = String(product.masterData.current.name['en-US'])
-        console.log(name)
-        const description = product?.masterData?.current?.description?.['en-US'].slice(0, product?.masterData?.current?.description?.['en-US'].indexOf('.')) ?? '';
-       const imageUrl = product?.masterData?.current?.masterVariant?.images?.[0]?.url ?? '';
-        return (
-          
-          <div key={product.id} className="product-list__item" data-id={product.id}>
-            <ProductCard
-              id={product.id}
-              name={name}
-              description={description}
-              price={'0'}
-              imageUrl={imageUrl}
-            />
-            <BaseButton
-              title="Add to Cart"
-              type="button"
-              className="button button--cart"
-              onClick={() => handleAddToCart(product.id)}
-            >
-              Add to Cart
-            </BaseButton>
-          </div>
-        )})}
+          const name = String(product.masterData.current.name['en-US']);
+          console.log(name);
+          const description =
+            product?.masterData?.current?.description?.['en-US'].slice(
+              0,
+              product?.masterData?.current?.description?.['en-US'].indexOf('.'),
+            ) ?? '';
+          const imageUrl = product?.masterData?.current?.masterVariant?.images?.[0]?.url ?? '';
+          return (
+            <div key={product.id} className="product-list__item" data-id={product.id}>
+              <ProductCard
+                id={product.id}
+                name={name}
+                description={description}
+                price="0"
+                imageUrl={imageUrl}
+              />
+              <BaseButton
+                title="Add to Cart"
+                type="button"
+                className="button button--cart"
+                onClick={() => handleAddToCart(product.id)}
+              >
+                Add to Cart
+              </BaseButton>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
