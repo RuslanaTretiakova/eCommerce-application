@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
+import { useAuth } from '../../api/authorithation/AuthToken';
+
+import ProductHeader from '../../components/product/productHeader/productHeader';
 import ProductDescription from '../../components/product/productDesc/productDescription';
+// import ProductSpecification from '../../components/product/productSpec/productSpecification';
 import BaseButton from '../../components/ui/base-button/BaseButton';
 import { ProductGallery } from '../../components/product/productSlider/mainPic/productSlider';
-import ProductHeader from '../../components/product/productHeader/productHeader';
 import type { Swiper as SwiperType } from 'swiper/types';
-// import ProductSpecification from '../../components/product/productSpec/productSpecification';
+
 import './product.scss';
 
 // const id = 'e507a429-1b68-455f-bf26-ea1d81da4bf3'; - one photo
@@ -74,6 +78,7 @@ interface ProductResponse {
 
 function Item() {
   // debugger;
+  const { token } = useAuth();
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -85,8 +90,13 @@ function Item() {
       return;
     }
     const fetchProduct = async () => {
+      // debugger;
       try {
-        const response = await fetch(`/.netlify/functions/product?id=${id}`);
+        const response = await fetch(`/.netlify/functions/product?id=${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!response.ok) throw new Error('Failed to fetch product');
 
         const data: ProductResponse = await response.json();
@@ -96,7 +106,7 @@ function Item() {
         const variants = current.variants || [];
         const description =
           staged.description?.en ??
-          `Need a bike that won’t let you down? No flashy gimmicks—just proven durability. Meet ${current.name.en} - no-nonsense durability, built to last.`;
+          `Need a bike that won't let you down? No flashy gimmicks—just proven durability. Meet ${current.name.en} - no-nonsense durability, built to last.`;
 
         const allImages: string[] = [
           ...(variant.images?.map((img) => img.url) || []),
@@ -122,11 +132,11 @@ function Item() {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [id, token]);
 
   if (loading) return <p>Loading...</p>;
   if (error || !product) {
-    debugger;
+    // debugger;
     console.log(error);
   }
 
@@ -147,7 +157,6 @@ function Item() {
         <BaseButton type="button" className="button--submit" title="title">
           Add to cart
         </BaseButton>
-
       </div>
     );
   }

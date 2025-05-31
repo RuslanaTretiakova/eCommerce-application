@@ -32,7 +32,7 @@
 .product-header {
   grid-area: header;
 }
-.pr {
+.product-description {
   grid-area: description;
 }
 .button.button--submit{
@@ -56,7 +56,7 @@
   .product-header {
     align-self: start;
   }
-  .pr {
+  .product-description {
     grid-area: description;
     margin-top: 30px;
   }
@@ -83,7 +83,7 @@
     margin-top: 25px;
     align-self: start;
   }
-  .pr {
+  .product-description {
     grid-area: description;
     margin-top: 30px;
   }

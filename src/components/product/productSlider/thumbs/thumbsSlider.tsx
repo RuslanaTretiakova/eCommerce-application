@@ -3,7 +3,7 @@ import { Thumbs } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper/types';
 import 'swiper/css';
 import 'swiper/css/thumbs';
-import '../mainPic/productSlider.scss'
+import '../mainPic/productSlider.scss';
 
 type ThumbsProps = {
   images: string[];

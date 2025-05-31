@@ -4,17 +4,19 @@ import { CTP_PROJECT_KEY, CTP_API_URL } from '../../src/types/constants';
 
 const handler: Handler = async (event) => {
   const id = event.queryStringParameters?.id;
+  const authHeader = event.headers.authorization || event.headers.Authorization;
 
-  if (!id) {
+  if (!id || !authHeader) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ message: 'Product ID is missing' }),
+      body: JSON.stringify({ message: 'Product ID or token is missing' }),
     };
   }
+  // debugger;
+  const token = authHeader.replace('Bearer ', '');
+  console.log(token);
 
   try {
-    const token = 'wM2dm6fRmwQnuiBqynIHYz6LBpdP_WmO';
-
     const apiUrl = `${CTP_API_URL}/${CTP_PROJECT_KEY}/products/${id}`;
     const response = await fetch(apiUrl, {
       headers: {
