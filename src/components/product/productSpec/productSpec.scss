@@ -1,0 +1,18 @@
+.product-spec {
+  margin-bottom: 30px;
+  ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(auto, 1fr);
+    padding: 0;
+  }
+  li {
+    display: flex;
+    p {
+      font-size: small;
+      &:first-child {
+      padding-right: 5px;
+    }
+    }
+  }
+}

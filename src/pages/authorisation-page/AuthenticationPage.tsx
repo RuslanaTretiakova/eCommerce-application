@@ -40,7 +40,6 @@ function AuthenticationPage(): JSX.Element {
   };
 
   useEffect(() => {
-    debugger;
     if (token) {
       navigate('/');
     }
