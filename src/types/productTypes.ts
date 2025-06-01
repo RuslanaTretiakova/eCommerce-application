@@ -31,7 +31,7 @@ interface Variant {
 }
 
 interface Description {
-  en: string;
+  ['en-US']: string;
 }
 
 interface Staged {
@@ -40,15 +40,15 @@ interface Staged {
 
 interface Current {
   name: {
-    en: string;
+    ['en-US']: string;
   };
   slug: {
-    en: string;
+    ['en-US']: string;
   };
   masterVariant: Variant;
   variants?: Variant[];
   description: {
-    en: string;
+    ['en-US']: string;
   };
 }
 

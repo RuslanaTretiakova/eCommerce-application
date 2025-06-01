@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Thumbs } from 'swiper/modules';
+import { Thumbs, Navigation, Autoplay, Keyboard, Zoom } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper/types';
 import 'swiper/css';
 import 'swiper/css/thumbs';
@@ -9,7 +9,6 @@ import './productSlider.scss';
 type ProductGalleryProps = {
   images: string[];
   thumbsSwiper: SwiperType | null;
-  // setThumbsSwiper: (swiper: SwiperType | null) => void;
 };
 
 function ProductGallery({ images, thumbsSwiper }: ProductGalleryProps) {
@@ -24,8 +23,13 @@ function ProductGallery({ images, thumbsSwiper }: ProductGalleryProps) {
         }
         spaceBetween={10}
         navigation
+        autoHeight
+        keyboard={{
+          enabled: true,
+          onlyInViewport: true,
+        }}
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
-        modules={[Thumbs]}
+        modules={[Thumbs, Navigation, Autoplay, Keyboard, Zoom]}
         className="main-swiper"
       >
         {images.map((src) => (
@@ -34,21 +38,6 @@ function ProductGallery({ images, thumbsSwiper }: ProductGalleryProps) {
           </SwiperSlide>
         ))}
       </Swiper>
-
-      {/* <Swiper
-        onSwiper={setThumbsSwiper}
-        spaceBetween={10}
-        slidesPerView={4}
-        watchSlidesProgress
-        modules={[Thumbs]}
-        className="thumbs-swiper"
-      >
-        {images.map((src) => (
-          <SwiperSlide key={src}>
-            <img src={src} alt={`Thumb ${src + 1}`} className="thumb-image" />
-          </SwiperSlide>
-        ))}
-      </Swiper> */}
     </div>
   );
 }

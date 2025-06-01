@@ -1,12 +1,13 @@
 .container {
-  min-height: 100vh;
+  min-height: 95vh;
   height: 100%;
 }
 .product {
-  min-height: 100vh;
+  margin-bottom: 40px;
+  min-height: 100%;
   display: grid;
   grid-template-columns: 60% 40%;
-  grid-template-rows: 150px 350px 50px;
+  grid-template-rows: min-content auto min-content;
   grid-template-areas:
       "slider header"
       "slider description"
@@ -42,9 +43,9 @@
 }
 
 
-@media (max-width: 850px) {
+@media (max-width: 1050px) {
   .product {
-    grid-template-rows: 200px 150px auto;
+    grid-template-rows: max-content max-content auto;
     grid-template-areas:
       "slider header"
       "slider button"
@@ -54,9 +55,11 @@
     grid-area: slider;
   }
   .product-header {
-    align-self: start;
+    align-self: center;
+    margin-top: 0;
   }
   .product-description {
+  align-self: top;
     grid-area: description;
     margin-top: 30px;
   }
@@ -65,9 +68,9 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 695px) {
   .product {
-    grid-template-rows: auto 150px 50px auto;
+    grid-template-rows: min-content;
     grid-template-areas:
       "slider slider"
       "header header"
