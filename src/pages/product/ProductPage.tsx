@@ -15,7 +15,8 @@ import './product.scss';
 
 // const id = 'e507a429-1b68-455f-bf26-ea1d81da4bf3'; - one photo
 // const id = '18c819ea-a29d-497e-817e-b2dfc9e4ad72'; - 6 photos
-
+// const id = '532e8904-630c-4e7c-aacb-04cba211a5e6'; - 1 variant, 14 photos
+// const id = '8d7cbb3e-bceb-43f4-a6cc-4e088f40295b'; - one photo
 
 
 function Item() {
@@ -45,8 +46,9 @@ function Item() {
         const variant = current.masterVariant;
         const variants = current.variants || [];
         const description =
-          staged.description?.en ??
-          `Need a bike that won't let you down? No flashy gimmicks—just proven durability. Meet ${current.name.en} - no-nonsense durability, built to last.`;
+          staged.description?.['en-US'] ??
+          current.description?.['en-US'] ??
+          `Need a bike that won't let you down? No flashy gimmicks—just proven durability. Meet ${current.name['en-US']} - no-nonsense durability, built to last.`;
 
         const allImages: string[] = [
           ...(variant.images?.map((img) => img.url) || []),
@@ -57,7 +59,7 @@ function Item() {
           variant.prices?.[0]?.value.centAmount ?? variants[0]?.prices?.[0]?.value.centAmount ?? 0;
 
         const productInfo: Product = {
-          title: current.name.en,
+          title: current.name['en-US'],
           price: price / 100,
           images: allImages,
           description: description,
