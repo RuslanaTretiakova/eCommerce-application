@@ -25,27 +25,6 @@ const anonymousToken = async (): Promise<string> => {
   return data.access_token;
 };
 
-// function App() {
-//   return (
-//     <TokenProvider>
-//       <Routes>
-//         <Route path="/" element={<MainPage />}>
-//           <Route index element={<HomePage />} />
-//           <Route path="/products" element={<Products />} />
-//           <Route path="/about" element={<About />} />
-//           <Route path="/profile-access-block" element={<ProfileAccess />} />
-//           <Route path="/login" element={<AuthenticationPage />} />
-//           <Route path="/registration" element={<RegistrationPage />} />
-//           <Route path="/profile-info" element={<UserLoginProfile />} />
-//           <Route path="/cart" element={<Cart />} />
-//           <Route path="*" element={<NotFoundPage />} />
-//           <Route path="/product/:id" element={<ProductPage />} />
-//         </Route>
-//       </Routes>
-//     </TokenProvider>
-//   );
-// }
-
 function InnerApp() {
   fetchAnonymousToken();
   const { token, setToken } = useAuth();
