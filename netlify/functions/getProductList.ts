@@ -34,7 +34,7 @@ const handler: Handler = async () => {
     const response = await apiRoot
       .withProjectKey({ projectKey: CTP_PROJECT_KEY })
       .products()
-      .get()
+      .get({ queryArgs: { limit: 500 } })
       .execute();
 
     return {
@@ -44,7 +44,7 @@ const handler: Handler = async () => {
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error}),
+      body: JSON.stringify({ error: error }),
     };
   }
 };

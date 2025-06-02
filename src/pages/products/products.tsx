@@ -59,15 +59,36 @@ function Products(): JSX.Element {
               product?.masterData?.current?.description?.['en-US'].indexOf('.'),
             ) ?? '';
           const imageUrl = product?.masterData?.current?.masterVariant?.images?.[0]?.url ?? '';
+
+          const price =
+            product?.masterData?.staged?.masterVariant?.prices?.[0].value.centAmount ?? '';
+
+          const discount =
+            product?.masterData?.current?.masterVariant?.prices?.[0].discounted?.value.centAmount ||
+            '';
+
+          console.log(price);
           return (
             <div key={product.id} className="product-list__item" data-id={product.id}>
-              <ProductCard
-                id={product.id}
-                name={name}
-                description={description}
-                price="0"
-                imageUrl={imageUrl}
-              />
+              {discount ? (
+                <ProductCard
+                  id={product.id}
+                  name={name}
+                  description={description}
+                  price={`${String(price)} EUR`}
+                  imageUrl={imageUrl}
+                  discount={`${String(discount)} EUR`}
+                />
+              ) : (
+                <ProductCard
+                  id={product.id}
+                  name={name}
+                  description={description}
+                  price={`${String(price)} EUR`}
+                  imageUrl={imageUrl}
+                />
+              )}
+
               <BaseButton
                 title="Add to Cart"
                 type="button"

@@ -18,7 +18,6 @@ import './product.scss';
 // const id = '532e8904-630c-4e7c-aacb-04cba211a5e6'; - 1 variant, 14 photos
 // const id = '8d7cbb3e-bceb-43f4-a6cc-4e088f40295b'; - one photo
 
-
 function Item() {
   const { token } = useAuth();
   const { id } = useParams<{ id: string }>();

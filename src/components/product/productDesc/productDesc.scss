@@ -6,11 +6,8 @@
   padding: 0;
 }
 
-
-
-@media (max-width: 1200px) and (min-width: 900px)   {
+@media (max-width: 1200px) and (min-width: 900px) {
   .product-description__text {
-    font-size: calc(8px + 8 * (100vw / 1200)) ;
+    font-size: calc(8px + 8 * (100vw / 1200));
   }
 }
-
