@@ -108,4 +108,5 @@ export interface IProductCard {
   description: string;
   price: string;
   imageUrl: string;
+  discount?: string;
 }

@@ -32,4 +32,13 @@
   &__price {
     font-weight: 900;
   }
+
+  &__price_cross {
+    text-decoration: line-through;
+  }
+
+  &__price_discount {
+    color: red;
+    font-weight: 900;
+  }
 }
