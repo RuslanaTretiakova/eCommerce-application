@@ -1,0 +1,20 @@
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-top: 75px;
+}
+.product-title {
+  width: 65%;
+}
+.discounted-price {
+  h2 {
+    margin: 0;
+  }
+}
+
+@media (max-width: 850px) {
+  .product-header {
+    flex-direction: column;
+  }
+}

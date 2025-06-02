@@ -1,0 +1,16 @@
+.product-description__text {
+  border-top: 1px solid rgba(0, 0, 0, 0.184);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.184);
+  padding: 25px 0;
+  margin: 25px 0;
+  padding: 0;
+}
+
+
+
+@media (max-width: 1200px) and (min-width: 900px)   {
+  .product-description__text {
+    font-size: calc(8px + 8 * (100vw / 1200)) ;
+  }
+}
+
