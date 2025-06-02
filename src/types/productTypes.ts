@@ -1,8 +1,9 @@
 export type Product = {
   title: string;
   price: number;
+  discountedPrice?: number | null;
   images: string[];
-  description: string;
+  description?: string;
 };
 
 interface Image {
@@ -20,6 +21,12 @@ interface Price {
     currencyCode: string;
     centAmount: number;
     fractionDigits: number;
+  };
+  discounted?: {
+    value: {
+      centAmount: number;
+      currencyCode: string;
+    };
   };
 }
 

@@ -10,6 +10,13 @@
 .discounted-price {
   h2 {
     margin: 0;
+    display: inline-block;
+    animation: blink 1s infinite;
+  }
+  h3 {
+    text-decoration: line-through;
+    opacity: 25%;
+    margin-top: 5px;
   }
 }
 
@@ -17,4 +24,11 @@
   .product-header {
     flex-direction: column;
   }
+}
+
+
+@keyframes blink {
+  0% { color: black; }
+  50% { color: orange; }
+  100% { color: black; }
 }

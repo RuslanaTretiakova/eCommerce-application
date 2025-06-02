@@ -18,7 +18,6 @@ import './product.scss';
 // const id = '532e8904-630c-4e7c-aacb-04cba211a5e6'; - 1 variant, 14 photos
 // const id = '8d7cbb3e-bceb-43f4-a6cc-4e088f40295b'; - one photo
 
-
 function Item() {
   const { token } = useAuth();
   const { id } = useParams<{ id: string }>();
@@ -58,9 +57,16 @@ function Item() {
         const price =
           variant.prices?.[0]?.value.centAmount ?? variants[0]?.prices?.[0]?.value.centAmount ?? 0;
 
+        let discountedPrice = null;
+        discountedPrice =
+          variant.prices?.[0]?.discounted?.value.centAmount ??
+          variants[0]?.prices?.[0]?.discounted?.value.centAmount ??
+          null;
+
         const productInfo: Product = {
           title: current.name['en-US'],
           price: price / 100,
+          discountedPrice: discountedPrice !== null ? discountedPrice / 100 : null,
           images: allImages,
           description: description,
         };
@@ -88,11 +94,15 @@ function Item() {
           <ProductGallery images={product.images} thumbsSwiper={thumbsSwiper} />
         </div>
 
-        <ProductHeader title={product.title} price={product.price} discount={0} />
+        <ProductHeader
+          title={product.title}
+          price={product.price}
+          discountedPrice={product.discountedPrice ?? null}
+        />
         <ProductDescription
           images={product.images}
           setThumbsSwiper={setThumbsSwiper}
-          description={product.description}
+          description={product.description ?? ''}
         />
         {/* <ItemSpecification specs={[{ frame: 'Al' }, { weight: '15.5kg' }]} /> */}
         <BaseButton type="button" className="button--submit" title="title">
