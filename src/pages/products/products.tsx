@@ -12,6 +12,7 @@ import BaseButton from '../../components/ui/base-button/BaseButton';
 import ProductCard from '../../components/ui/product-card/ProductCard';
 import './product.scss';
 import getProductListFromServer from '../../api/getProductListFromServer';
+import SearchProduct from '../../components/searchProduct/searchProduct';
 
 function Products(): JSX.Element {
   const handleAddToCart = (productId: string) => {
@@ -46,7 +47,7 @@ function Products(): JSX.Element {
 
   return (
     <div className="product-page temp">
-      <h1>Products page</h1>
+      <SearchProduct/>
       <div className="product-list">
         {products.map((product) => {
           console.log(product);
