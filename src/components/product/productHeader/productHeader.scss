@@ -10,11 +10,31 @@
 .discounted-price {
   h2 {
     margin: 0;
+    padding: 0 3px;
+    display: inline-block;
+    background: linear-gradient(to left, orange 100%);
+    background-size: 200% 100%;
+    background-position: left;
+    animation: slide-fill 3s;
+  }
+  h3 {
+    text-decoration: line-through;
+    opacity: 25%;
+    margin-top: 5px;
   }
 }
 
 @media (max-width: 850px) {
   .product-header {
     flex-direction: column;
+  }
+}
+
+@keyframes slide-fill {
+   0% {
+    background-position: left;
+  }
+  100% {
+    background-position: right;
   }
 }

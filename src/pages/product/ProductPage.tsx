@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useAuth } from '../../api/authorithation/AuthToken';
-import type { Product, ProductResponse } from '../../types/productTypes';
+import type { Product } from '../../types/productTypes';
+import { fetchProductById } from '../../api/products/fetchProductById';
 
 import ProductHeader from '../../components/product/productHeader/productHeader';
 import ProductDescription from '../../components/product/productDesc/productDescription';
@@ -32,38 +33,7 @@ function Item() {
     }
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`/.netlify/functions/product?id=${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (!response.ok) throw new Error('Failed to fetch product');
-
-        const data: ProductResponse = await response.json();
-        const current = data.masterData.current;
-        const staged = data.masterData.staged;
-        const variant = current.masterVariant;
-        const variants = current.variants || [];
-        const description =
-          staged.description?.['en-US'] ??
-          current.description?.['en-US'] ??
-          `Need a bike that won't let you down? No flashy gimmicks—just proven durability. Meet ${current.name['en-US']} - no-nonsense durability, built to last.`;
-
-        const allImages: string[] = [
-          ...(variant.images?.map((img) => img.url) || []),
-          ...variants.flatMap((v) => v.images?.map((img) => img.url) || []),
-        ];
-
-        const price =
-          variant.prices?.[0]?.value.centAmount ?? variants[0]?.prices?.[0]?.value.centAmount ?? 0;
-
-        const productInfo: Product = {
-          title: current.name['en-US'],
-          price: price / 100,
-          images: allImages,
-          description: description,
-        };
-
+        const productInfo = await fetchProductById(id, token);
         setProduct(productInfo);
       } catch (err) {
         setError((err as Error).message);
@@ -87,11 +57,15 @@ function Item() {
           <ProductGallery images={product.images} thumbsSwiper={thumbsSwiper} />
         </div>
 
-        <ProductHeader title={product.title} price={product.price} discount={0} />
+        <ProductHeader
+          title={product.title}
+          price={product.price}
+          discountedPrice={product.discountedPrice ?? null}
+        />
         <ProductDescription
           images={product.images}
           setThumbsSwiper={setThumbsSwiper}
-          description={product.description}
+          description={product.description ?? ''}
         />
         {/* <ItemSpecification specs={[{ frame: 'Al' }, { weight: '15.5kg' }]} /> */}
         <BaseButton type="button" className="button--submit" title="title">
