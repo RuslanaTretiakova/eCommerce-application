@@ -1,28 +1,37 @@
-import { Link } from 'react-router-dom';
+import EditableCard from '../../components/ui/editable-card/EditableCard';
+import { useUserProfile } from '../../components/user-profile/hooks/useUserProfile';
+import UserAddresses from '../../components/user-profile/UserAddresses';
+import PersonalInfo from '../../components/user-profile/PersonalInfo';
+
 import './userLoginProfile.scss';
-// import { useAuth } from '../../api/authorithation/AuthToken';
-import { useLogout } from '../../api/authorithation/handleLogout';
 
 function UserLoginProfile() {
-  debugger;
-  const logout = useLogout();
-  // const token = useAuth();
+  const { user } = useUserProfile();
+
   return (
     <div className="user-login-profile">
-      <h3>
-        {/* token:
-        {token.token} */}
-      </h3>
-      <Link to="/profile-info" className="button">
-        Edit profile
-      </Link>
-      <button type="button" className="button" onClick={logout}>
-        LOGOUT
-      </button>
+      <div className="user-login-profile__header">
+        {user && (
+          <h2 className="user-login-profile__greeting">
+            Welcome,
+            {user.firstName}
+          </h2>
+        )}
+      </div>
+
+      {user && (
+        <>
+          <EditableCard title="Personal Info" onEdit={() => console.log('Edit personal info')}>
+            <PersonalInfo user={user} />
+          </EditableCard>
+
+          <EditableCard title="Addresses" onEdit={() => console.log('Edit addresses')}>
+            <UserAddresses addresses={user.addresses} />
+          </EditableCard>
+        </>
+      )}
     </div>
   );
 }
 
 export default UserLoginProfile;
-
-//uncomment the comments, and the token will be visible for testing
