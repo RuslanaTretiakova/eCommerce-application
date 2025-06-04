@@ -6,7 +6,6 @@ import type { IFormData } from '../../../types/interfaces.ts';
 import { registrationFields } from '../../../components/forms/registration/fieldsConfig.ts';
 import { handleRegistration } from '../../../api/authorithation/handleRegistration.ts';
 import { useAuth } from '../../../api/authorithation/AuthToken.tsx';
-// import NotFoundPage from '../../404/404.tsx';
 
 import './_registration-page.scss';
 
@@ -22,9 +21,6 @@ function RegistrationPage(): JSX.Element {
     setStatus('initial');
   };
 
-  // if (token) {
-  //   return <NotFoundPage />;
-  // }
   if (token) {
     return <Navigate to="/" replace />;
   }
