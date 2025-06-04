@@ -1,9 +1,9 @@
 import type { IAddress } from '../../types/interfaces';
 
 function AddressCard({ address }: { address: IAddress }) {
-  let label = 'Shipping Address';
+  let label = 'Shipping Address:';
 
-  if (address.isDefaultBillingAddress && address.isDefaultShippingAddress)
+  if (address.isDefaultBillingAddress)
     if (address.isDefaultBillingAddress) {
       label = 'Billing Address:';
     } else if (address.isDefaultShippingAddress) {
