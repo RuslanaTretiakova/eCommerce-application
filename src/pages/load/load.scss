@@ -1,0 +1,28 @@
+.load-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .load-title {
+    text-align: center;
+  }
+  .loading-circle {
+    height: 50px;
+    width: 50px;
+    border: 4px solid black;
+    border-radius: 50%;
+    border-top: 4px dashed #ffa909;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

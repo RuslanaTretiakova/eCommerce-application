@@ -145,3 +145,13 @@ export interface ICustomerMeResponse {
   addresses?: IRawAddress[];
   [key: string]: unknown;
 }
+
+//ProductCard
+export interface IProductCard {
+  id?: string;
+  name: string;
+  description: string;
+  price: string;
+  imageUrl: string;
+  discount?: string;
+}
