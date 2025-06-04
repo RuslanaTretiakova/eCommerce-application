@@ -1,5 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { CTP_API_URL, CTP_PROJECT_KEY } from '../../src/types/constants';
+import { ICustomerMeResponse, IRawAddress } from '../../src/types/interfaces';
 
 export const handler: Handler = async (event) => {
   const authHeader = event.headers.authorization || '';
@@ -20,7 +21,7 @@ export const handler: Handler = async (event) => {
     },
   });
 
-  const data = await res.json();
+  const data: ICustomerMeResponse = await res.json();
 
   if (!res.ok) {
     return {
@@ -29,8 +30,29 @@ export const handler: Handler = async (event) => {
     };
   }
 
+  const billingId = data.defaultBillingAddressId;
+  const shippingId = data.defaultShippingAddressId;
+
+  const enrichedAddresses = (data.addresses || []).map(
+    (
+      addr,
+    ): IRawAddress & {
+      isDefaultBillingAddress: boolean;
+      isDefaultShippingAddress: boolean;
+    } => ({
+      ...addr,
+      isDefaultBillingAddress: addr.id === billingId,
+      isDefaultShippingAddress: addr.id === shippingId,
+    }),
+  );
+
+  const response = {
+    ...data,
+    addresses: enrichedAddresses,
+  };
+
   return {
     statusCode: 200,
-    body: JSON.stringify(data),
+    body: JSON.stringify(response),
   };
 };
