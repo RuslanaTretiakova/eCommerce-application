@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { Product } from '@commercetools/platform-sdk';
+import type { ProductData, Product } from '@commercetools/platform-sdk';
 import Load from '../load/load';
 
 // This is a temporary implementation that simply demonstrates how to work with the ProductCard component.
@@ -13,6 +13,10 @@ import ProductCard from '../../components/ui/product-card/ProductCard';
 import './product.scss';
 import getProductListFromServer from '../../api/getProductListFromServer';
 import SearchProduct from '../../components/searchProduct/searchProduct';
+
+interface ProductDataWithId extends ProductData {
+  id: string;
+}
 
 function Products(): JSX.Element {
   const handleAddToCart = (productId: string) => {
@@ -37,6 +41,13 @@ function Products(): JSX.Element {
     fetchProducts();
   }, []);
 
+  const handleSearchResults = (results: Product[]) => {
+    console.log('this');
+
+    setProducts(results);
+    console.log(products);
+  };
+
   useEffect(() => {
     console.log('Updated products state:', products);
   }, [products]);
@@ -47,33 +58,38 @@ function Products(): JSX.Element {
 
   return (
     <div className="product-page temp">
-      <SearchProduct/>
+      <SearchProduct onSearchResults={handleSearchResults} />
       <div className="product-list">
         {products.map((product) => {
           console.log(product);
 
-          const name = String(product.masterData.current.name['en-US']);
-          console.log(name);
-          const description =
-            product?.masterData?.current?.description?.['en-US'].slice(
-              0,
-              product?.masterData?.current?.description?.['en-US'].indexOf('.'),
-            ) ?? '';
-          const imageUrl = product?.masterData?.current?.masterVariant?.images?.[0]?.url ?? '';
+          const isProduct = 'masterData' in product;
 
-          const price =
-            product?.masterData?.staged?.masterVariant?.prices?.[0].value.centAmount ?? '';
+          const productData = isProduct
+            ? (product as Product).masterData.current
+            : (product as ProductDataWithId);
+
+          console.log(productData);
+
+          const name = productData?.name['en-US'];
+
+          const description =
+            productData?.description?.['en-US'].slice(
+              0,
+              productData?.description?.['en-US'].indexOf('.'),
+            ) ?? '';
+          const imageUrl = productData?.masterVariant?.images?.[0]?.url ?? '';
+
+          const price = productData?.masterVariant?.prices?.[0]?.value.centAmount ?? '';
 
           const discount =
-            product?.masterData?.current?.masterVariant?.prices?.[0].discounted?.value.centAmount ||
-            '';
+            productData?.masterVariant?.prices?.[0]?.discounted?.value.centAmount || '';
 
-          console.log(price);
           return (
             <div key={product.id} className="product-list__item" data-id={product.id}>
               {discount ? (
                 <ProductCard
-                  id={product.id}
+                  id={product?.id}
                   name={name}
                   description={description}
                   price={`${String(price)} EUR`}
