@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import EditableCard from '../../components/ui/editable-card/EditableCard';
 import { useUserProfile } from '../../components/user-profile/hooks/useUserProfile';
 import UserAddresses from '../../components/user-profile/UserAddresses';
@@ -7,6 +9,14 @@ import './userLoginProfile.scss';
 
 function UserLoginProfile() {
   const { user } = useUserProfile();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/profile-access-block');
+    }
+  }, [navigate]);
 
   return (
     <div className="user-login-profile">
