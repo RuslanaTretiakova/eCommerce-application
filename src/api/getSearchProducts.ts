@@ -6,12 +6,12 @@ async function getSearchProductListFromServer(textSearch: string) {
   console.log('Raw response:', response);
 
   if (!response.ok) {
-    const text = await response.text(); // Read raw HTML
+    const text = await response.text(); 
     console.error('Server error:', text);
     throw new Error(`Request failed with status ${response.status}`);
   }
 
-  const data = await response.json(); // Only try to parse JSON if response is OK
+  const data = await response.json();
   console.log(data);
   return data;
 }

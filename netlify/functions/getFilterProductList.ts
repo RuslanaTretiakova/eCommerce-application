@@ -40,15 +40,12 @@ const handler: Handler = async (event) => {
     const response = await apiRoot
       .withProjectKey({ projectKey: CTP_PROJECT_KEY })
       .productProjections()
-      .search()
-      .get({ queryArgs: { 'text.en-US': searchTerm.toLowerCase(), limit: 50 } })
+      .get({ queryArgs: { limit: 500 } })
       .execute();
 
     const filtered = response.body.results.filter((product) => {
       const name = product.name?.['en-US']?.toLowerCase() || '';
-      const desc = product.description?.['en-US']?.toLowerCase() || '';
-
-      return name.includes(searchTerm) || desc.includes(searchTerm);
+      return name.includes(searchTerm)
     });
 
     console.log(filtered);

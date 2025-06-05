@@ -1,6 +1,9 @@
 .product-page {
   height: auto;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 302px);
 }
 
 .product-list {
