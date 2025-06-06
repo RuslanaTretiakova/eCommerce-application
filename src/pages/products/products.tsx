@@ -13,12 +13,15 @@ import ProductCard from '../../components/ui/product-card/ProductCard';
 import './product.scss';
 import getProductListFromServer from '../../api/getProductListFromServer';
 import SearchProduct from '../../components/searchProduct/searchProduct';
+import { useParams } from 'react-router-dom';
+import getSearchProductListByCategoryFromServer from '../../api/productListByCategory';
 
 interface ProductDataWithId extends ProductData {
   id: string;
 }
 
 function Products(): JSX.Element {
+  const { category } = useParams();
   const handleAddToCart = (productId: string) => {
     console.log(`${productId}`);
   };
@@ -28,9 +31,16 @@ function Products(): JSX.Element {
 
   useEffect(() => {
     async function fetchProducts() {
+      setLoading(true);
       try {
-        const response = await getProductListFromServer();
-        setProducts(response.results);
+        let response;
+        if (category === 'all') {
+          response = await getProductListFromServer();
+          setProducts(response.results);
+        } else {
+          response = await getSearchProductListByCategoryFromServer(category || '');
+          setProducts(response.results);
+        }
       } catch (error) {
         console.error('Failed to load products:', error);
       } finally {
@@ -39,13 +49,10 @@ function Products(): JSX.Element {
     }
 
     fetchProducts();
-  }, []);
+  }, [category]);
 
   const handleSearchResults = (results: Product[]) => {
-    console.log('this');
-
     setProducts(results);
-    console.log(products);
   };
 
   useEffect(() => {
@@ -61,15 +68,11 @@ function Products(): JSX.Element {
       <SearchProduct onSearchResults={handleSearchResults} />
       <div className="product-list">
         {products.map((product) => {
-          console.log(product);
-
           const isProduct = 'masterData' in product;
 
           const productData = isProduct
             ? (product as Product).masterData.current
             : (product as ProductDataWithId);
-
-          console.log(productData);
 
           const name = productData?.name['en-US'];
 

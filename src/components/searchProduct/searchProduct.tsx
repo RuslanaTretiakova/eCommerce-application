@@ -1,7 +1,7 @@
 import type { ChangeEvent } from 'react';
 import getSearchProductListFromServer from '../../api/getSearchProducts';
 import type { Product } from '@commercetools/platform-sdk';
-import './searchProduct.scss'
+import './searchProduct.scss';
 
 export type SearchProductProps = {
   onSearchResults: (results: Product[]) => void;

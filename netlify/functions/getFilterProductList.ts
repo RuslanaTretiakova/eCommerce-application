@@ -45,7 +45,7 @@ const handler: Handler = async (event) => {
 
     const filtered = response.body.results.filter((product) => {
       const name = product.name?.['en-US']?.toLowerCase() || '';
-      return name.includes(searchTerm)
+      return name.includes(searchTerm);
     });
 
     console.log(filtered);

@@ -1,6 +1,6 @@
-async function getSearchProductListFromServer(textSearch: string) {
+async function getSearchProductListByCategoryFromServer(category: string) {
   const response = await fetch(
-    `/.netlify/functions/getFilterProductList?q=${encodeURIComponent(textSearch)}`,
+    `/.netlify/functions/getProductListByCategory?category=${encodeURIComponent(category)}`,
   );
 
   if (!response.ok) {
@@ -13,4 +13,4 @@ async function getSearchProductListFromServer(textSearch: string) {
   return data;
 }
 
-export default getSearchProductListFromServer;
+export default getSearchProductListByCategoryFromServer;

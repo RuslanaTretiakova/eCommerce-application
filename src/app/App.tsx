@@ -18,6 +18,7 @@ import ProductPage from '../pages/product/ProductPage';
 import { TokenProvider, useAuth } from '../api/authorithation/AuthToken';
 import fetchAnonymousToken from '../api/authorithation/AnonymousToken';
 import { useEffect, useState } from 'react';
+import ProductsCategory from '../pages/productsCategory/productsCategory';
 
 const anonymousToken = async (): Promise<string> => {
   const res = await fetch('/.netlify/functions/anonymousToken');
@@ -53,7 +54,8 @@ function InnerApp() {
     <Routes>
       <Route path="/" element={<MainPage />}>
         <Route index element={<HomePage />} />
-        <Route path="/products" element={<Products />} />
+        <Route path="/products" element={<ProductsCategory />} />
+        <Route path="/products/:category" element={<Products />} />
         <Route path="/about" element={<About />} />
         <Route path="/profile-access-block" element={<ProfileAccess />} />
         <Route path="/login" element={<AuthenticationPage />} />
