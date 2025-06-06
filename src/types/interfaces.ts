@@ -1,5 +1,5 @@
 import type { ButtonType, NotificationType, RegistrationErrorType } from './types';
-import type { ChangeEventHandler, FocusEventHandler } from 'react';
+import type { ChangeEventHandler, FocusEventHandler, ReactNode } from 'react';
 import type { ChangeHandler, FieldValues, Path } from 'react-hook-form';
 
 // Form
@@ -99,6 +99,51 @@ export interface IRegistrationError extends Error {
     message: string;
     errors?: ICommercetoolsErrorDetail[];
   };
+}
+
+export interface IEditableCard {
+  title: string;
+  children: ReactNode;
+  onEdit?: () => void;
+}
+
+export interface IAddress {
+  id: string;
+  streetName: string;
+  streetNumber: string;
+  city: string;
+  postalCode: string;
+  country: string;
+  isDefaultBillingAddress?: boolean;
+  isDefaultShippingAddress?: boolean;
+}
+
+export interface IUserProfile {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  addresses: IAddress[];
+}
+
+export interface IRawAddress {
+  id: string;
+  streetName?: string;
+  streetNumber?: string;
+  city?: string;
+  postalCode?: string;
+  country?: string;
+}
+
+export interface ICustomerMeResponse {
+  firstName: string;
+  lastName: string;
+  dateOfBirth?: string;
+  defaultBillingAddressId?: string;
+  defaultBillingAddressIds?: string[];
+  defaultShippingAddressId?: string;
+  defaultShippingAddressIds?: string[];
+  addresses?: IRawAddress[];
+  [key: string]: unknown;
 }
 
 //ProductCard
