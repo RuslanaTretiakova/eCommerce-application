@@ -1,5 +1,8 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import '../productModal/productModal.scss'
+import '../productModal/productModal.scss';
+
+import Prev from '../productModal/svg/prev.svg';
+import Next from '../productModal/svg/next.svg';
 
 type ModalProps = {
   images: string[];
@@ -14,6 +17,27 @@ export function Modal({ images, initialIndex, isOpen, onClose }: ModalProps) {
   useEffect(() => {
     setCurrentIndex(initialIndex);
   }, [initialIndex]);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (!isOpen) return;
+
+      if (['ArrowRight', 'ArrowLeft'].includes(e.key)) {
+        e.stopPropagation();
+      }
+
+      if (e.key === 'ArrowRight') {
+        setCurrentIndex((i) => (i + 1) % images.length);
+      } else if (e.key === 'ArrowLeft') {
+        setCurrentIndex((i) => (i - 1 + images.length) % images.length);
+      } else if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKey, true);
+    return () => window.removeEventListener('keydown', handleKey, true);
+  }, [isOpen, images.length, onClose]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -65,7 +89,6 @@ export function Modal({ images, initialIndex, isOpen, onClose }: ModalProps) {
         onTouchEnd={handleTouchEnd}
         role="button"
       >
-
         <button
           type="button"
           className="gallery-modal__close"
@@ -76,7 +99,14 @@ export function Modal({ images, initialIndex, isOpen, onClose }: ModalProps) {
           &times;
         </button>
 
-        <button type="button" className="gallery-modal__prev">&#10094;</button>
+        <button
+          type="button"
+          className="gallery-modal__prev"
+          onClick={() => setCurrentIndex((i) => (i - 1 + images.length) % images.length)}
+          aria-label="Previous photo"
+        >
+          <img src={Prev} alt="Previous" />
+        </button>
 
         <img
           src={images[currentIndex]}
@@ -84,7 +114,14 @@ export function Modal({ images, initialIndex, isOpen, onClose }: ModalProps) {
           className="gallery-modal__image"
         />
 
-        <button type="button" className="gallery-modal__next">&#10095;</button>
+        <button
+          type="button"
+          className="gallery-modal__next"
+          onClick={() => setCurrentIndex((i) => (i + 1) % images.length)}
+          aria-label="Next photo"
+        >
+          <img src={Next} alt="Next" />
+        </button>
       </div>
     </div>
   );

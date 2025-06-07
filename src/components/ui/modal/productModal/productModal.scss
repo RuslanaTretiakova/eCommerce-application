@@ -33,11 +33,11 @@
   background: transparent;
   border: none;
   color: white;
-  font-size: 2rem;
+  outline: none;
   cursor: pointer;
   transition: color 0.2s ease;
-  &:hover {
-    color: #ccc;
+  img {
+    width: 30px;
   }
 }
 
@@ -47,13 +47,13 @@
 }
 
 .gallery-modal__prev {
-  left: -50px;
+  left: -5px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .gallery-modal__next {
-  right: -50px;
+  right: -5px;
   top: 50%;
   transform: translateY(-50%);
 }
