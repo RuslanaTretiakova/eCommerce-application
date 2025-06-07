@@ -4,13 +4,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Thumbs, Navigation, Autoplay, Keyboard } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper/types';
 
-import { Modal } from '../../../ui/modal/modal';
+import { Modal } from '../../../ui/modal/productModal/galleryModal';
 
 import 'swiper/css';
 import 'swiper/css/thumbs';
 import 'swiper/css/navigation';
 import './productSlider.scss';
-import '../../../ui/modal/modal.scss';
 
 type ProductGalleryProps = {
   images: string[];
@@ -37,11 +36,11 @@ function ProductGallery({ images, thumbsSwiper }: ProductGalleryProps) {
         }
         spaceBetween={10}
         navigation
-        autoHeight
         keyboard={{
           enabled: true,
           onlyInViewport: true,
         }}
+        autoHeight={false}
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
         modules={[Thumbs, Navigation, Autoplay, Keyboard]}
         className="main-swiper"
