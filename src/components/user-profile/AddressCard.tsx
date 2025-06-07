@@ -1,14 +1,13 @@
 import type { IAddress } from '../../types/interfaces';
 
 function AddressCard({ address }: { address: IAddress }) {
-  let label = 'Shipping Address:';
+  let label = '';
 
-  if (address.isDefaultBillingAddress)
-    if (address.isDefaultBillingAddress) {
-      label = 'Billing Address:';
-    } else if (address.isDefaultShippingAddress) {
-      label = 'Shipping Address:';
-    }
+  if (address.isDefaultBillingAddress) {
+    label = 'Billing Address:';
+  } else if (address.isDefaultShippingAddress) {
+    label = 'Shipping Address:';
+  }
 
   return (
     <>
@@ -16,10 +15,6 @@ function AddressCard({ address }: { address: IAddress }) {
       <p>
         <span className="label">Street:</span>
         {address.streetName}
-      </p>
-      <p>
-        <span className="label">Number:</span>
-        {address.streetNumber}
       </p>
       <p>
         <span className="label">City:</span>

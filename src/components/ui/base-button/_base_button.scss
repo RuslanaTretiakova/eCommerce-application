@@ -18,6 +18,19 @@
     color: var(--text-color);
   }
 
+  &--save {
+    border: solid 1px #000000;
+    background-color: transparent;
+    color: var(--text-color);
+
+    @media (hover: hover) {
+      &:hover {
+        color: white;
+        background-color: #000000;
+      }
+    }
+  }
+
   &--submit {
     width: 100%;
     color: white;
