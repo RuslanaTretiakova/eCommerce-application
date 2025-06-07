@@ -1,5 +1,5 @@
-import type { ButtonType, NotificationType, RegistrationErrorType } from './types';
-import type { ChangeEventHandler, FocusEventHandler } from 'react';
+import type { ButtonType, FieldType, NotificationType, RegistrationErrorType } from './types';
+import type { ChangeEventHandler, FocusEventHandler, ReactNode } from 'react';
 import type { ChangeHandler, FieldValues, Path } from 'react-hook-form';
 
 // Form
@@ -101,6 +101,50 @@ export interface IRegistrationError extends Error {
   };
 }
 
+export interface IEditableCard {
+  title: string;
+  children: ReactNode;
+  onEdit?: () => void;
+}
+
+export interface IAddress {
+  id: string;
+  streetName: string;
+  city: string;
+  postalCode: string;
+  country: string;
+  isDefaultBillingAddress?: boolean;
+  isDefaultShippingAddress?: boolean;
+}
+
+export interface IUserProfile {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  addresses: IAddress[];
+}
+
+export interface IRawAddress {
+  id: string;
+  streetName?: string;
+  streetNumber?: string;
+  city?: string;
+  postalCode?: string;
+  country?: string;
+}
+
+export interface ICustomerMeResponse {
+  firstName: string;
+  lastName: string;
+  dateOfBirth?: string;
+  defaultBillingAddressId?: string;
+  defaultBillingAddressIds?: string[];
+  defaultShippingAddressId?: string;
+  defaultShippingAddressIds?: string[];
+  addresses?: IRawAddress[];
+  [key: string]: unknown;
+}
+
 //ProductCard
 export interface IProductCard {
   id?: string;
@@ -109,4 +153,18 @@ export interface IProductCard {
   price: string;
   imageUrl: string;
   discount?: string;
+}
+
+//Edit form
+export interface IEditField<T> {
+  label: string;
+  key: keyof T;
+  type: FieldType;
+  id?: string;
+}
+
+export interface IEditFormProps<T extends Record<string, string>> {
+  fields: IEditField<T>[];
+  initialValues: T;
+  onChange: (updated: T) => void;
 }
