@@ -15,31 +15,31 @@ export interface Image {
   };
 }
 
-interface Price {
-  value: {
-    type: string;
-    currencyCode: string;
-    centAmount: number;
-    fractionDigits: number;
-  };
-  discounted?: {
-    value: {
-      centAmount: number;
-      currencyCode: string;
-    };
-  };
-}
+// interface Price {
+//   value: {
+//     type: string;
+//     currencyCode: string;
+//     centAmount: number;
+//     fractionDigits: number;
+//   };
+//   discounted?: {
+//     value: {
+//       centAmount: number;
+//       currencyCode: string;
+//     };
+//   };
+// }
 
-interface Variant {
-  id: number;
-  sku: string;
-  prices?: Price[];
-  images?: Image[];
-}
+// interface Variant {
+//   id: number;
+//   sku: string;
+//   prices?: Price[];
+//   images?: Image[];
+// }
 
-interface Description {
-  ['en-US']: string;
-}
+// interface Description {
+//   ['en-US']: string;
+// }
 
 // interface Staged {
 //   description?: Description;

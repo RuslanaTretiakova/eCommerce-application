@@ -1,10 +1,16 @@
+import { useState } from 'react';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Thumbs, Navigation, Autoplay, Keyboard, Zoom } from 'swiper/modules';
+import { Thumbs, Navigation, Autoplay, Keyboard } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper/types';
+
+import { Modal } from '../../../ui/modal/modal';
+
 import 'swiper/css';
 import 'swiper/css/thumbs';
 import 'swiper/css/navigation';
 import './productSlider.scss';
+import '../../../ui/modal/modal.scss';
 
 type ProductGalleryProps = {
   images: string[];
@@ -12,6 +18,14 @@ type ProductGalleryProps = {
 };
 
 function ProductGallery({ images, thumbsSwiper }: ProductGalleryProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalStartIndex, setModalStartIndex] = useState(0);
+
+  const openModal = (index: number) => {
+    setModalStartIndex(index);
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="product-gallery">
       <Swiper
@@ -29,15 +43,24 @@ function ProductGallery({ images, thumbsSwiper }: ProductGalleryProps) {
           onlyInViewport: true,
         }}
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
-        modules={[Thumbs, Navigation, Autoplay, Keyboard, Zoom]}
+        modules={[Thumbs, Navigation, Autoplay, Keyboard]}
         className="main-swiper"
       >
-        {images.map((src) => (
+        {images.map((src, index) => (
           <SwiperSlide key={src}>
-            <img src={src} alt="Bike" className="product-image" />
+            <button type="button" onClick={() => openModal(index)} className="product-button">
+              <img src={src} alt={`Bike ${index}`} className="product-image" />
+            </button>
           </SwiperSlide>
         ))}
       </Swiper>
+
+      <Modal
+        images={images}
+        initialIndex={modalStartIndex}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }
