@@ -23,11 +23,9 @@ export const useUserProfile = () => {
           console.error('Unauthorized:', data);
           return;
         }
-
         const mappedAddresses = (data.addresses || []).map((addr: IAddress) => ({
           id: addr.id,
           streetName: addr.streetName || '',
-          streetNumber: addr.streetNumber || '',
           city: addr.city || '',
           postalCode: addr.postalCode || '',
           country: addr.country || '',
@@ -45,9 +43,8 @@ export const useUserProfile = () => {
         console.error('Failed to fetch user profile:', err);
       }
     };
-
     fetchProfile();
   }, [token]);
 
-  return { user };
+  return { user, setUser };
 };
