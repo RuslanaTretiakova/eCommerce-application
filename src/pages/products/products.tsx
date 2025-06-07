@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { Product } from '@commercetools/platform-sdk';
+import type { ProductData, Product } from '@commercetools/platform-sdk';
 import Load from '../load/load';
 
 // This is a temporary implementation that simply demonstrates how to work with the ProductCard component.
@@ -12,8 +12,16 @@ import BaseButton from '../../components/ui/base-button/BaseButton';
 import ProductCard from '../../components/ui/product-card/ProductCard';
 import './product.scss';
 import getProductListFromServer from '../../api/getProductListFromServer';
+import SearchProduct from '../../components/searchProduct/searchProduct';
+import { useParams } from 'react-router-dom';
+import getSearchProductListByCategoryFromServer from '../../api/productListByCategory';
+
+interface ProductDataWithId extends ProductData {
+  id: string;
+}
 
 function Products(): JSX.Element {
+  const { category } = useParams();
   const handleAddToCart = (productId: string) => {
     console.log(`${productId}`);
   };
@@ -23,9 +31,16 @@ function Products(): JSX.Element {
 
   useEffect(() => {
     async function fetchProducts() {
+      setLoading(true);
       try {
-        const response = await getProductListFromServer();
-        setProducts(response.results);
+        let response;
+        if (category === 'all') {
+          response = await getProductListFromServer();
+          setProducts(response.results);
+        } else {
+          response = await getSearchProductListByCategoryFromServer(category || '');
+          setProducts(response.results);
+        }
       } catch (error) {
         console.error('Failed to load products:', error);
       } finally {
@@ -34,7 +49,11 @@ function Products(): JSX.Element {
     }
 
     fetchProducts();
-  }, []);
+  }, [category]);
+
+  const handleSearchResults = (results: Product[]) => {
+    setProducts(results);
+  };
 
   useEffect(() => {
     console.log('Updated products state:', products);
@@ -46,45 +65,46 @@ function Products(): JSX.Element {
 
   return (
     <div className="product-page temp">
-      <h1>Products page</h1>
+      <SearchProduct onSearchResults={handleSearchResults} />
       <div className="product-list">
         {products.map((product) => {
-          console.log(product);
+          const isProduct = 'masterData' in product;
 
-          const name = String(product.masterData.current.name['en-US']);
-          console.log(name);
+          const productData = isProduct
+            ? (product as Product).masterData.current
+            : (product as ProductDataWithId);
+
+          const name = productData?.name['en-US'];
+
           const description =
-            product?.masterData?.current?.description?.['en-US'].slice(
+            productData?.description?.['en-US'].slice(
               0,
-              product?.masterData?.current?.description?.['en-US'].indexOf('.'),
+              productData?.description?.['en-US'].indexOf('.'),
             ) ?? '';
-          const imageUrl = product?.masterData?.current?.masterVariant?.images?.[0]?.url ?? '';
+          const imageUrl = productData?.masterVariant?.images?.[0]?.url ?? '';
 
-          const price =
-            product?.masterData?.staged?.masterVariant?.prices?.[0].value.centAmount ?? '';
+          const price = productData?.masterVariant?.prices?.[0]?.value.centAmount ?? '';
 
           const discount =
-            product?.masterData?.current?.masterVariant?.prices?.[0].discounted?.value.centAmount ||
-            '';
+            productData?.masterVariant?.prices?.[0]?.discounted?.value.centAmount || '';
 
-          console.log(price);
           return (
             <div key={product.id} className="product-list__item" data-id={product.id}>
               {discount ? (
                 <ProductCard
-                  id={product.id}
+                  id={product?.id}
                   name={name}
                   description={description}
-                  price={`${String(price)} EUR`}
+                  price={`${String((+price / 100).toFixed(2))} EUR`}
                   imageUrl={imageUrl}
-                  discount={`${String(discount)} EUR`}
+                  discount={`${String((+discount / 100).toFixed(2))} EUR`}
                 />
               ) : (
                 <ProductCard
                   id={product.id}
                   name={name}
                   description={description}
-                  price={`${String(price)} EUR`}
+                  price={`${String((+price / 100).toFixed(2))} EUR`}
                   imageUrl={imageUrl}
                 />
               )}

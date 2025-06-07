@@ -1,0 +1,31 @@
+.category-page__list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  button {
+    all: unset;
+    cursor: pointer;
+  }
+  .category-page__item {
+    width: 250px;
+    height: max-content;
+
+    cursor: pointer;
+    text-align: center;
+    font-size: 3em;
+    img {
+      border-radius: 50%;
+      border: 1px solid #ffa909;
+    }
+    p {
+      margin: 0;
+    }
+  }
+
+  .category-page__item:hover a {
+    color: #ffa909;
+  }
+}

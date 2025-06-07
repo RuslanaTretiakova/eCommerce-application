@@ -1,6 +1,9 @@
 .product-page {
   height: auto;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 302px);
 }
 
 .product-list {
@@ -9,6 +12,7 @@
   gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
+  margin-bottom: 20px;
 
   &__item {
     display: flex;

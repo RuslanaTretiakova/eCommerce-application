@@ -1,6 +1,7 @@
 import React from 'react';
 import type { IProductCard } from '../../../types/interfaces';
 import './product-card.scss';
+import '../../../components/product/productHeader/productHeader.scss';
 
 const ProductCard = React.memo(({ name, description, price, imageUrl, discount }: IProductCard) => {
   return (
@@ -11,7 +12,7 @@ const ProductCard = React.memo(({ name, description, price, imageUrl, discount }
       {discount ? (
         <>
           <div className="product-card__price product-card__price_cross">{price}</div>
-          <div className="product-card__price_discount">{discount}</div>
+          <div className="product-card__price_discount ">{discount}</div>
         </>
       ) : (
         <div className="product-card__price">{price}</div>
