@@ -16,25 +16,28 @@ import UserLoginProfile from '../pages/userLoginProfile/userLoginProfile';
 import ProductPage from '../pages/product/ProductPage';
 
 import { TokenProvider, useAuth } from '../api/authorithation/AuthToken';
-import fetchAnonymousToken from '../api/authorithation/AnonymousToken';
+// import fetchAnonymousToken from '../api/authorithation/AnonymousToken';
+import { fetchToken } from '../utils/token/token';
 import { useEffect, useState } from 'react';
 
-const anonymousToken = async (): Promise<string> => {
-  const res = await fetch('/.netlify/functions/anonymousToken');
-  const data = await res.json();
-  return data.access_token;
-};
+// const fetchToken = async (): Promise<string> => {
+//   const res = await fetch('/.netlify/functions/anonymousToken');
+//   const data = await res.json();
+//   return data.access_token;
+// };
+
+// fetchToken('anonymous');
 
 function InnerApp() {
-  fetchAnonymousToken();
-  const { token, setToken } = useAuth();
+  debugger;
+  const { token, scope, setToken } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!token) {
-      anonymousToken()
-        .then((responseToken) => {
-          setToken(responseToken);
+      fetchToken('anonymous')
+        .then(({ token, scope }) => {
+          setToken(token, scope);
         })
         .catch((error) => {
           console.error('Failed to fetch anonymous token', error);
@@ -44,6 +47,9 @@ function InnerApp() {
         });
     }
   }, [token]);
+
+  console.log('Token:', token);
+  console.log('Scope:', scope);
 
   if (isLoading) {
     return <div>Loading...</div>;

@@ -4,15 +4,10 @@ import './userLoginProfile.scss';
 import { useLogout } from '../../api/authorithation/handleLogout';
 
 function UserLoginProfile() {
-  debugger;
+  // debugger;
   const logout = useLogout();
-  // const token = useAuth();
   return (
     <div className="user-login-profile">
-      <h3>
-        {/* token:
-        {token.token} */}
-      </h3>
       <Link to="/profile-info" className="button">
         Edit profile
       </Link>
@@ -24,5 +19,3 @@ function UserLoginProfile() {
 }
 
 export default UserLoginProfile;
-
-//uncomment the comments, and the token will be visible for testing
