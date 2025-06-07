@@ -1,7 +1,7 @@
 import React from 'react';
 import type { IProductCard } from '../../../types/interfaces';
 import './product-card.scss';
-import '../../../components/product/productHeader/productHeader.scss'
+import '../../../components/product/productHeader/productHeader.scss';
 
 const ProductCard = React.memo(({ name, description, price, imageUrl, discount }: IProductCard) => {
   return (
