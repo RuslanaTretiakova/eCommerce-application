@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 
 import { useAuth } from '../../api/authorithation/AuthToken';
 import type { Product } from '../../types/productTypes';
-import { fetchProductById } from '../../api/products/fetchProductById';
+// import { fetchProductById } from '../../api/products/fetchProductById';
+import { fetchProductById } from '../../api/products/fetchProductBySKU';
 
 import ProductHeader from '../../components/product/productHeader/productHeader';
 import ProductDescription from '../../components/product/productDesc/productDescription';
