@@ -1,4 +1,4 @@
-import type { ButtonType, NotificationType, RegistrationErrorType } from './types';
+import type { ButtonType, FieldType, NotificationType, RegistrationErrorType } from './types';
 import type { ChangeEventHandler, FocusEventHandler, ReactNode } from 'react';
 import type { ChangeHandler, FieldValues, Path } from 'react-hook-form';
 
@@ -110,7 +110,6 @@ export interface IEditableCard {
 export interface IAddress {
   id: string;
   streetName: string;
-  streetNumber: string;
   city: string;
   postalCode: string;
   country: string;
@@ -154,4 +153,18 @@ export interface IProductCard {
   price: string;
   imageUrl: string;
   discount?: string;
+}
+
+//Edit form
+export interface IEditField<T> {
+  label: string;
+  key: keyof T;
+  type: FieldType;
+  id?: string;
+}
+
+export interface IEditFormProps<T extends Record<string, string>> {
+  fields: IEditField<T>[];
+  initialValues: T;
+  onChange: (updated: T) => void;
 }
