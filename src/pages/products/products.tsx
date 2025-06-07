@@ -95,16 +95,16 @@ function Products(): JSX.Element {
                   id={product?.id}
                   name={name}
                   description={description}
-                  price={`${String(price)} EUR`}
+                  price={`${String((+price / 100).toFixed(2))} EUR`}
                   imageUrl={imageUrl}
-                  discount={`${String(discount)} EUR`}
+                  discount={`${String((+discount / 100).toFixed(2))} EUR`}
                 />
               ) : (
                 <ProductCard
                   id={product.id}
                   name={name}
                   description={description}
-                  price={`${String(price)} EUR`}
+                  price={`${String((+price / 100).toFixed(2))} EUR`}
                   imageUrl={imageUrl}
                 />
               )}
