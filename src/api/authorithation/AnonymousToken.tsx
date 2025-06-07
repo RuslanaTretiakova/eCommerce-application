@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { useAuth } from './AuthToken';
 
 const fetchAnonymousToken = () => {
-  const { token, setToken } = useAuth();
+  const { isAnonymous, token, setToken } = useAuth();
 
   useEffect(() => {
-    if (!token) {
+    if (!isAnonymous) {
       fetch('/.netlify/functions/anonymousToken')
         .then((res) => res.json())
         .then((data) => {
