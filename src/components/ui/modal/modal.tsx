@@ -64,7 +64,6 @@ export function Modal({ images, initialIndex, isOpen, onClose }: ModalProps) {
         onTouchEnd={handleTouchEnd}
         role="button"
       >
-
         <button type="button" className="modal-close" onClick={onClose} aria-label="Close modal">
           {' '}
           &times;
