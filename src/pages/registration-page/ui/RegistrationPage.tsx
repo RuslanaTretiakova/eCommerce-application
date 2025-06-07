@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import { useState } from 'react';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DynamicForm from '../../../components/forms/DynamicForm.tsx';
 import type { IFormData } from '../../../types/interfaces.ts';
 import { registrationFields } from '../../../components/forms/registration/fieldsConfig.ts';
@@ -11,7 +11,7 @@ import './_registration-page.scss';
 
 function RegistrationPage(): JSX.Element {
   const navigate = useNavigate();
-  const { token, setToken } = useAuth();
+  const { setToken } = useAuth();
 
   const [status, setStatus] = useState<'initial' | 'submitting'>('initial');
 
@@ -21,9 +21,9 @@ function RegistrationPage(): JSX.Element {
     setStatus('initial');
   };
 
-  if (token) {
-    return <Navigate to="/" replace />;
-  }
+  // if (token) {
+  //   return <Navigate to="/" replace />;
+  // }
 
   return (
     <div className="registration-page">
