@@ -2,7 +2,7 @@ import type { IFormData } from '../../types/interfaces';
 import { transformFormData } from '../../utils/formUtils/transformFormData';
 import type { NavigateFunction } from 'react-router-dom';
 import { showNotification } from '../../utils/toastify/showNotification';
-import { fetchToken } from '../../utils/token/token';
+import { fetchToken } from '../../utils/token/tokenType';
 import { getRegistrationErrorMessage } from '../../utils/errors/getRegistrationErrorMessage';
 
 export const handleRegistration = async (

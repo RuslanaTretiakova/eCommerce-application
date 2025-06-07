@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 import DynamicForm from '../../components/forms/DynamicForm';
 import { authenticationFields } from '../../components/forms/registration/fieldsConfig';
 import type { IFormDataAuth } from '../../types/interfaces';
-import { fetchToken } from '../../utils/token/token';
+import { fetchToken } from '../../utils/token/tokenType';
 import { showNotification } from '../../utils/toastify/showNotification';
 import type { IRegistrationError } from '../../types/interfaces';
 import { useAuth } from '../../api/authorithation/AuthToken';

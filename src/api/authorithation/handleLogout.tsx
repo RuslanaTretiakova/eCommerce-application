@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../api/authorithation/AuthToken';
-import { fetchToken } from '../../utils/token/token';
+import { fetchToken } from '../../utils/token/tokenType';
 
 export const useLogout = () => {
   const navigate = useNavigate();
