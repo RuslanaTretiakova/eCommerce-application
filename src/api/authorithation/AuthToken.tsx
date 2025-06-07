@@ -14,10 +14,9 @@ const Token = createContext<TokenType>({
   isAnonymous: true,
 });
 
-
 export function TokenProvider({ children }: { children: React.ReactNode }) {
   const [tokenState, setTokenState] = useState<string | null>(null);
-  const [scopeState, setScopeState] = useState<string>('')
+  const [scopeState, setScopeState] = useState<string>('');
   const [isAnonymous, setIsAnonymous] = useState(true);
 
   const setToken = (token: string | null, scope = '') => {
@@ -31,7 +30,7 @@ export function TokenProvider({ children }: { children: React.ReactNode }) {
       token: tokenState,
       scope: scopeState,
       setToken,
-      isAnonymous
+      isAnonymous,
     }),
     [tokenState, scopeState, isAnonymous],
   );

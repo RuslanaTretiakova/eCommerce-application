@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
 function AuthenticationPage(): JSX.Element {
-  debugger;
   const { isAnonymous, setToken } = useAuth();
 
   const navigate = useNavigate();
@@ -20,7 +19,6 @@ function AuthenticationPage(): JSX.Element {
     console.log('Login:', data);
     // logic
     try {
-      debugger;
       const { token, scope } = await fetchToken('customer', {
         email: data.email,
         password: data.password,

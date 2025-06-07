@@ -1,7 +1,6 @@
 import type { Product, ProductResponse } from '../../types/productTypes';
 
 export const fetchProductBySKU = async (sku: string, token: string | null): Promise<Product> => {
-  debugger;
   const response = await fetch(`/.netlify/functions/productBySKU?sku=${sku}`, {
     headers: {
       Authorization: `Bearer ${token}`,

@@ -16,20 +16,10 @@ import UserLoginProfile from '../pages/userLoginProfile/userLoginProfile';
 import ProductPage from '../pages/product/ProductPage';
 
 import { TokenProvider, useAuth } from '../api/authorithation/AuthToken';
-// import fetchAnonymousToken from '../api/authorithation/AnonymousToken';
 import { fetchToken } from '../utils/token/token';
 import { useEffect, useState } from 'react';
 
-// const fetchToken = async (): Promise<string> => {
-//   const res = await fetch('/.netlify/functions/anonymousToken');
-//   const data = await res.json();
-//   return data.access_token;
-// };
-
-// fetchToken('anonymous');
-
 function InnerApp() {
-  debugger;
   const { token, scope, setToken } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 

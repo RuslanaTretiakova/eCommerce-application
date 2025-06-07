@@ -21,4 +21,3 @@ const fetchAnonymousToken = () => {
 };
 
 export default fetchAnonymousToken;
-

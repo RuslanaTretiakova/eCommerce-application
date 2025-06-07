@@ -5,7 +5,7 @@ type CustomerCredentials = { email: string; password: string };
 
 export const fetchToken = async (
   type: TokenType,
-  credentials?: CustomerCredentials
+  credentials?: CustomerCredentials,
 ): Promise<TokenResponse> => {
   const endpoint =
     type === 'anonymous' ? '/.netlify/functions/anonymousToken' : '/.netlify/functions/login';

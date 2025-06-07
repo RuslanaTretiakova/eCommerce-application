@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom';
 import './userLoginProfile.scss';
-// import { useAuth } from '../../api/authorithation/AuthToken';
 import { useLogout } from '../../api/authorithation/handleLogout';
 
 function UserLoginProfile() {
-  // debugger;
   const logout = useLogout();
   return (
     <div className="user-login-profile">

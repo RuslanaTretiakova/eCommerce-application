@@ -5,7 +5,6 @@ import closeMobileMenu from '../../../utils/closeMobileNavigation/closeMobileNav
 import { useAuth } from '../../../api/authorithation/AuthToken';
 
 function HeaderProfile() {
-  debugger;
   const { isAnonymous } = useAuth();
 
   return (

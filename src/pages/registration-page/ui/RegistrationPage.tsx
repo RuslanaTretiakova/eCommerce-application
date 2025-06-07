@@ -11,7 +11,6 @@ import './_registration-page.scss';
 
 function RegistrationPage(): JSX.Element {
   const navigate = useNavigate();
-  debugger;
   const { isAnonymous, setToken } = useAuth();
 
   const [status, setStatus] = useState<'initial' | 'submitting'>('initial');

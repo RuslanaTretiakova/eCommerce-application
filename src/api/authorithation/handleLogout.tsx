@@ -7,7 +7,6 @@ export const useLogout = () => {
   const { setToken } = useAuth();
 
   const logout = async () => {
-    debugger;
     try {
       const { token, scope } = await fetchToken('anonymous');
       setToken(token, scope);
