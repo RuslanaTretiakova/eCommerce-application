@@ -38,18 +38,17 @@ function FilterByType({ onChange = () => {} }: FilterByTypeProps) {
         {options.map((option) => {
           const inputId = `filter-${option.value}`;
           return (
-      
-          <label key={option.value}  htmlFor={inputId} className="checkbox-option">
-            <input
-              type="checkbox"
-              value={option.value}
-              checked={selectedValues.includes(option.value)}
-              onChange={() => handleToggleOption(option.value)}
-            />
-            {option.label}
-          </label>
-        )})
-      }
+            <label key={option.value} htmlFor={inputId} className="checkbox-option">
+              <input
+                type="checkbox"
+                value={option.value}
+                checked={selectedValues.includes(option.value)}
+                onChange={() => handleToggleOption(option.value)}
+              />
+              {option.label}
+            </label>
+          );
+        })}
       </div>
     </div>
   );
