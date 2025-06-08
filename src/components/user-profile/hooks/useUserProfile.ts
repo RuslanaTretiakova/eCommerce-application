@@ -25,6 +25,7 @@ export const useUserProfile = () => {
         }
         const mappedAddresses = (data.addresses || []).map((addr: IAddress) => ({
           id: addr.id,
+          streetName: addr.streetName,
           city: addr.city,
           postalCode: addr.postalCode,
           country: addr.country,
