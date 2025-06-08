@@ -45,8 +45,6 @@ function Item() {
     console.log(error);
   }
 
-  console.log(product);
-
   if (product) {
     return (
       <div className="product">
