@@ -1,17 +1,13 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useUserProfile } from '../../components/user-profile/hooks/useUserProfile';
 import type { IUserProfile, IAddress } from '../../types/interfaces';
 
 import './userLoginProfile.scss';
 
-import {
-  personalFields,
-  type IUserProfileFormFields,
-} from '../../components/user-profile/forms/personalFields';
-import {
-  addressFields,
-  type IAddressFormFields,
-} from '../../components/user-profile/forms/addressFields';
+import type {
+  IAddressFormFields,
+  IUserProfileFormFields,
+} from '../../components/user-profile/forms/userProfileFormTypes';
 
 import EditableCard from '../../components/ui/editable-card/EditableCard';
 import PersonalInfo from '../../components/user-profile/PersonalInfo';
@@ -20,6 +16,8 @@ import Modal from '../../components/ui/modal/Modal';
 import EditForm from '../../components/ui/form/EditForm';
 import { showNotification } from '../../utils/toastify/showNotification';
 import { createDefaultAddress } from '../../components/user-profile/utils/defaultAddress';
+import { personalFields } from '../../components/user-profile/forms/personalFields';
+import { addressFields } from '../../components/user-profile/forms/addressFields';
 
 const defaultUserFormValues: IUserProfileFormFields = {
   email: '',
@@ -39,12 +37,13 @@ function UserLoginProfile() {
   const { user, setUser } = useUserProfile();
 
   const billingAddress =
-    user?.addresses.find((a) => a.isDefaultBillingAddress) ||
-    user?.addresses[0] ||
+    user?.addresses.find((a) => a.isDefaultBillingAddress) ??
+    user?.addresses.find((a) => !a.isDefaultShippingAddress) ??
     createDefaultAddress('billing');
+
   const shippingAddress =
-    user?.addresses.find((a) => a.isDefaultShippingAddress) ||
-    user?.addresses[0] ||
+    user?.addresses.find((a) => a.isDefaultShippingAddress) ??
+    user?.addresses.find((a) => !a.isDefaultBillingAddress) ??
     createDefaultAddress('shipping');
 
   const [isPersonalModalOpen, setPersonalModalOpen] = useState(false);
@@ -58,6 +57,16 @@ function UserLoginProfile() {
   const [addressFormValues, setAddressFormValues] =
     useState<IAddressFormFields>(defaultAddressFormValues);
 
+  const personalFormRef = useRef<{
+    trigger: () => Promise<boolean>;
+    getValues: () => IUserProfileFormFields;
+  }>(null);
+
+  const addressFormRef = useRef<{
+    trigger: () => Promise<boolean>;
+    getValues: () => IAddressFormFields;
+  }>(null);
+
   const openPersonalModal = () => {
     if (!user) return;
     setEditedUser(user);
@@ -70,9 +79,16 @@ function UserLoginProfile() {
     setPersonalModalOpen(true);
   };
 
-  const savePersonal = () => {
-    if (!editedUser) return;
-    const updated = { ...editedUser, ...formValues };
+  const savePersonal = async () => {
+    if (!editedUser || !personalFormRef.current) return;
+    const isValid = await personalFormRef.current.trigger();
+    if (!isValid) {
+      showNotification({ text: 'Please correct the errors before saving.', type: 'error' });
+      return;
+    }
+
+    const updatedData = personalFormRef.current.getValues();
+    const updated = { ...editedUser, ...updatedData };
     setEditedUser(updated);
     setUser(updated);
     showNotification({ text: 'Personal information saved successfully.', type: 'info' });
@@ -86,10 +102,8 @@ function UserLoginProfile() {
   };
 
   const openAddressModal = (type: 'billing' | 'shipping') => {
-    const existing = type === 'billing' ? billingAddress : shippingAddress;
-    const address = existing ?? createDefaultAddress(type);
-
-    setEditedAddress(address);
+    const address = type === 'billing' ? billingAddress : shippingAddress;
+    setEditedAddress({ ...address });
     setAddressFormValues({
       streetName: address.streetName,
       city: address.city,
@@ -104,17 +118,24 @@ function UserLoginProfile() {
     }
   };
 
-  const saveAddress = () => {
-    if (!editedAddress || !user) return;
+  const saveAddress = async () => {
+    if (!editedAddress || !user || !addressFormRef.current) return;
+    const isValid = await addressFormRef.current.trigger();
+    if (!isValid) {
+      showNotification({ text: 'Please fix the address form errors.', type: 'error' });
+      return;
+    }
 
-    const updatedAddress = { ...editedAddress, ...addressFormValues };
+    const updatedData = addressFormRef.current.getValues();
+    const updatedAddress = { ...editedAddress, ...updatedData };
+
     const addressExists = user.addresses.some((a) => a.id === updatedAddress.id);
     const updatedAddresses = addressExists
       ? user.addresses.map((addr) => (addr.id === updatedAddress.id ? updatedAddress : addr))
       : [...user.addresses, updatedAddress];
 
     setUser({ ...user, addresses: updatedAddresses });
-    setEditedAddress(updatedAddress);
+    setEditedAddress(null);
     showNotification({ text: 'Address saved successfully.', type: 'info' });
 
     setBillingModalOpen(false);
@@ -166,12 +187,18 @@ function UserLoginProfile() {
             onSave={savePersonal}
             onClose={cancelPersonal}
           >
-            <EditForm fields={personalFields} initialValues={formValues} onChange={setFormValues} />
+            <EditForm<IUserProfileFormFields>
+              ref={personalFormRef}
+              fields={personalFields}
+              initialValues={formValues}
+              onChange={setFormValues}
+            />
           </Modal>
 
           {showAddressModal && (
             <Modal title={modalTitle} isOpen onSave={saveAddress} onClose={cancelAddress}>
-              <EditForm
+              <EditForm<IAddressFormFields>
+                ref={addressFormRef}
                 fields={addressFields}
                 initialValues={addressFormValues}
                 onChange={setAddressFormValues}
