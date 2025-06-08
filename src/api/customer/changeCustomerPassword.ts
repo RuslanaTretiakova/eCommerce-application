@@ -3,6 +3,7 @@ export const changeCustomerPassword = async (
   version: number,
   currentPassword: string,
   newPassword: string,
+  accessToken: string,
 ) => {
   const url = '/.netlify/functions/changePassword';
 
@@ -17,6 +18,7 @@ export const changeCustomerPassword = async (
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(body),
   });
