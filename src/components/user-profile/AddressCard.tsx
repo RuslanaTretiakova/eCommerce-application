@@ -1,17 +1,8 @@
 import type { IAddress } from '../../types/interfaces';
 
 function AddressCard({ address }: { address: IAddress }) {
-  let label = '';
-
-  if (address.isDefaultBillingAddress) {
-    label = 'Billing Address:';
-  } else if (address.isDefaultShippingAddress) {
-    label = 'Shipping Address:';
-  }
-
   return (
     <>
-      <p className="address-label">{label}</p>
       <p>
         <span className="label">Street:</span>
         {address.streetName}
