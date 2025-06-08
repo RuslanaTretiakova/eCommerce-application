@@ -32,7 +32,6 @@
   position: absolute;
   background: transparent;
   border: none;
-  color: white;
   outline: none;
   cursor: pointer;
   transition: color 0.2s ease;
@@ -43,7 +42,9 @@
 
 .gallery-modal__close {
   top: 10px;
-  right: 40px;
+  right: 20px;
+  font-size: 45px;
+  color: #ccc;
 }
 
 .gallery-modal__prev {
@@ -56,4 +57,12 @@
   right: -5px;
   top: 50%;
   transform: translateY(-50%);
+}
+
+
+@media (max-width: 550px) {
+  .gallery-modal__close {
+    right: 15px;
+    font-size: 35px;
+  }
 }

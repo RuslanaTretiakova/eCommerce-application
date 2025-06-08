@@ -3,22 +3,17 @@ import { useParams } from 'react-router-dom';
 
 import { useAuth } from '../../api/authorithation/AuthToken';
 import type { Product } from '../../types/productTypes';
-// import { fetchProductById } from '../../api/products/fetchProductById';
 import { fetchProductById } from '../../api/products/fetchProductBySKU';
 
 import ProductHeader from '../../components/product/productHeader/productHeader';
 import ProductDescription from '../../components/product/productDesc/productDescription';
-// import ProductSpecification from '../../components/product/productSpec/productSpecification';
+// import ProductSpecification from '../../components/product/productSpec/productSpec';
 import BaseButton from '../../components/ui/base-button/BaseButton';
 import { ProductGallery } from '../../components/product/productSlider/mainPic/productSlider';
 import type { Swiper as SwiperType } from 'swiper/types';
 
 import './product.scss';
 
-// const id = 'e507a429-1b68-455f-bf26-ea1d81da4bf3'; - one photo
-// const id = '18c819ea-a29d-497e-817e-b2dfc9e4ad72'; - 6 photos
-// const id = '532e8904-630c-4e7c-aacb-04cba211a5e6'; - 1 variant, 14 photos
-// const id = '8d7cbb3e-bceb-43f4-a6cc-4e088f40295b'; - one photo
 
 function Item() {
   const { token } = useAuth();
@@ -51,6 +46,8 @@ function Item() {
     console.log(error);
   }
 
+  console.log(product);
+
   if (product) {
     return (
       <div className="product">
@@ -68,7 +65,7 @@ function Item() {
           setThumbsSwiper={setThumbsSwiper}
           description={product.description ?? ''}
         />
-        {/* <ItemSpecification specs={[{ frame: 'Al' }, { weight: '15.5kg' }]} /> */}
+        {/* <ProductSpecification specs={[{ frame: 'Al' }, { weight: '15.5kg' }]} /> */}
         <BaseButton type="button" className="button--submit" title="title">
           Add to cart
         </BaseButton>
