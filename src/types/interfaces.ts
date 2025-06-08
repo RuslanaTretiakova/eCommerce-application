@@ -119,6 +119,8 @@ export interface IAddress {
 }
 
 export interface IUserProfile {
+  id: string;
+  version: number;
   firstName: string;
   lastName: string;
   dateOfBirth: string;
