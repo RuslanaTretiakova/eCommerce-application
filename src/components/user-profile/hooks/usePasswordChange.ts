@@ -4,21 +4,21 @@ import type { IPasswordFormFields } from '../forms/userProfileFormTypes';
 import { showNotification } from '../../../utils/toastify/showNotification';
 import { changeCustomerPassword } from '../../../api/customer/changeCustomerPassword';
 import { useAuth } from '../../../api/authorithation/AuthToken';
+import { reAuthenticate } from '../../../api/authorithation/reAuthenticate';
 
 export const usePasswordChange = (
   user: IUserProfile | null,
   setUser: (user: IUserProfile) => void,
 ) => {
-  const { token } = useAuth();
+  const { token, setToken } = useAuth();
 
-  const defaultPasswordFormValues: IPasswordFormFields = {
+  const defaultValues: IPasswordFormFields = {
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
   };
 
-  const [passwordFormValues, setPasswordFormValues] =
-    useState<IPasswordFormFields>(defaultPasswordFormValues);
+  const [passwordFormValues, setPasswordFormValues] = useState(defaultValues);
   const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
 
   const passwordFormRef = useRef<{
@@ -27,17 +27,21 @@ export const usePasswordChange = (
   }>(null);
 
   const openPasswordModal = () => {
-    setPasswordFormValues(defaultPasswordFormValues);
+    setPasswordFormValues(defaultValues);
     setPasswordModalOpen(true);
   };
 
   const cancelPassword = () => {
-    setPasswordFormValues(defaultPasswordFormValues);
+    setPasswordFormValues(defaultValues);
     setPasswordModalOpen(false);
   };
 
   const savePassword = async () => {
-    if (!passwordFormRef.current || !user || !token) return;
+    if (!passwordFormRef.current || !user || !token) {
+      showNotification({ text: 'Missing form or user context.', type: 'error' });
+      return;
+    }
+
     const isValid = await passwordFormRef.current.trigger();
     if (!isValid) {
       showNotification({ text: 'Please fix the password form errors.', type: 'error' });
@@ -59,10 +63,19 @@ export const usePasswordChange = (
         newPassword,
         token,
       );
+
       setUser(updatedUser);
-      showNotification({ text: 'Password changed successfully.', type: 'info' });
+
+      const authResponse = await reAuthenticate(user.email, newPassword);
+      if (authResponse.access_token) {
+        setToken(authResponse.access_token, authResponse.scope);
+        showNotification({ text: 'Password changed and re-authenticated.', type: 'info' });
+      } else {
+        showNotification({ text: 'Re-authentication failed.', type: 'error' });
+      }
+
       setPasswordModalOpen(false);
-      setPasswordFormValues(defaultPasswordFormValues);
+      setPasswordFormValues(defaultValues);
     } catch (error) {
       console.error('Password change failed:', error);
       showNotification({
