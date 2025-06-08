@@ -1,42 +1,75 @@
-import { useState, useEffect } from 'react';
+import { useForm, type FieldValues } from 'react-hook-form';
+import { forwardRef, useImperativeHandle } from 'react';
+import BaseInput from '../../ui/base-input/BaseInput';
+import BaseSelect from '../../ui/base-select/BaseSelect';
 import type { IEditFormProps } from '../../../types/interfaces';
 
-function EditForm<T extends Record<string, string>>({
-  fields,
-  initialValues,
-  onChange,
-}: IEditFormProps<T>) {
-  const [formData, setFormData] = useState<T>(initialValues);
+type FormRef<T> = {
+  trigger: () => Promise<boolean>;
+  getValues: () => T;
+};
 
-  useEffect(() => {
-    setFormData(initialValues);
-  }, [initialValues]);
+function EditFormInner<T extends FieldValues>(
+  { fields, initialValues }: IEditFormProps<T>,
+  ref: React.Ref<FormRef<T>>,
+) {
+  const {
+    register,
+    formState: { errors },
+    trigger,
+    getValues,
+  } = useForm<T>({
+    defaultValues: initialValues,
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
+  });
 
-  const handleChange = (key: keyof T, value: string) => {
-    const updated = { ...formData, [key]: value };
-    setFormData(updated);
-    onChange(updated);
-  };
+  useImperativeHandle(ref, () => ({
+    trigger,
+    getValues,
+  }));
 
   return (
-    <form className="edit-form">
+    <form className="edit-form" onSubmit={(e) => e.preventDefault()}>
       {fields.map((field) => {
-        const inputId = field.id ?? `field-${String(field.key)}`;
+        const { key, label, type, placeholder, rules, options } = field;
+        const { ref, onChange: fieldChange, onBlur, name } = register(key, rules);
+
+        if (type === 'select' && options) {
+          return (
+            <BaseSelect
+              key={String(key)}
+              name={name}
+              label={label}
+              options={options}
+              placeholder={placeholder}
+              onChange={fieldChange}
+              onBlur={onBlur}
+              ref={ref}
+            />
+          );
+        }
 
         return (
-          <div className="edit-form__field" key={String(field.key)}>
-            <label htmlFor={inputId}>{field.label}</label>
-            <input
-              id={inputId}
-              type={field.type}
-              value={formData[field.key]}
-              onChange={(e) => handleChange(field.key, e.target.value)}
-            />
-          </div>
+          <BaseInput
+            key={String(key)}
+            name={name}
+            label={label}
+            type={type}
+            placeholder={placeholder}
+            onChange={fieldChange}
+            onBlur={onBlur}
+            ref={ref}
+            error={errors[key]?.message as string | undefined}
+          />
         );
       })}
     </form>
   );
 }
+
+const EditForm = forwardRef(EditFormInner) as <T extends FieldValues>(
+  props: IEditFormProps<T> & { ref?: React.Ref<FormRef<T>> },
+) => ReturnType<typeof EditFormInner>;
 
 export default EditForm;
