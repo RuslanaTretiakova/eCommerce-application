@@ -2,11 +2,6 @@ import { useEffect, useState } from 'react';
 import type { ProductData, Product } from '@commercetools/platform-sdk';
 import Load from '../load/load';
 
-// This is a temporary implementation that simply demonstrates how to work with the ProductCard component.
-// It includes basic styling for the entire card component.
-// To implement hover effects on the ProductCard, it's necessary to add the `product-list__item` class.
-// This code is just a simple example, please delete it or modify it for your purposes once you begin work on the actual task.
-
 import type { JSX } from 'react';
 import BaseButton from '../../components/ui/base-button/BaseButton';
 import ProductCard from '../../components/ui/product-card/ProductCard';
