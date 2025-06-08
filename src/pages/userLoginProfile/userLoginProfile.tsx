@@ -12,12 +12,12 @@ import type {
 import EditableCard from '../../components/ui/editable-card/EditableCard';
 import PersonalInfo from '../../components/user-profile/PersonalInfo';
 import UserAddresses from '../../components/user-profile/UserAddresses';
-import Modal from '../../components/ui/modal/Modal';
 import EditForm from '../../components/ui/form/EditForm';
 import { showNotification } from '../../utils/toastify/showNotification';
 import { createDefaultAddress } from '../../components/user-profile/utils/defaultAddress';
 import { personalFields } from '../../components/user-profile/forms/personalFields';
 import { addressFields } from '../../components/user-profile/forms/addressFields';
+import Modal from '../../components/ui/modal/editModal/Modal';
 
 const defaultUserFormValues: IUserProfileFormFields = {
   email: '',
