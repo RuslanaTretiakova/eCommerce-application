@@ -22,6 +22,7 @@ import { showNotification } from '../../utils/toastify/showNotification';
 import { createDefaultAddress } from '../../components/user-profile/utils/defaultAddress';
 
 const defaultUserFormValues: IUserProfileFormFields = {
+  email: '',
   firstName: '',
   lastName: '',
   dateOfBirth: '',
@@ -61,6 +62,7 @@ function UserLoginProfile() {
     if (!user) return;
     setEditedUser(user);
     setFormValues({
+      email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
       dateOfBirth: user.dateOfBirth,

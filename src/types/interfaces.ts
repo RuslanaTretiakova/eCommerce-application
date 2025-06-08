@@ -121,13 +121,13 @@ export interface IUserProfile {
   firstName: string;
   lastName: string;
   dateOfBirth: string;
+  email: string;
   addresses: IAddress[];
 }
 
 export interface IRawAddress {
   id: string;
   streetName?: string;
-  streetNumber?: string;
   city?: string;
   postalCode?: string;
   country?: string;
@@ -155,7 +155,6 @@ export interface IProductCard {
   discount?: string;
 }
 
-//Edit form
 export interface IEditField<T> {
   label: string;
   key: keyof T;
