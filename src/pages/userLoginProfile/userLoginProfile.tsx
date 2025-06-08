@@ -7,6 +7,7 @@ import './userLoginProfile.scss';
 import type {
   IAddressFormFields,
   IUserProfileFormFields,
+  IPasswordFormFields,
 } from '../../components/user-profile/forms/userProfileFormTypes';
 
 import EditableCard from '../../components/ui/editable-card/EditableCard';
@@ -18,6 +19,7 @@ import { createDefaultAddress } from '../../components/user-profile/utils/defaul
 import { personalFields } from '../../components/user-profile/forms/personalFields';
 import { addressFields } from '../../components/user-profile/forms/addressFields';
 import Modal from '../../components/ui/modal/editModal/Modal';
+import { passwordFields } from '../../components/user-profile/forms/passwordFields';
 
 const defaultUserFormValues: IUserProfileFormFields = {
   email: '',
@@ -31,6 +33,12 @@ const defaultAddressFormValues: IAddressFormFields = {
   city: '',
   postalCode: '',
   country: '',
+};
+
+const defaultPasswordFormValues: IPasswordFormFields = {
+  currentPassword: '',
+  newPassword: '',
+  confirmPassword: '',
 };
 
 function UserLoginProfile() {
@@ -49,6 +57,7 @@ function UserLoginProfile() {
   const [isPersonalModalOpen, setPersonalModalOpen] = useState(false);
   const [isBillingModalOpen, setBillingModalOpen] = useState(false);
   const [isShippingModalOpen, setShippingModalOpen] = useState(false);
+  const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
 
   const [editedUser, setEditedUser] = useState<IUserProfile | null>(null);
   const [formValues, setFormValues] = useState<IUserProfileFormFields>(defaultUserFormValues);
@@ -56,6 +65,9 @@ function UserLoginProfile() {
   const [editedAddress, setEditedAddress] = useState<IAddress | null>(null);
   const [addressFormValues, setAddressFormValues] =
     useState<IAddressFormFields>(defaultAddressFormValues);
+
+  const [passwordFormValues, setPasswordFormValues] =
+    useState<IPasswordFormFields>(defaultPasswordFormValues);
 
   const personalFormRef = useRef<{
     trigger: () => Promise<boolean>;
@@ -65,6 +77,11 @@ function UserLoginProfile() {
   const addressFormRef = useRef<{
     trigger: () => Promise<boolean>;
     getValues: () => IAddressFormFields;
+  }>(null);
+
+  const passwordFormRef = useRef<{
+    trigger: () => Promise<boolean>;
+    getValues: () => IPasswordFormFields;
   }>(null);
 
   const openPersonalModal = () => {
@@ -149,6 +166,46 @@ function UserLoginProfile() {
     setShippingModalOpen(false);
   };
 
+  const openPasswordModal = () => {
+    setPasswordFormValues(defaultPasswordFormValues);
+    setPasswordModalOpen(true);
+  };
+
+  const savePassword = async () => {
+    if (!passwordFormRef.current) return;
+    const isValid = await passwordFormRef.current.trigger();
+    if (!isValid) {
+      showNotification({ text: 'Please fix the password form errors.', type: 'error' });
+      return;
+    }
+
+    const { currentPassword, newPassword, confirmPassword } = passwordFormRef.current.getValues();
+    console.log(currentPassword);
+    if (newPassword !== confirmPassword) {
+      showNotification({ text: 'New password and confirmation do not match.', type: 'error' });
+      return;
+    }
+
+    try {
+      // todo: Implement changeUserPassword logic to update the password
+      // await changeUserPassword({ currentPassword, newPassword });
+
+      showNotification({ text: 'Password changed successfully.', type: 'info' });
+      setPasswordModalOpen(false);
+      setPasswordFormValues(defaultPasswordFormValues);
+    } catch {
+      showNotification({
+        text: 'Failed to change password. Please check your current password.',
+        type: 'error',
+      });
+    }
+  };
+
+  const cancelPassword = () => {
+    setPasswordFormValues(defaultPasswordFormValues);
+    setPasswordModalOpen(false);
+  };
+
   const showAddressModal = isBillingModalOpen || isShippingModalOpen;
   const modalTitle = isBillingModalOpen
     ? 'Edit Billing Address'
@@ -181,6 +238,10 @@ function UserLoginProfile() {
             <UserAddresses addresses={[shippingAddress]} />
           </EditableCard>
 
+          <EditableCard title="Change Password" onEdit={openPasswordModal}>
+            <p>You can change your password here.</p>
+          </EditableCard>
+
           <Modal
             title="Edit Personal Info"
             isOpen={isPersonalModalOpen}
@@ -205,6 +266,20 @@ function UserLoginProfile() {
               />
             </Modal>
           )}
+
+          <Modal
+            title="Change Password"
+            isOpen={isPasswordModalOpen}
+            onSave={savePassword}
+            onClose={cancelPassword}
+          >
+            <EditForm<IPasswordFormFields>
+              ref={passwordFormRef}
+              fields={passwordFields}
+              initialValues={passwordFormValues}
+              onChange={setPasswordFormValues}
+            />
+          </Modal>
         </>
       )}
     </div>
