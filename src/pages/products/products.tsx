@@ -59,6 +59,9 @@ function Products(): JSX.Element {
     setProducts(results);
   };
 
+
+
+
   const handleSort = async (sortAttr: string) => {
     if (sortAttr === 'price asc' || sortAttr === 'price desc') {
       const sorted = [...products].sort((a, b) => {
@@ -89,6 +92,23 @@ function Products(): JSX.Element {
     }
   };
 
+
+
+const handleSortButtonClick = (
+  sortKey: string,
+  e: React.MouseEvent<HTMLButtonElement>
+) => {
+
+  const allButtons = document.querySelectorAll('.sort-button');
+  allButtons.forEach((btn) => btn.classList.remove('sort-button_clicked'));
+
+  const target = e.target as HTMLButtonElement;
+  target.classList.add('sort-button_clicked');
+
+
+  handleSort(sortKey);
+};
+
   useEffect(() => {
     console.log('Updated products state:', products);
   }, [products]);
@@ -101,10 +121,10 @@ function Products(): JSX.Element {
     <div className="product-page temp">
       <SearchProduct onSearchResults={handleSearchResults} />
       <div className="sort-buttons">
-        <SortButton attrSort=" name A-Z" onClickF={() => handleSort('name.en-US asc')} />
-        <SortButton attrSort=" name Z-A" onClickF={() => handleSort('name.en-US desc')} />
-        <SortButton attrSort=" price ↑" onClickF={() => handleSort('price asc')} />
-        <SortButton attrSort=" price ↓" onClickF={() => handleSort('price desc')} />
+        <SortButton attrSort=" name A-Z" onClickF={(e)=>handleSortButtonClick('name.en-US asc', e)} />
+        <SortButton attrSort=" name Z-A" onClickF={(e) => handleSortButtonClick('name.en-US desc', e)} />
+        <SortButton attrSort=" price ↑" onClickF={(e) => handleSortButtonClick('price asc', e)} />
+        <SortButton attrSort=" price ↓" onClickF={(e) => handleSortButtonClick('price desc', e)} />
       </div>
 
       <div className="product-list">
