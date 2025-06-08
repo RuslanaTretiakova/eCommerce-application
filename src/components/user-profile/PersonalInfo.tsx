@@ -4,6 +4,10 @@ function PersonalInfo({ user }: { user: IUserProfile }) {
   return (
     <>
       <p>
+        <span className="label">Email:</span>
+        {user.email}
+      </p>
+      <p>
         <span className="label">First Name:</span>
         {user.firstName}
       </p>
