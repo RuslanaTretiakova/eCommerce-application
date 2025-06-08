@@ -20,6 +20,7 @@ import getSortedProductListFromServer from '../../api/getSortedProductListByCatg
 import getSortedProductListAllFromServer from '../../api/getSortdeProductListAll';
 import FilterByType from '../../components/ui/filter/filterByType';
 import getFilteredProducts from '../../api/getFilteredProductsByType';
+import PriceRangeFilter from '../../components/ui/filter/priceRange';
 
 interface ProductDataWithId extends ProductData {
   id: string;
@@ -110,37 +111,6 @@ function Products(): JSX.Element {
     } catch (error) {
       console.error('Sorting failed:', error);
     }
-    // if (sortAttr === 'price asc' || sortAttr === 'price desc') {
-    //   console.log(products)
-    //   const sorted = [...visibleProducts].sort((a, b) => {
-    //     const isProductA = 'masterData' in a;
-    //     const isProductB = 'masterData' in b;
-    //     const aData = isProductA ? (a as Product).masterData.current : (a as ProductDataWithId);
-    //     const bData = isProductB ? (b as Product).masterData.current : (b as ProductDataWithId);
-    //     const priceA = aData.masterVariant.prices?.[0]?.value.centAmount || 0;
-    //     const priceB = bData.masterVariant.prices?.[0]?.value.centAmount || 0;
-    //     return sortAttr === 'price asc' ? priceA - priceB : priceB - priceA;
-    //   });
-    //    setVisibleProducts(sorted)
-    //   // setProducts(sorted);
-    // } else if (category === 'all') {
-    //   try {
-    //     const response = await getSortedProductListAllFromServer(`masterData.current.${sortAttr}`);
-    //     // setProducts(response.results);
-    //      setVisibleProducts(response.results)
-    //     console.log(products);
-    //   } catch (error) {
-    //     console.error('Sorting failed:', error);
-    //   }
-    // } else {
-    //   try {
-    //     const response = await getSortedProductListFromServer(category || '', sortAttr);
-    //     // setProducts(response.results);
-    //      setVisibleProducts(response.results)
-    //   } catch (error) {
-    //     console.error('Sorting failed:', error);
-    //   }
-    // }
   };
 
   const handleSortButtonClick = (sortKey: string, e: React.MouseEvent<HTMLButtonElement>) => {
@@ -174,24 +144,40 @@ function Products(): JSX.Element {
     } catch (error) {
       console.error('Filtering error:', error);
     }
+  };
 
-    // if (selectedCategories.length === 0) {
-    //   const fallback =
-    //     category === 'all'
-    //       ? await getProductListFromServer()
-    //       : await getSearchProductListByCategoryFromServer(category || '');
-    //   setProducts(fallback.results);
-    //    setVisibleProducts(fallback.results)
-    //   return;
-    // }
+  const handlePriceRangeChange = (min: number | null, max: number | null) => {
+    const range = { min: min ?? undefined, max: max ?? undefined };
 
-    // try {
-    //   const filtered = await getFilteredProducts(selectedCategories);
-    //   // setProducts(filtered.results);
-    //    setVisibleProducts(filtered.results)
-    // } catch (error) {
-    //   console.error('Filtering error:', error);
-    // }
+    const filtered = products.filter((prod: Product) => {
+      const productData = 'masterData' in prod ? prod.masterData.current : prod;
+
+      const masterVariant = productData.masterVariant;
+      const otherVariants = productData.variants;
+
+      const masterPriceCents = masterVariant.prices?.[0]?.value.centAmount ?? 0;
+      const masterPriceEuros = masterPriceCents / 100;
+
+      const masterInRange =
+        (range.min === undefined || masterPriceEuros >= range.min) &&
+        (range.max === undefined || masterPriceEuros <= range.max);
+
+      if (!masterInRange) return false;
+
+      const variants = [masterVariant, ...otherVariants];
+      const anyVariantInRange = variants.some((variant) => {
+        const priceCents = variant.prices?.[0]?.value.centAmount ?? 0;
+        const priceEuros = priceCents / 100;
+        return (
+          (range.min === undefined || priceEuros >= range.min) &&
+          (range.max === undefined || priceEuros <= range.max)
+        );
+      });
+
+      return anyVariantInRange;
+    });
+
+    setVisibleProducts(filtered);
   };
 
   useEffect(() => {
@@ -211,6 +197,7 @@ function Products(): JSX.Element {
       <SearchProduct onSearchResults={handleSearchResults} />
       <div className="filter_container">
         <FilterByType onChange={handleFilterChange} />
+        <PriceRangeFilter onChange={handlePriceRangeChange} />
       </div>
       <div className="sort-buttons">
         <SortButton
