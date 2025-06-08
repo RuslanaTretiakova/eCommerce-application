@@ -1,6 +1,7 @@
 import type { ButtonType, FieldType, NotificationType, RegistrationErrorType } from './types';
 import type { ChangeEventHandler, FocusEventHandler, ReactNode } from 'react';
-import type { ChangeHandler, FieldValues, Path } from 'react-hook-form';
+import type { ChangeHandler, DefaultValues, FieldValues, Path } from 'react-hook-form';
+import type { RegisterOptions } from 'react-hook-form';
 
 // Form
 export interface IFormData {
@@ -121,13 +122,13 @@ export interface IUserProfile {
   firstName: string;
   lastName: string;
   dateOfBirth: string;
+  email: string;
   addresses: IAddress[];
 }
 
 export interface IRawAddress {
   id: string;
   streetName?: string;
-  streetNumber?: string;
   city?: string;
   postalCode?: string;
   country?: string;
@@ -155,16 +156,20 @@ export interface IProductCard {
   discount?: string;
 }
 
-//Edit form
-export interface IEditField<T> {
+//Edit
+
+export interface IEditField<T extends FieldValues> {
   label: string;
-  key: keyof T;
+  key: Path<T>;
   type: FieldType;
   id?: string;
+  placeholder?: string;
+  rules?: RegisterOptions<T, Path<T>>;
+  options?: { value: string; label: string }[];
 }
 
-export interface IEditFormProps<T extends Record<string, string>> {
+export interface IEditFormProps<T extends FieldValues> {
   fields: IEditField<T>[];
-  initialValues: T;
+  initialValues: DefaultValues<T>;
   onChange: (updated: T) => void;
 }
