@@ -18,6 +18,8 @@ import getSearchProductListByCategoryFromServer from '../../api/productListByCat
 import SortButton from '../../components/ui/sort-button/sort-button';
 import getSortedProductListFromServer from '../../api/getSortedProductListByCatgory';
 import getSortedProductListAllFromServer from '../../api/getSortdeProductListAll';
+import FilterByType from '../../components/ui/filter/filterByType';
+import getFilteredProducts from '../../api/getFilteredProductsByType';
 
 interface ProductDataWithId extends ProductData {
   id: string;
@@ -30,6 +32,8 @@ function Products(): JSX.Element {
   };
 
   const [products, setProducts] = useState<Product[]>([]);
+  const [visibleProducts, setVisibleProducts] = useState<Product[]>([]);
+  const [isFilterActive, setIsFilterActive] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -40,10 +44,11 @@ function Products(): JSX.Element {
         if (category === 'all') {
           response = await getProductListFromServer();
           setProducts(response.results);
+          setVisibleProducts(response.results);
         } else {
           response = await getSearchProductListByCategoryFromServer(category || '');
-          console.log(response.results);
           setProducts(response.results);
+          setVisibleProducts(response.results);
         }
       } catch (error) {
         console.error('Failed to load products:', error);
@@ -57,61 +62,145 @@ function Products(): JSX.Element {
 
   const handleSearchResults = (results: Product[]) => {
     setProducts(results);
+    setVisibleProducts(results);
   };
-
-
-
 
   const handleSort = async (sortAttr: string) => {
-    if (sortAttr === 'price asc' || sortAttr === 'price desc') {
-      const sorted = [...products].sort((a, b) => {
-        const isProductA = 'masterData' in a;
-        const isProductB = 'masterData' in b;
-        const aData = isProductA ? (a as Product).masterData.current : (a as ProductDataWithId);
-        const bData = isProductB ? (b as Product).masterData.current : (b as ProductDataWithId);
-        const priceA = aData.masterVariant.prices?.[0]?.value.centAmount || 0;
-        const priceB = bData.masterVariant.prices?.[0]?.value.centAmount || 0;
-        return sortAttr === 'price asc' ? priceA - priceB : priceB - priceA;
-      });
-      setProducts(sorted);
-    } else if (category === 'all') {
-      try {
-        const response = await getSortedProductListAllFromServer(`masterData.current.${sortAttr}`);
-        setProducts(response.results);
-        console.log(products);
-      } catch (error) {
-        console.error('Sorting failed:', error);
-      }
-    } else {
-      try {
-        const response = await getSortedProductListFromServer(category || '', sortAttr);
-        setProducts(response.results);
-      } catch (error) {
-        console.error('Sorting failed:', error);
-      }
+    const isPriceSort = sortAttr === 'price asc' || sortAttr === 'price desc';
+    const isNameSort = sortAttr.startsWith('name');
+
+    if (visibleProducts.length <= 1 && (isPriceSort || (isFilterActive && isNameSort))) {
+      setVisibleProducts([...visibleProducts]);
+      return;
     }
+
+    if (isPriceSort || (isFilterActive && isNameSort)) {
+      const sorted = [...visibleProducts].sort((a, b) => {
+        const getData = (product: Product | ProductDataWithId) =>
+          'masterData' in product ? product.masterData.current : product;
+
+        const aData = getData(a);
+        const bData = getData(b);
+
+        if (isPriceSort) {
+          const priceA = aData.masterVariant.prices?.[0]?.value.centAmount || 0;
+          const priceB = bData.masterVariant.prices?.[0]?.value.centAmount || 0;
+          return sortAttr === 'price asc' ? priceA - priceB : priceB - priceA;
+        }
+
+        const nameA = aData.name?.['en-US']?.toLowerCase() || '';
+        const nameB = bData.name?.['en-US']?.toLowerCase() || '';
+        return sortAttr.endsWith('asc') ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+      });
+
+      setVisibleProducts(sorted);
+      return;
+    }
+
+    try {
+      let response;
+      if (category === 'all') {
+        response = await getSortedProductListAllFromServer(`masterData.current.${sortAttr}`);
+      } else {
+        response = await getSortedProductListFromServer(category || '', sortAttr);
+      }
+
+      setProducts(response.results);
+      setVisibleProducts(response.results);
+    } catch (error) {
+      console.error('Sorting failed:', error);
+    }
+    // if (sortAttr === 'price asc' || sortAttr === 'price desc') {
+    //   console.log(products)
+    //   const sorted = [...visibleProducts].sort((a, b) => {
+    //     const isProductA = 'masterData' in a;
+    //     const isProductB = 'masterData' in b;
+    //     const aData = isProductA ? (a as Product).masterData.current : (a as ProductDataWithId);
+    //     const bData = isProductB ? (b as Product).masterData.current : (b as ProductDataWithId);
+    //     const priceA = aData.masterVariant.prices?.[0]?.value.centAmount || 0;
+    //     const priceB = bData.masterVariant.prices?.[0]?.value.centAmount || 0;
+    //     return sortAttr === 'price asc' ? priceA - priceB : priceB - priceA;
+    //   });
+    //    setVisibleProducts(sorted)
+    //   // setProducts(sorted);
+    // } else if (category === 'all') {
+    //   try {
+    //     const response = await getSortedProductListAllFromServer(`masterData.current.${sortAttr}`);
+    //     // setProducts(response.results);
+    //      setVisibleProducts(response.results)
+    //     console.log(products);
+    //   } catch (error) {
+    //     console.error('Sorting failed:', error);
+    //   }
+    // } else {
+    //   try {
+    //     const response = await getSortedProductListFromServer(category || '', sortAttr);
+    //     // setProducts(response.results);
+    //      setVisibleProducts(response.results)
+    //   } catch (error) {
+    //     console.error('Sorting failed:', error);
+    //   }
+    // }
   };
 
+  const handleSortButtonClick = (sortKey: string, e: React.MouseEvent<HTMLButtonElement>) => {
+    const allButtons = document.querySelectorAll('.sort-button');
+    allButtons.forEach((btn) => btn.classList.remove('sort-button_clicked'));
 
+    const target = e.target as HTMLButtonElement;
+    target.classList.add('sort-button_clicked');
 
-const handleSortButtonClick = (
-  sortKey: string,
-  e: React.MouseEvent<HTMLButtonElement>
-) => {
+    handleSort(sortKey);
+  };
 
-  const allButtons = document.querySelectorAll('.sort-button');
-  allButtons.forEach((btn) => btn.classList.remove('sort-button_clicked'));
+  const handleFilterChange = async (selectedCategories: string[]) => {
+    const filterIsActive = selectedCategories.length > 0;
+    setIsFilterActive(filterIsActive);
 
-  const target = e.target as HTMLButtonElement;
-  target.classList.add('sort-button_clicked');
+    if (!filterIsActive) {
+      const fallback =
+        category === 'all'
+          ? await getProductListFromServer()
+          : await getSearchProductListByCategoryFromServer(category || '');
+      setProducts(fallback.results);
+      setVisibleProducts(fallback.results);
+      return;
+    }
 
+    try {
+      const filtered = await getFilteredProducts(selectedCategories);
+      setProducts(filtered.results);
+      setVisibleProducts(filtered.results);
+    } catch (error) {
+      console.error('Filtering error:', error);
+    }
 
-  handleSort(sortKey);
-};
+    // if (selectedCategories.length === 0) {
+    //   const fallback =
+    //     category === 'all'
+    //       ? await getProductListFromServer()
+    //       : await getSearchProductListByCategoryFromServer(category || '');
+    //   setProducts(fallback.results);
+    //    setVisibleProducts(fallback.results)
+    //   return;
+    // }
+
+    // try {
+    //   const filtered = await getFilteredProducts(selectedCategories);
+    //   // setProducts(filtered.results);
+    //    setVisibleProducts(filtered.results)
+    // } catch (error) {
+    //   console.error('Filtering error:', error);
+    // }
+  };
 
   useEffect(() => {
     console.log('Updated products state:', products);
   }, [products]);
+
+  useEffect(() => {
+    console.log('Updated products state:', visibleProducts);
+  }, [visibleProducts]);
 
   if (loading) {
     return <Load />;
@@ -120,15 +209,24 @@ const handleSortButtonClick = (
   return (
     <div className="product-page temp">
       <SearchProduct onSearchResults={handleSearchResults} />
+      <div className="filter_container">
+        <FilterByType onChange={handleFilterChange} />
+      </div>
       <div className="sort-buttons">
-        <SortButton attrSort=" name A-Z" onClickF={(e)=>handleSortButtonClick('name.en-US asc', e)} />
-        <SortButton attrSort=" name Z-A" onClickF={(e) => handleSortButtonClick('name.en-US desc', e)} />
+        <SortButton
+          attrSort=" name A-Z"
+          onClickF={(e) => handleSortButtonClick('name.en-US asc', e)}
+        />
+        <SortButton
+          attrSort=" name Z-A"
+          onClickF={(e) => handleSortButtonClick('name.en-US desc', e)}
+        />
         <SortButton attrSort=" price ↑" onClickF={(e) => handleSortButtonClick('price asc', e)} />
         <SortButton attrSort=" price ↓" onClickF={(e) => handleSortButtonClick('price desc', e)} />
       </div>
 
       <div className="product-list">
-        {products.map((product) => {
+        {visibleProducts.map((product) => {
           const productData = 'masterData' in product ? product.masterData.current : product;
           const variants = [productData.masterVariant, ...productData.variants];
 

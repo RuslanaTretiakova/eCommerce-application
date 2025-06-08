@@ -2,7 +2,7 @@ import './sort-button.scss';
 
 type SortButtonProps = {
   attrSort: string;
-   onClickF: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClickF: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 function SortButton({ attrSort, onClickF }: SortButtonProps) {
