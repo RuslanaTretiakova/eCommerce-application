@@ -14,7 +14,6 @@ import type { Swiper as SwiperType } from 'swiper/types';
 
 import './product.scss';
 
-
 function Item() {
   const { token } = useAuth();
   const { id } = useParams<{ id: string }>();
