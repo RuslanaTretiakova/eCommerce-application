@@ -25,24 +25,26 @@ export const useUserProfile = () => {
         }
         const mappedAddresses = (data.addresses || []).map((addr: IAddress) => ({
           id: addr.id,
-          streetName: addr.streetName || '',
-          city: addr.city || '',
-          postalCode: addr.postalCode || '',
-          country: addr.country || '',
+          streetName: addr.streetName,
+          city: addr.city,
+          postalCode: addr.postalCode,
+          country: addr.country,
           isDefaultBillingAddress: addr.isDefaultBillingAddress || false,
           isDefaultShippingAddress: addr.isDefaultShippingAddress || false,
         }));
 
         setUser({
+          email: data.email,
           firstName: data.firstName,
           lastName: data.lastName,
-          dateOfBirth: data.dateOfBirth || 'Not set',
+          dateOfBirth: data.dateOfBirth,
           addresses: mappedAddresses,
         });
       } catch (err) {
         console.error('Failed to fetch user profile:', err);
       }
     };
+
     fetchProfile();
   }, [token]);
 

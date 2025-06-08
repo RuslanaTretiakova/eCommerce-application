@@ -1,8 +1,9 @@
 .base-input {
+  padding-bottom: 5px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
 
   &--inline {
     flex-direction: row-reverse;
@@ -34,6 +35,7 @@
   }
 
   &__error {
+    margin-bottom: 2px;
     font-size: 0.85rem;
     color: var(--error-color);
   }
