@@ -1,34 +1,26 @@
 import { useState, useRef } from 'react';
 import { useUserProfile } from '../../components/user-profile/hooks/useUserProfile';
-import type { IUserProfile, IAddress } from '../../types/interfaces';
-
-import './userLoginProfile.scss';
-
+import type { IAddress } from '../../types/interfaces';
 import type {
   IAddressFormFields,
   IPasswordFormFields,
   IUserProfileFormFields,
 } from '../../components/user-profile/forms/userProfileFormTypes';
 
+import './userLoginProfile.scss';
+
 import EditableCard from '../../components/ui/editable-card/EditableCard';
 import PersonalInfo from '../../components/user-profile/PersonalInfo';
 import UserAddresses from '../../components/user-profile/UserAddresses';
 import EditForm from '../../components/ui/form/EditForm';
-import { showNotification } from '../../utils/toastify/showNotification';
-import { createDefaultAddress } from '../../components/user-profile/utils/defaultAddress';
-import { personalFields } from '../../components/user-profile/forms/personalFields';
-import { addressFields } from '../../components/user-profile/forms/addressFields';
 import Modal from '../../components/ui/modal/editModal/Modal';
+
 import { passwordFields } from '../../components/user-profile/forms/passwordFields';
-
+import { addressFields } from '../../components/user-profile/forms/addressFields';
+import { personalFields } from '../../components/user-profile/forms/personalFields';
+import { createDefaultAddress } from '../../components/user-profile/utils/defaultAddress';
 import { usePasswordChange } from '../../components/user-profile/hooks/usePasswordChange';
-
-const defaultUserFormValues: IUserProfileFormFields = {
-  email: '',
-  firstName: '',
-  lastName: '',
-  dateOfBirth: '',
-};
+import { usePersonalInfo } from '../../components/user-profile/hooks/usePersonalInfo';
 
 const defaultAddressFormValues: IAddressFormFields = {
   streetName: '',
@@ -40,16 +32,6 @@ const defaultAddressFormValues: IAddressFormFields = {
 function UserLoginProfile() {
   const { user, setUser } = useUserProfile();
 
-  const {
-    passwordFormValues,
-    setPasswordFormValues,
-    isPasswordModalOpen,
-    openPasswordModal,
-    cancelPassword,
-    savePassword,
-    passwordFormRef,
-  } = usePasswordChange(user, setUser);
-
   const billingAddress =
     user?.addresses.find((a) => a.isDefaultBillingAddress) ??
     user?.addresses.find((a) => !a.isDefaultShippingAddress) ??
@@ -60,60 +42,37 @@ function UserLoginProfile() {
     user?.addresses.find((a) => !a.isDefaultBillingAddress) ??
     createDefaultAddress('shipping');
 
-  const [isPersonalModalOpen, setPersonalModalOpen] = useState(false);
   const [isBillingModalOpen, setBillingModalOpen] = useState(false);
   const [isShippingModalOpen, setShippingModalOpen] = useState(false);
-
-  const [editedUser, setEditedUser] = useState<IUserProfile | null>(null);
-  const [formValues, setFormValues] = useState<IUserProfileFormFields>(defaultUserFormValues);
 
   const [editedAddress, setEditedAddress] = useState<IAddress | null>(null);
   const [addressFormValues, setAddressFormValues] =
     useState<IAddressFormFields>(defaultAddressFormValues);
-
-  const personalFormRef = useRef<{
-    trigger: () => Promise<boolean>;
-    getValues: () => IUserProfileFormFields;
-  }>(null);
 
   const addressFormRef = useRef<{
     trigger: () => Promise<boolean>;
     getValues: () => IAddressFormFields;
   }>(null);
 
-  const openPersonalModal = () => {
-    if (!user) return;
-    setEditedUser(user);
-    setFormValues({
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      dateOfBirth: user.dateOfBirth,
-    });
-    setPersonalModalOpen(true);
-  };
+  const {
+    passwordFormValues,
+    setPasswordFormValues,
+    isPasswordModalOpen,
+    openPasswordModal,
+    cancelPassword,
+    savePassword,
+    passwordFormRef,
+  } = usePasswordChange(user, setUser);
 
-  const savePersonal = async () => {
-    if (!editedUser || !personalFormRef.current) return;
-    const isValid = await personalFormRef.current.trigger();
-    if (!isValid) {
-      showNotification({ text: 'Please correct the errors before saving.', type: 'error' });
-      return;
-    }
-
-    const updatedData = personalFormRef.current.getValues();
-    const updated = { ...editedUser, ...updatedData };
-    setEditedUser(updated);
-    setUser(updated);
-    showNotification({ text: 'Personal information saved successfully.', type: 'info' });
-    setPersonalModalOpen(false);
-  };
-
-  const cancelPersonal = () => {
-    setEditedUser(null);
-    setFormValues(defaultUserFormValues);
-    setPersonalModalOpen(false);
-  };
+  const {
+    personalFormValues,
+    setPersonalFormValues,
+    isPersonalModalOpen,
+    openPersonalModal,
+    cancelPersonal,
+    savePersonal,
+    personalFormRef,
+  } = usePersonalInfo(user, setUser);
 
   const openAddressModal = (type: 'billing' | 'shipping') => {
     const address = type === 'billing' ? billingAddress : shippingAddress;
@@ -135,10 +94,7 @@ function UserLoginProfile() {
   const saveAddress = async () => {
     if (!editedAddress || !user || !addressFormRef.current) return;
     const isValid = await addressFormRef.current.trigger();
-    if (!isValid) {
-      showNotification({ text: 'Please fix the address form errors.', type: 'error' });
-      return;
-    }
+    if (!isValid) return;
 
     const updatedData = addressFormRef.current.getValues();
     const updatedAddress = { ...editedAddress, ...updatedData };
@@ -150,8 +106,6 @@ function UserLoginProfile() {
 
     setUser({ ...user, addresses: updatedAddresses });
     setEditedAddress(null);
-    showNotification({ text: 'Address saved successfully.', type: 'info' });
-
     setBillingModalOpen(false);
     setShippingModalOpen(false);
   };
@@ -208,8 +162,8 @@ function UserLoginProfile() {
             <EditForm<IUserProfileFormFields>
               ref={personalFormRef}
               fields={personalFields}
-              initialValues={formValues}
-              onChange={setFormValues}
+              initialValues={personalFormValues}
+              onChange={setPersonalFormValues}
             />
           </Modal>
 
