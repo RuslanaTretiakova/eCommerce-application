@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Thumbs, Navigation, Autoplay, Keyboard } from 'swiper/modules';
+import { Thumbs, Navigation, Keyboard } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper/types';
 
 import { Modal } from '../../../ui/modal/productModal/galleryModal';
@@ -41,8 +41,9 @@ function ProductGallery({ images, thumbsSwiper }: ProductGalleryProps) {
           onlyInViewport: true,
         }}
         autoHeight={false}
+        loop
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
-        modules={[Thumbs, Navigation, Autoplay, Keyboard]}
+        modules={[Thumbs, Navigation, Keyboard]}
         className="main-swiper"
       >
         {images.map((src, index) => (
