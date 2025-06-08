@@ -2,14 +2,13 @@ import Header from '../../components/header/header';
 import './main.scss';
 import Footer from '../../components/footer/footer';
 import { Outlet } from 'react-router-dom';
+import { Breadcrumbs } from '../../components/ui/breadcrumbs/Breadcrumbs';
 
 function MainPage() {
-  // useEffect(() => {
-  //   fetchAnonymousToken();
-  // }, []);
   return (
     <div className="container">
       <Header />
+      <Breadcrumbs />
       <Outlet />
       <Footer />
     </div>
