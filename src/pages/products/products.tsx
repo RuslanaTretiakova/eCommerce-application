@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
-import type { ProductData, Product } from '@commercetools/platform-sdk';
+import type {
+  ProductData,
+  Product
+} from '@commercetools/platform-sdk';
 import Load from '../load/load';
 
 // This is a temporary implementation that simply demonstrates how to work with the ProductCard component.
@@ -42,6 +45,7 @@ function Products(): JSX.Element {
           setProducts(response.results);
         } else {
           response = await getSearchProductListByCategoryFromServer(category || '');
+          console.log(response.results);
           setProducts(response.results);
         }
       } catch (error) {
@@ -99,66 +103,49 @@ function Products(): JSX.Element {
   return (
     <div className="product-page temp">
       <SearchProduct onSearchResults={handleSearchResults} />
-      <div className='sort-buttons'>
+      <div className="sort-buttons">
         <SortButton attrSort=" name A-Z" onClickF={() => handleSort('name.en-US asc')} />
         <SortButton attrSort=" name Z-A" onClickF={() => handleSort('name.en-US desc')} />
         <SortButton attrSort=" price ↑" onClickF={() => handleSort('price asc')} />
         <SortButton attrSort=" price ↓" onClickF={() => handleSort('price desc')} />
       </div>
-     
+
       <div className="product-list">
         {products.map((product) => {
-          const isProduct = 'masterData' in product;
+          const productData = 'masterData' in product ? product.masterData.current : product;
+          const variants = [productData.masterVariant, ...productData.variants];
 
-          const productData = isProduct
-            ? (product as Product).masterData.current
-            : (product as ProductDataWithId);
+          const productName = productData.name?.['en-US'] || 'Unnamed product';
+          const productDescription = productData.description?.['en-US']?.split('.')[0] || '';
 
-          const name = productData?.name['en-US'];
+          return variants.map((variant) => {
+            const variantKey = variant.sku || String(variant.id);
+            const price = variant.prices?.[0]?.value.centAmount ?? 0;
+            const discount = variant.prices?.[0]?.discounted?.value.centAmount ?? 0;
+            const imageUrl = variant.images?.[0]?.url || '';
 
-          const description =
-            productData?.description?.['en-US'].slice(
-              0,
-              productData?.description?.['en-US'].indexOf('.'),
-            ) ?? '';
-          const imageUrl = productData?.masterVariant?.images?.[0]?.url ?? '';
-
-          const price = productData?.masterVariant?.prices?.[0]?.value.centAmount ?? '';
-
-          const discount =
-            productData?.masterVariant?.prices?.[0]?.discounted?.value.centAmount || '';
-
-          return (
-            <div key={product.id} className="product-list__item" data-id={product.id}>
-              {discount ? (
+            return (
+              <div key={variantKey} className="product-list__item" data-id={variantKey}>
                 <ProductCard
-                  id={product?.id}
-                  name={name}
-                  description={description}
-                  price={`${String((+price / 100).toFixed(2))} EUR`}
+                  id={variantKey}
+                  name={productName}
+                  description={productDescription}
+                  price={`${(price / 100).toFixed(2)} EUR`}
                   imageUrl={imageUrl}
-                  discount={`${String((+discount / 100).toFixed(2))} EUR`}
+                  discount={discount ? `${(discount / 100).toFixed(2)} EUR` : undefined}
                 />
-              ) : (
-                <ProductCard
-                  id={product.id}
-                  name={name}
-                  description={description}
-                  price={`${String((+price / 100).toFixed(2))} EUR`}
-                  imageUrl={imageUrl}
-                />
-              )}
 
-              <BaseButton
-                title="Add to Cart"
-                type="button"
-                className="button button--cart"
-                onClick={() => handleAddToCart(product.id)}
-              >
-                Add to Cart
-              </BaseButton>
-            </div>
-          );
+                <BaseButton
+                  title="Add to Cart"
+                  type="button"
+                  className="button button--cart"
+                  onClick={() => handleAddToCart(variantKey)}
+                >
+                  Add to Cart
+                </BaseButton>
+              </div>
+            );
+          });
         })}
       </div>
     </div>

@@ -4,14 +4,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-.gallery-modal__content{
+.gallery-modal__content {
   position: relative;
   max-width: 90vw;
   max-height: 90vh;

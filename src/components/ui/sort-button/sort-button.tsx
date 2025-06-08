@@ -1,4 +1,4 @@
-import './sort-button.scss'
+import './sort-button.scss';
 
 type SortButtonProps = {
   attrSort: string;
