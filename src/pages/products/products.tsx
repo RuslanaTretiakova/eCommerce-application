@@ -25,7 +25,6 @@ interface ProductDataWithId extends ProductData {
 
 function Products(): JSX.Element {
   const { category } = useParams();
-  // const { sortAttr } = useParams();
   const handleAddToCart = (productId: string) => {
     console.log(`${productId}`);
   };
@@ -66,31 +65,27 @@ function Products(): JSX.Element {
         const isProductB = 'masterData' in b;
         const aData = isProductA ? (a as Product).masterData.current : (a as ProductDataWithId);
         const bData = isProductB ? (b as Product).masterData.current : (b as ProductDataWithId);
-        console.log(a);
         const priceA = aData.masterVariant.prices?.[0]?.value.centAmount || 0;
         const priceB = bData.masterVariant.prices?.[0]?.value.centAmount || 0;
         return sortAttr === 'price asc' ? priceA - priceB : priceB - priceA;
       });
       setProducts(sorted);
-    } else if(category === 'all'){
+    } else if (category === 'all') {
       try {
-              const response = await getSortedProductListAllFromServer(`masterData.current.${sortAttr}`);
-              setProducts(response.results);
-              console.log(products);
-            } catch (error) {
-              console.error('Sorting failed:', error);
-      } 
-    } else {
-      try {
-        const response = await getSortedProductListFromServer(category || '', sortAttr);
+        const response = await getSortedProductListAllFromServer(`masterData.current.${sortAttr}`);
         setProducts(response.results);
         console.log(products);
       } catch (error) {
         console.error('Sorting failed:', error);
       }
+    } else {
+      try {
+        const response = await getSortedProductListFromServer(category || '', sortAttr);
+        setProducts(response.results);
+      } catch (error) {
+        console.error('Sorting failed:', error);
+      }
     }
-    
-   
   };
 
   useEffect(() => {
@@ -104,10 +99,13 @@ function Products(): JSX.Element {
   return (
     <div className="product-page temp">
       <SearchProduct onSearchResults={handleSearchResults} />
-      <SortButton attrSort="name A-Z" onClickF={() => handleSort('name.en-US asc')} />
-      <SortButton attrSort="name Z-A" onClickF={() => handleSort('name.en-US desc')} />
-      <SortButton attrSort="price ↑" onClickF={() => handleSort('price asc')} />
-      <SortButton attrSort="price ↓" onClickF={() => handleSort('price desc')} />
+      <div className='sort-buttons'>
+        <SortButton attrSort=" name A-Z" onClickF={() => handleSort('name.en-US asc')} />
+        <SortButton attrSort=" name Z-A" onClickF={() => handleSort('name.en-US desc')} />
+        <SortButton attrSort=" price ↑" onClickF={() => handleSort('price asc')} />
+        <SortButton attrSort=" price ↓" onClickF={() => handleSort('price desc')} />
+      </div>
+     
       <div className="product-list">
         {products.map((product) => {
           const isProduct = 'masterData' in product;

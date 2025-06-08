@@ -11,7 +11,7 @@ import {
 import { ClientBuilder } from '@commercetools/sdk-client-v2';
 
 const handler: Handler = async (event) => {
-     const sortAttr = event.queryStringParameters?.sort || '';
+  const sortAttr = event.queryStringParameters?.sort || '';
   const client = new ClientBuilder()
     .withProjectKey(CTP_PROJECT_KEY)
     .withClientCredentialsFlow({
