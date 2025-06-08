@@ -6,9 +6,7 @@ import type { Swiper as SwiperType } from 'swiper/types';
 
 import { Modal } from '../../../ui/modal/productModal/galleryModal';
 
-import 'swiper/css';
-import 'swiper/css/thumbs';
-import 'swiper/css/navigation';
+import 'swiper/swiper-bundle.css';
 import './productSlider.scss';
 
 type ProductGalleryProps = {

@@ -2,7 +2,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { Breadcrumbs } from '../../components/ui/breadcrumbs/Breadcrumbs';
 
-
 import './productsCategory.scss';
 import kaskImg from '../../assets/img/kask-2.png';
 import bikeImg from '../../assets/img/category-bike.png';

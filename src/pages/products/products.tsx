@@ -58,7 +58,7 @@ function Products(): JSX.Element {
   const navigate = useNavigate();
   const handleCardClick = (productId: string) => {
     navigate(`/product/${productId}`);
-};
+  };
   const handleSearchResults = (results: Product[]) => {
     setProducts(results);
   };
