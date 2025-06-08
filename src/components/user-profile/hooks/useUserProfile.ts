@@ -34,6 +34,8 @@ export const useUserProfile = () => {
         }));
 
         setUser({
+          id: data.id,
+          version: data.version,
           email: data.email,
           firstName: data.firstName,
           lastName: data.lastName,
