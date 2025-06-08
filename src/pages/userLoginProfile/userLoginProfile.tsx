@@ -6,8 +6,8 @@ import './userLoginProfile.scss';
 
 import type {
   IAddressFormFields,
-  IUserProfileFormFields,
   IPasswordFormFields,
+  IUserProfileFormFields,
 } from '../../components/user-profile/forms/userProfileFormTypes';
 
 import EditableCard from '../../components/ui/editable-card/EditableCard';
@@ -20,6 +20,8 @@ import { personalFields } from '../../components/user-profile/forms/personalFiel
 import { addressFields } from '../../components/user-profile/forms/addressFields';
 import Modal from '../../components/ui/modal/editModal/Modal';
 import { passwordFields } from '../../components/user-profile/forms/passwordFields';
+
+import { usePasswordChange } from '../../components/user-profile/hooks/usePasswordChange';
 
 const defaultUserFormValues: IUserProfileFormFields = {
   email: '',
@@ -35,14 +37,18 @@ const defaultAddressFormValues: IAddressFormFields = {
   country: '',
 };
 
-const defaultPasswordFormValues: IPasswordFormFields = {
-  currentPassword: '',
-  newPassword: '',
-  confirmPassword: '',
-};
-
 function UserLoginProfile() {
   const { user, setUser } = useUserProfile();
+
+  const {
+    passwordFormValues,
+    setPasswordFormValues,
+    isPasswordModalOpen,
+    openPasswordModal,
+    cancelPassword,
+    savePassword,
+    passwordFormRef,
+  } = usePasswordChange(user, setUser);
 
   const billingAddress =
     user?.addresses.find((a) => a.isDefaultBillingAddress) ??
@@ -57,7 +63,6 @@ function UserLoginProfile() {
   const [isPersonalModalOpen, setPersonalModalOpen] = useState(false);
   const [isBillingModalOpen, setBillingModalOpen] = useState(false);
   const [isShippingModalOpen, setShippingModalOpen] = useState(false);
-  const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
 
   const [editedUser, setEditedUser] = useState<IUserProfile | null>(null);
   const [formValues, setFormValues] = useState<IUserProfileFormFields>(defaultUserFormValues);
@@ -65,9 +70,6 @@ function UserLoginProfile() {
   const [editedAddress, setEditedAddress] = useState<IAddress | null>(null);
   const [addressFormValues, setAddressFormValues] =
     useState<IAddressFormFields>(defaultAddressFormValues);
-
-  const [passwordFormValues, setPasswordFormValues] =
-    useState<IPasswordFormFields>(defaultPasswordFormValues);
 
   const personalFormRef = useRef<{
     trigger: () => Promise<boolean>;
@@ -77,11 +79,6 @@ function UserLoginProfile() {
   const addressFormRef = useRef<{
     trigger: () => Promise<boolean>;
     getValues: () => IAddressFormFields;
-  }>(null);
-
-  const passwordFormRef = useRef<{
-    trigger: () => Promise<boolean>;
-    getValues: () => IPasswordFormFields;
   }>(null);
 
   const openPersonalModal = () => {
@@ -164,46 +161,6 @@ function UserLoginProfile() {
     setAddressFormValues(defaultAddressFormValues);
     setBillingModalOpen(false);
     setShippingModalOpen(false);
-  };
-
-  const openPasswordModal = () => {
-    setPasswordFormValues(defaultPasswordFormValues);
-    setPasswordModalOpen(true);
-  };
-
-  const savePassword = async () => {
-    if (!passwordFormRef.current) return;
-    const isValid = await passwordFormRef.current.trigger();
-    if (!isValid) {
-      showNotification({ text: 'Please fix the password form errors.', type: 'error' });
-      return;
-    }
-
-    const { currentPassword, newPassword, confirmPassword } = passwordFormRef.current.getValues();
-    console.log(currentPassword);
-    if (newPassword !== confirmPassword) {
-      showNotification({ text: 'New password and confirmation do not match.', type: 'error' });
-      return;
-    }
-
-    try {
-      // todo: Implement changeUserPassword logic to update the password
-      // await changeUserPassword({ currentPassword, newPassword });
-
-      showNotification({ text: 'Password changed successfully.', type: 'info' });
-      setPasswordModalOpen(false);
-      setPasswordFormValues(defaultPasswordFormValues);
-    } catch {
-      showNotification({
-        text: 'Failed to change password. Please check your current password.',
-        type: 'error',
-      });
-    }
-  };
-
-  const cancelPassword = () => {
-    setPasswordFormValues(defaultPasswordFormValues);
-    setPasswordModalOpen(false);
   };
 
   const showAddressModal = isBillingModalOpen || isShippingModalOpen;
