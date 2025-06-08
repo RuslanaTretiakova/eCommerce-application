@@ -59,4 +59,16 @@ export const addressFields: IEditField<IAddressFormFields>[] = [
       },
     },
   },
+  {
+    key: 'isDefaultBillingAddress',
+    label: 'Set as default billing',
+    type: 'checkbox',
+    rules: {},
+  },
+  {
+    key: 'isDefaultShippingAddress',
+    label: 'Set as default shipping',
+    type: 'checkbox',
+    rules: {},
+  },
 ];
