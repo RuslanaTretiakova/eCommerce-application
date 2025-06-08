@@ -16,7 +16,8 @@ import SearchProduct from '../../components/searchProduct/searchProduct';
 import { useParams } from 'react-router-dom';
 import getSearchProductListByCategoryFromServer from '../../api/productListByCategory';
 import SortButton from '../../components/ui/sort-button/sort-button';
-import getSortedProductListFromServer from '../../api/getSortedProductList';
+import getSortedProductListFromServer from '../../api/getSortedProductListByCatgory';
+import getSortedProductListAllFromServer from '../../api/getSortdeProductListAll';
 
 interface ProductDataWithId extends ProductData {
   id: string;
@@ -71,6 +72,14 @@ function Products(): JSX.Element {
         return sortAttr === 'price asc' ? priceA - priceB : priceB - priceA;
       });
       setProducts(sorted);
+    } else if(category === 'all'){
+      try {
+              const response = await getSortedProductListAllFromServer(`masterData.current.${sortAttr}`);
+              setProducts(response.results);
+              console.log(products);
+            } catch (error) {
+              console.error('Sorting failed:', error);
+      } 
     } else {
       try {
         const response = await getSortedProductListFromServer(category || '', sortAttr);
@@ -80,6 +89,8 @@ function Products(): JSX.Element {
         console.error('Sorting failed:', error);
       }
     }
+    
+   
   };
 
   useEffect(() => {

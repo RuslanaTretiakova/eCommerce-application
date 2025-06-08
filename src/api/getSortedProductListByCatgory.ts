@@ -1,6 +1,6 @@
 async function getSortedProductListFromServer(category: string, sortAttr: string) {
   const response = await fetch(
-    `/.netlify/functions/getSortedProductList?category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sortAttr)}`,
+    `/.netlify/functions/getSortedProductListByCategory?category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sortAttr)}`,
   );
 
   console.log(sortAttr);
