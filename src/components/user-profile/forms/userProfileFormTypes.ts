@@ -6,3 +6,9 @@ export type IUserProfileFormFields = Pick<
 >;
 
 export type IAddressFormFields = Pick<IAddress, 'streetName' | 'city' | 'postalCode' | 'country'>;
+
+export interface IPasswordFormFields {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
