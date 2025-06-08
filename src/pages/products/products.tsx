@@ -21,6 +21,7 @@ import getSortedProductListAllFromServer from '../../api/getSortdeProductListAll
 import FilterByType from '../../components/ui/filter/filterByType';
 import getFilteredProducts from '../../api/getFilteredProductsByType';
 import PriceRangeFilter from '../../components/ui/filter/priceRange';
+import ButtonResetFilter from '../../components/ui/button-reset-filter/button-reset-filter';
 
 interface ProductDataWithId extends ProductData {
   id: string;
@@ -180,6 +181,26 @@ function Products(): JSX.Element {
     setVisibleProducts(filtered);
   };
 
+  const handleResetFilter = async () => {
+    setIsFilterActive(false);
+
+    setLoading(true);
+    try {
+      let response;
+      if (category === 'all') {
+        response = await getProductListFromServer();
+      } else {
+        response = await getSearchProductListByCategoryFromServer(category || '');
+      }
+      setProducts(response.results);
+      setVisibleProducts(response.results);
+    } catch (error) {
+      console.error('Failed to reset filters:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     console.log('Updated products state:', products);
   }, [products]);
@@ -198,6 +219,7 @@ function Products(): JSX.Element {
       <div className="filter_container">
         <FilterByType onChange={handleFilterChange} />
         <PriceRangeFilter onChange={handlePriceRangeChange} />
+        <ButtonResetFilter onClick={handleResetFilter} />
       </div>
       <div className="sort-buttons">
         <SortButton
