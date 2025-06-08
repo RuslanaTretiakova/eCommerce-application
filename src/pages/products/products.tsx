@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
-import type {
-  ProductData,
-  Product
-} from '@commercetools/platform-sdk';
+import type { ProductData, Product } from '@commercetools/platform-sdk';
 import Load from '../load/load';
 
 // This is a temporary implementation that simply demonstrates how to work with the ProductCard component.
