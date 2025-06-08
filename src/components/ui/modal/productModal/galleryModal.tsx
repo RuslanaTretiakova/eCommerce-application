@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import '../productModal/productModal.scss'
+import '../productModal/productModal.scss';
 
 type ModalProps = {
   images: string[];
@@ -65,7 +65,6 @@ export function Modal({ images, initialIndex, isOpen, onClose }: ModalProps) {
         onTouchEnd={handleTouchEnd}
         role="button"
       >
-
         <button
           type="button"
           className="gallery-modal__close"
@@ -76,7 +75,9 @@ export function Modal({ images, initialIndex, isOpen, onClose }: ModalProps) {
           &times;
         </button>
 
-        <button type="button" className="gallery-modal__prev">&#10094;</button>
+        <button type="button" className="gallery-modal__prev">
+          &#10094;
+        </button>
 
         <img
           src={images[currentIndex]}
@@ -84,7 +85,9 @@ export function Modal({ images, initialIndex, isOpen, onClose }: ModalProps) {
           className="gallery-modal__image"
         />
 
-        <button type="button" className="gallery-modal__next">&#10095;</button>
+        <button type="button" className="gallery-modal__next">
+          &#10095;
+        </button>
       </div>
     </div>
   );
