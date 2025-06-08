@@ -12,7 +12,6 @@ import BaseButton from '../../components/ui/base-button/BaseButton';
 import { ProductGallery } from '../../components/product/productSlider/mainPic/productSlider';
 // import { Breadcrumbs } from '../../components/ui/breadcrumbs/Breadcrumbs';
 
-
 import type { Swiper as SwiperType } from 'swiper/types';
 
 import './product.scss';
