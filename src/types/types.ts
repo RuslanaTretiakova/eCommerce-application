@@ -10,4 +10,4 @@ export type RegistrationErrorType = 'EMAIL_EXISTS' | 'VALIDATION_FAILED' | 'INTE
 
 export type JsonResponseBody = IJsonSuccessResponse | IJsonErrorResponse;
 
-export type FieldType = 'text' | 'date' | 'email' | 'password' | 'select';
+export type FieldType = 'text' | 'date' | 'email' | 'password' | 'select' | 'checkbox';
