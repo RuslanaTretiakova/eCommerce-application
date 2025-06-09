@@ -5,7 +5,15 @@ export type IUserProfileFormFields = Pick<
   'firstName' | 'lastName' | 'dateOfBirth' | 'email'
 >;
 
-export type IAddressFormFields = Pick<IAddress, 'streetName' | 'city' | 'postalCode' | 'country'>;
+export type IAddressFormFields = Pick<
+  IAddress,
+  | 'streetName'
+  | 'city'
+  | 'postalCode'
+  | 'country'
+  | 'isDefaultBillingAddress'
+  | 'isDefaultShippingAddress'
+>;
 
 export interface IPasswordFormFields {
   currentPassword: string;

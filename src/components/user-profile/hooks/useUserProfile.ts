@@ -23,14 +23,11 @@ export const useUserProfile = () => {
           console.error('Unauthorized:', data);
           return;
         }
+
         const mappedAddresses = (data.addresses || []).map((addr: IAddress) => ({
-          id: addr.id,
-          streetName: addr.streetName,
-          city: addr.city,
-          postalCode: addr.postalCode,
-          country: addr.country,
-          isDefaultBillingAddress: addr.isDefaultBillingAddress || false,
-          isDefaultShippingAddress: addr.isDefaultShippingAddress || false,
+          ...addr,
+          isDefaultBillingAddress: addr.id === data.defaultBillingAddressId,
+          isDefaultShippingAddress: addr.id === data.defaultShippingAddressId,
         }));
 
         setUser({
@@ -41,6 +38,8 @@ export const useUserProfile = () => {
           lastName: data.lastName,
           dateOfBirth: data.dateOfBirth,
           addresses: mappedAddresses,
+          defaultBillingAddressId: data.defaultBillingAddressId,
+          defaultShippingAddressId: data.defaultShippingAddressId,
         });
       } catch (err) {
         console.error('Failed to fetch user profile:', err);

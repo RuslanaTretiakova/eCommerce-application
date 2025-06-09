@@ -1,5 +1,5 @@
 .editable-card {
-  width: 50%;
+  width: 40%;
   min-width: 280px;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
@@ -17,7 +17,15 @@
   border-bottom: 1px solid #f0f0f0;
 }
 
-.editable-card__edit-button {
+.editable-card__buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.editable-card__edit-button,
+.editable-card__delete-button {
   background: transparent;
   border: none;
   padding: 0;

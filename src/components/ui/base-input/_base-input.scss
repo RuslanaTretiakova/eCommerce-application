@@ -99,3 +99,13 @@
     background-color: rgba(239, 68, 68, 0.05);
   }
 }
+
+.user-addresses__input {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+
+  &-small {
+    width: 30px;
+  }
+}

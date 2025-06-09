@@ -33,7 +33,9 @@ function EditFormInner<T extends FieldValues>(
     <form className="edit-form" onSubmit={(e) => e.preventDefault()}>
       {fields.map((field) => {
         const { key, label, type, placeholder, rules, options } = field;
-        const { ref, onChange: fieldChange, onBlur, name } = register(key, rules);
+        const { ref: inputRef, onChange, onBlur, name } = register(key, rules);
+
+        const error = errors[key]?.message as string | undefined;
 
         if (type === 'select' && options) {
           return (
@@ -43,9 +45,9 @@ function EditFormInner<T extends FieldValues>(
               label={label}
               options={options}
               placeholder={placeholder}
-              onChange={fieldChange}
+              onChange={onChange}
               onBlur={onBlur}
-              ref={ref}
+              ref={inputRef}
             />
           );
         }
@@ -57,10 +59,10 @@ function EditFormInner<T extends FieldValues>(
             label={label}
             type={type}
             placeholder={placeholder}
-            onChange={fieldChange}
+            onChange={onChange}
             onBlur={onBlur}
-            ref={ref}
-            error={errors[key]?.message as string | undefined}
+            ref={inputRef}
+            error={error}
           />
         );
       })}

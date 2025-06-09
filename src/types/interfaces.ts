@@ -1,4 +1,4 @@
-import type { ButtonType, FieldType, NotificationType, RegistrationErrorType } from './types';
+import type { ButtonType, InputType, NotificationType, RegistrationErrorType } from './types';
 import type { ChangeEventHandler, FocusEventHandler, ReactNode } from 'react';
 import type { ChangeHandler, DefaultValues, FieldValues, Path } from 'react-hook-form';
 import type { RegisterOptions } from 'react-hook-form';
@@ -44,7 +44,7 @@ export interface IBaseInputProps<TFormData extends FieldValues = FieldValues> {
   type: string;
   placeholder?: string;
   onChange: ChangeHandler;
-  onBlur: ChangeHandler;
+  onBlur?: ChangeHandler;
   error?: string;
 }
 
@@ -106,6 +106,7 @@ export interface IEditableCard {
   title: string;
   children: ReactNode;
   onEdit?: () => void;
+  onDelete?: () => void;
 }
 
 export interface IAddress {
@@ -118,14 +119,25 @@ export interface IAddress {
   isDefaultShippingAddress?: boolean;
 }
 
+export interface IAddressFormFields {
+  streetName: string;
+  city: string;
+  postalCode: string;
+  country: string;
+  isDefaultBillingAddress: boolean;
+  isDefaultShippingAddress: boolean;
+}
+
 export interface IUserProfile {
   id: string;
   version: number;
+  email: string;
   firstName: string;
   lastName: string;
   dateOfBirth: string;
-  email: string;
   addresses: IAddress[];
+  defaultBillingAddressId?: string;
+  defaultShippingAddressId?: string;
 }
 
 export interface IRawAddress {
@@ -159,15 +171,13 @@ export interface IProductCard {
 }
 
 //Edit
-
-export interface IEditField<T extends FieldValues> {
+export interface IEditField<T> {
+  key: keyof T;
   label: string;
-  key: Path<T>;
-  type: FieldType;
-  id?: string;
+  type: InputType;
   placeholder?: string;
-  rules?: RegisterOptions<T, Path<T>>;
-  options?: { value: string; label: string }[];
+  options?: { label: string; value: string }[];
+  rules?: RegisterOptions;
 }
 
 export interface IEditFormProps<T extends FieldValues> {
