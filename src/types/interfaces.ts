@@ -136,6 +136,8 @@ export interface IUserProfile {
   lastName: string;
   dateOfBirth: string;
   addresses: IAddress[];
+  defaultBillingAddressId?: string;
+  defaultShippingAddressId?: string;
 }
 
 export interface IRawAddress {

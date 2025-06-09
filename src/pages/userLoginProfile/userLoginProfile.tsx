@@ -1,128 +1,40 @@
-import { useState, useRef } from 'react';
 import { useUserProfile } from '../../components/user-profile/hooks/useUserProfile';
-import type { IAddress } from '../../types/interfaces';
-import type {
-  IAddressFormFields,
-  IPasswordFormFields,
-  IUserProfileFormFields,
-} from '../../components/user-profile/forms/userProfileFormTypes';
-
-import './userLoginProfile.scss';
-
-import EditableCard from '../../components/ui/editable-card/EditableCard';
-import PersonalInfo from '../../components/user-profile/PersonalInfo';
-import UserAddresses from '../../components/user-profile/UserAddresses';
-import EditForm from '../../components/ui/form/EditForm';
-import Modal from '../../components/ui/modal/editModal/Modal';
-
-import { passwordFields } from '../../components/user-profile/forms/passwordFields';
-import { addressFields } from '../../components/user-profile/forms/addressFields';
-import { personalFields } from '../../components/user-profile/forms/personalFields';
-import { createDefaultAddress } from '../../components/user-profile/utils/defaultAddress';
+import { useAuth } from '../../api/authorithation/AuthToken';
 import { usePasswordChange } from '../../components/user-profile/hooks/usePasswordChange';
 import { usePersonalInfo } from '../../components/user-profile/hooks/usePersonalInfo';
+import { useAddressManagement } from '../../components/user-profile/hooks/useAddressManagement';
 
-const defaultAddressFormValues: IAddressFormFields = {
-  streetName: '',
-  city: '',
-  postalCode: '',
-  country: '',
-};
+import { personalFields } from '../../components/user-profile/forms/personalFields';
+import { addressFields } from '../../components/user-profile/forms/addressFields';
+import { passwordFields } from '../../components/user-profile/forms/passwordFields';
+
+import EditableCard from '../../components/ui/editable-card/EditableCard';
+import EditForm from '../../components/ui/form/EditForm';
+import Modal from '../../components/ui/modal/editModal/Modal';
+import BaseButton from '../../components/ui/base-button/BaseButton';
+import PersonalInfo from '../../components/user-profile/PersonalInfo';
+import UserAddresses from '../../components/user-profile/UserAddresses';
+
+import type {
+  IUserProfileFormFields,
+  IPasswordFormFields,
+} from '../../components/user-profile/forms/userProfileFormTypes';
+
+import type { IAddressFormFields } from '../../types/interfaces';
+
+import './userLoginProfile.scss';
+import {
+  areAddressesEqual,
+  getAddressTitle,
+} from '../../components/user-profile/utils/addressUtils';
 
 function UserLoginProfile() {
   const { user, setUser } = useUserProfile();
+  const { token } = useAuth();
 
-  const billingAddress =
-    user?.addresses.find((a) => a.isDefaultBillingAddress) ??
-    user?.addresses.find((a) => !a.isDefaultShippingAddress) ??
-    createDefaultAddress('billing');
-
-  const shippingAddress =
-    user?.addresses.find((a) => a.isDefaultShippingAddress) ??
-    user?.addresses.find((a) => !a.isDefaultBillingAddress) ??
-    createDefaultAddress('shipping');
-
-  const [isBillingModalOpen, setBillingModalOpen] = useState(false);
-  const [isShippingModalOpen, setShippingModalOpen] = useState(false);
-
-  const [editedAddress, setEditedAddress] = useState<IAddress | null>(null);
-  const [addressFormValues, setAddressFormValues] =
-    useState<IAddressFormFields>(defaultAddressFormValues);
-
-  const addressFormRef = useRef<{
-    trigger: () => Promise<boolean>;
-    getValues: () => IAddressFormFields;
-  }>(null);
-
-  const {
-    passwordFormValues,
-    setPasswordFormValues,
-    isPasswordModalOpen,
-    openPasswordModal,
-    cancelPassword,
-    savePassword,
-    passwordFormRef,
-  } = usePasswordChange(user, setUser);
-
-  const {
-    personalFormValues,
-    setPersonalFormValues,
-    isPersonalModalOpen,
-    openPersonalModal,
-    cancelPersonal,
-    savePersonal,
-    personalFormRef,
-  } = usePersonalInfo(user, setUser);
-
-  const openAddressModal = (type: 'billing' | 'shipping') => {
-    const address = type === 'billing' ? billingAddress : shippingAddress;
-    setEditedAddress({ ...address });
-    setAddressFormValues({
-      streetName: address.streetName,
-      city: address.city,
-      postalCode: address.postalCode,
-      country: address.country,
-    });
-
-    if (type === 'billing') {
-      setBillingModalOpen(true);
-    } else {
-      setShippingModalOpen(true);
-    }
-  };
-
-  const saveAddress = async () => {
-    if (!editedAddress || !user || !addressFormRef.current) return;
-    const isValid = await addressFormRef.current.trigger();
-    if (!isValid) return;
-
-    const updatedData = addressFormRef.current.getValues();
-    const updatedAddress = { ...editedAddress, ...updatedData };
-
-    const addressExists = user.addresses.some((a) => a.id === updatedAddress.id);
-    const updatedAddresses = addressExists
-      ? user.addresses.map((addr) => (addr.id === updatedAddress.id ? updatedAddress : addr))
-      : [...user.addresses, updatedAddress];
-
-    setUser({ ...user, addresses: updatedAddresses });
-    setEditedAddress(null);
-    setBillingModalOpen(false);
-    setShippingModalOpen(false);
-  };
-
-  const cancelAddress = () => {
-    setEditedAddress(null);
-    setAddressFormValues(defaultAddressFormValues);
-    setBillingModalOpen(false);
-    setShippingModalOpen(false);
-  };
-
-  const showAddressModal = isBillingModalOpen || isShippingModalOpen;
-  const modalTitle = isBillingModalOpen
-    ? 'Edit Billing Address'
-    : isShippingModalOpen
-      ? 'Edit Shipping Address'
-      : '';
+  const password = usePasswordChange(user, setUser);
+  const personal = usePersonalInfo(user, setUser);
+  const address = useAddressManagement(user, setUser, token);
 
   return (
     <div className="user-login-profile">
@@ -137,58 +49,83 @@ function UserLoginProfile() {
 
       {user && (
         <>
-          <EditableCard title="Personal Info" onEdit={openPersonalModal}>
+          <BaseButton
+            type="button"
+            title="Add Address"
+            className="button button--add-address"
+            onClick={address.prepareAddAddress}
+          >
+            Add Address
+          </BaseButton>
+
+          <EditableCard title="Personal Info" onEdit={personal.openPersonalModal}>
             <PersonalInfo user={user} />
           </EditableCard>
 
-          <EditableCard title="Billing Address" onEdit={() => openAddressModal('billing')}>
-            <UserAddresses addresses={[billingAddress]} />
-          </EditableCard>
+          {user.addresses.map((addr, _, array) => {
+            const duplicates = array.filter((a) => areAddressesEqual(a, addr));
+            const index = duplicates.findIndex((a) => a.id === addr.id);
+            const title = getAddressTitle(addr, user, duplicates, index);
 
-          <EditableCard title="Shipping Address" onEdit={() => openAddressModal('shipping')}>
-            <UserAddresses addresses={[shippingAddress]} />
-          </EditableCard>
+            return (
+              <EditableCard
+                key={addr.id}
+                title={title}
+                onEdit={() => address.openEditAddressModal(addr)}
+                onDelete={() => address.handleDeleteAddress(addr.id)}
+              >
+                <UserAddresses
+                  user={user}
+                  addresses={[addr]}
+                  onSetDefault={address.setDefaultAddress}
+                />
+              </EditableCard>
+            );
+          })}
 
-          <EditableCard title="Change Password" onEdit={openPasswordModal}>
+          <EditableCard title="Change Password" onEdit={password.openPasswordModal}>
             <p>You can change your password here.</p>
           </EditableCard>
 
           <Modal
             title="Edit Personal Info"
-            isOpen={isPersonalModalOpen}
-            onSave={savePersonal}
-            onClose={cancelPersonal}
+            isOpen={personal.isPersonalModalOpen}
+            onSave={personal.savePersonal}
+            onClose={personal.cancelPersonal}
           >
             <EditForm<IUserProfileFormFields>
-              ref={personalFormRef}
+              ref={personal.personalFormRef}
               fields={personalFields}
-              initialValues={personalFormValues}
-              onChange={setPersonalFormValues}
+              initialValues={personal.personalFormValues}
+              onChange={personal.setPersonalFormValues}
             />
           </Modal>
 
-          {showAddressModal && (
-            <Modal title={modalTitle} isOpen onSave={saveAddress} onClose={cancelAddress}>
-              <EditForm<IAddressFormFields>
-                ref={addressFormRef}
-                fields={addressFields}
-                initialValues={addressFormValues}
-                onChange={setAddressFormValues}
-              />
-            </Modal>
-          )}
+          <Modal
+            title="Edit Address"
+            isOpen={address.isAddressModalOpen}
+            onSave={address.saveAddress}
+            onClose={address.cancelAddress}
+          >
+            <EditForm<IAddressFormFields>
+              ref={address.addressFormRef}
+              fields={addressFields}
+              initialValues={address.addressFormValues}
+              onChange={address.setAddressFormValues}
+            />
+          </Modal>
 
           <Modal
             title="Change Password"
-            isOpen={isPasswordModalOpen}
-            onSave={savePassword}
-            onClose={cancelPassword}
+            isOpen={password.isPasswordModalOpen}
+            onSave={password.savePassword}
+            onClose={password.cancelPassword}
           >
             <EditForm<IPasswordFormFields>
-              ref={passwordFormRef}
+              ref={password.passwordFormRef}
               fields={passwordFields}
-              initialValues={passwordFormValues}
-              onChange={setPasswordFormValues}
+              initialValues={password.passwordFormValues}
+              onChange={password.setPasswordFormValues}
             />
           </Modal>
         </>

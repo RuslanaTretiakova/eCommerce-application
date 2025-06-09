@@ -38,6 +38,8 @@ export const useUserProfile = () => {
           lastName: data.lastName,
           dateOfBirth: data.dateOfBirth,
           addresses: mappedAddresses,
+          defaultBillingAddressId: data.defaultBillingAddressId,
+          defaultShippingAddressId: data.defaultShippingAddressId,
         });
       } catch (err) {
         console.error('Failed to fetch user profile:', err);

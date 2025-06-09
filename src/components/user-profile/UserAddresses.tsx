@@ -1,16 +1,20 @@
-import type { IAddress } from '../../types/interfaces';
+import type { IAddress, IUserProfile } from '../../types/interfaces';
 
 interface Props {
+  user: IUserProfile;
   addresses: IAddress[];
   onSetDefault: (type: 'billing' | 'shipping', addressId: string) => void;
 }
 
-function UserAddresses({ addresses, onSetDefault }: Props) {
+function UserAddresses({ user, addresses, onSetDefault }: Props) {
   return (
     <div className="user-addresses">
       {addresses.map((address) => {
         const billingId = `billing-${address.id}`;
         const shippingId = `shipping-${address.id}`;
+
+        const isBilling = user.defaultBillingAddressId === address.id;
+        const isShipping = user.defaultShippingAddressId === address.id;
 
         return (
           <div key={address.id} className="user-addresses__card">
@@ -38,7 +42,7 @@ function UserAddresses({ addresses, onSetDefault }: Props) {
                   id={billingId}
                   name={billingId}
                   type="checkbox"
-                  checked={!!address.isDefaultBillingAddress}
+                  checked={isBilling}
                   onChange={() => onSetDefault('billing', address.id)}
                 />
                 Set as default billing
@@ -52,7 +56,7 @@ function UserAddresses({ addresses, onSetDefault }: Props) {
                   id={shippingId}
                   name={shippingId}
                   type="checkbox"
-                  checked={!!address.isDefaultShippingAddress}
+                  checked={isShipping}
                   onChange={() => onSetDefault('shipping', address.id)}
                 />
                 Set as default shipping
