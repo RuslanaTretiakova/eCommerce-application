@@ -12,7 +12,7 @@ function UserLogOut() {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate('/', { replace: true });
   };
 
   if (isAnonymous || !token) return null;
