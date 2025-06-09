@@ -2,13 +2,13 @@ import Header from '../../components/header/header';
 import './main.scss';
 import Footer from '../../components/footer/footer';
 import { Outlet } from 'react-router-dom';
-import { Breadcrumbs } from '../../components/ui/breadcrumbs/Breadcrumbs';
+// import { Breadcrumbs } from '../../components/ui/breadcrumbs/Breadcrumbs';
 
 function MainPage() {
   return (
     <div className="container">
       <Header />
-      <Breadcrumbs />
+      {/* <Breadcrumbs /> */}
       <Outlet />
       <Footer />
     </div>

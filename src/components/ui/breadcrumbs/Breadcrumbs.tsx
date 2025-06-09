@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import { breadcrumbNameMap } from '../../../utils/breadcrumbs/breadcrumbs';
 
 export function Breadcrumbs() {
   const location = useLocation();
@@ -7,11 +8,12 @@ export function Breadcrumbs() {
 
   const crumbs = pathnames.map((_, index) => {
     const url = '/' + pathnames.slice(0, index + 1).join('/');
-    // const key = pathnames[index];
+    const key = pathnames[index];
+    const name = breadcrumbNameMap[key] || decodeURIComponent(key);
 
     return (
       <span key={url}>
-        <Link to={url}>{url}</Link>
+        <Link to={url}>{name}</Link>
         {index < pathnames.length - 1 && ' / '}
       </span>
     );
@@ -24,4 +26,4 @@ export function Breadcrumbs() {
       {crumbs}
     </nav>
   );
-};
+}

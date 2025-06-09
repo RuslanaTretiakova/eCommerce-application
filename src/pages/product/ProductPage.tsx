@@ -10,7 +10,7 @@ import ProductDescription from '../../components/product/productDesc/productDesc
 // import ProductSpecification from '../../components/product/productSpec/productSpec';
 import BaseButton from '../../components/ui/base-button/BaseButton';
 import { ProductGallery } from '../../components/product/productSlider/mainPic/productSlider';
-import { Breadcrumbs } from '../../components/ui/breadcrumbs/Breadcrumbs';
+// import { Breadcrumbs } from '../../components/ui/breadcrumbs/Breadcrumbs';
 
 import type { Swiper as SwiperType } from 'swiper/types';
 
@@ -50,7 +50,7 @@ function Item() {
   if (product) {
     return (
       <div className="product">
-        <Breadcrumbs />
+        {/* <Breadcrumbs /> */}
         <div className="product-slider">
           <ProductGallery images={product.images} thumbsSwiper={thumbsSwiper} />
         </div>

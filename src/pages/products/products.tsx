@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import type { ProductData, Product } from '@commercetools/platform-sdk';
 import Load from '../load/load';
 
+import { Breadcrumbs } from '../../components/ui/breadcrumbs/Breadcrumbs';
+
+import { useNavigate } from 'react-router-dom';
+
 import type { JSX } from 'react';
 import BaseButton from '../../components/ui/base-button/BaseButton';
 import ProductCard from '../../components/ui/product-card/ProductCard';
@@ -57,6 +61,11 @@ function Products(): JSX.Element {
     fetchProducts();
   }, [category]);
 
+  //to navigate to detailed product page
+  const navigate = useNavigate();
+  const handleCardClick = (productId: string) => {
+    navigate(`/${productId}`);
+  };
   const handleSearchResults = (results: Product[]) => {
     setProducts(results);
     setVisibleProducts(results);
@@ -210,6 +219,7 @@ function Products(): JSX.Element {
 
   return (
     <div className="product-page temp">
+      <Breadcrumbs />
       <SearchProduct onSearchResults={handleSearchResults} />
       <div className="filter_container">
         <FilterByType onChange={handleFilterChange} />
@@ -244,7 +254,13 @@ function Products(): JSX.Element {
             const imageUrl = variant.images?.[0]?.url || '';
 
             return (
-              <div key={variantKey} className="product-list__item" data-id={variantKey}>
+              <div
+                key={variantKey}
+                className="product-list__item"
+                data-id={variantKey}
+                onClick={() => handleCardClick(variantKey)}
+                aria-hidden="true"
+              >
                 <ProductCard
                   id={variantKey}
                   name={productName}

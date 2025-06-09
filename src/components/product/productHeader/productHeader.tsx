@@ -16,7 +16,7 @@ function ProductHeader({ title, price, discountedPrice }: ProductHeaderProps) {
           <h3 className="">{`${price.toFixed(2)}`}</h3>
         </div>
       ) : (
-        <h2 className="original-price">{`$ ${price.toFixed(2)} EURO`}</h2>
+        <h2 className="original-price">{`${price.toFixed(2)} EURO`}</h2>
       )}
     </div>
   );
