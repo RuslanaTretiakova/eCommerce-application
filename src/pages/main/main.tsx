@@ -8,8 +8,10 @@ function MainPage() {
   return (
     <div className="container">
       <Header />
-      {/* <Breadcrumbs /> */}
-      <Outlet />
+      <main>
+        {/* <Breadcrumbs /> */}
+        <Outlet />
+      </main>
       <Footer />
     </div>
   );
