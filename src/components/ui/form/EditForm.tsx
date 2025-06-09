@@ -1,8 +1,9 @@
-import { useForm, type FieldValues } from 'react-hook-form';
+import { useForm, type FieldValues, type Path } from 'react-hook-form';
 import { forwardRef, useImperativeHandle } from 'react';
 import BaseInput from '../../ui/base-input/BaseInput';
 import BaseSelect from '../../ui/base-select/BaseSelect';
 import type { IEditFormProps } from '../../../types/interfaces';
+import type { RegisterOptions } from 'react-hook-form';
 
 type FormRef<T> = {
   trigger: () => Promise<boolean>;
@@ -33,9 +34,14 @@ function EditFormInner<T extends FieldValues>(
     <form className="edit-form" onSubmit={(e) => e.preventDefault()}>
       {fields.map((field) => {
         const { key, label, type, placeholder, rules, options } = field;
-        const { ref: inputRef, onChange, onBlur, name } = register(key, rules);
+        const {
+          ref: inputRef,
+          onChange,
+          onBlur,
+          name,
+        } = register(key as Path<T>, rules as unknown as RegisterOptions<T, Path<T>>);
 
-        const error = errors[key]?.message as string | undefined;
+        const error = errors[key as keyof T]?.message as string | undefined;
 
         if (type === 'select' && options) {
           return (
