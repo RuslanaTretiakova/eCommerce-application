@@ -10,7 +10,7 @@ import ProductDescription from '../../components/product/productDesc/productDesc
 // import ProductSpecification from '../../components/product/productSpec/productSpec';
 import BaseButton from '../../components/ui/base-button/BaseButton';
 import { ProductGallery } from '../../components/product/productSlider/mainPic/productSlider';
-// import { Breadcrumbs } from '../../components/ui/breadcrumbs/Breadcrumbs';
+import { Breadcrumbs } from '../../components/ui/breadcrumbs/Breadcrumbs';
 
 import type { Swiper as SwiperType } from 'swiper/types';
 
@@ -49,26 +49,28 @@ function Item() {
 
   if (product) {
     return (
-      <div className="product">
-        {/* <Breadcrumbs /> */}
-        <div className="product-slider">
-          <ProductGallery images={product.images} thumbsSwiper={thumbsSwiper} />
-        </div>
+      <div>
+        <Breadcrumbs />
+        <div className="product">
+          <div className="product-slider">
+            <ProductGallery images={product.images} thumbsSwiper={thumbsSwiper} />
+          </div>
 
-        <ProductHeader
-          title={product.title}
-          price={product.price}
-          discountedPrice={product.discountedPrice ?? null}
-        />
-        <ProductDescription
-          images={product.images}
-          setThumbsSwiper={setThumbsSwiper}
-          description={product.description ?? ''}
-        />
-        {/* <ProductSpecification specs={[{ frame: 'Al' }, { weight: '15.5kg' }]} /> */}
-        <BaseButton type="button" className="button--submit" title="title">
-          Add to cart
-        </BaseButton>
+          <ProductHeader
+            title={product.title}
+            price={product.price}
+            discountedPrice={product.discountedPrice ?? null}
+          />
+          <ProductDescription
+            images={product.images}
+            setThumbsSwiper={setThumbsSwiper}
+            description={product.description ?? ''}
+          />
+          {/* <ProductSpecification specs={[{ frame: 'Al' }, { weight: '15.5kg' }]} /> */}
+          <BaseButton type="button" className="button--submit" title="title">
+            Add to cart
+          </BaseButton>
+        </div>
       </div>
     );
   }
