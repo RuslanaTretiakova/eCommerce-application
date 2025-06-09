@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useUserProfile } from '../../components/user-profile/hooks/useUserProfile';
 import { useAuth } from '../../api/authorithation/AuthToken';
 import { usePasswordChange } from '../../components/user-profile/hooks/usePasswordChange';
@@ -30,7 +32,16 @@ import {
 
 function UserLoginProfile() {
   const { user, setUser } = useUserProfile();
-  const { token } = useAuth();
+  const { token, isAnonymous } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAnonymous) {
+      navigate('/profile-access-block');
+    } else if (token) {
+      navigate('/profile-info');
+    }
+  }, [isAnonymous, token, navigate]);
 
   const password = usePasswordChange(user, setUser);
   const personal = usePersonalInfo(user, setUser);
