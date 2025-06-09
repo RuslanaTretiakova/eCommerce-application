@@ -106,6 +106,7 @@ export interface IEditableCard {
   title: string;
   children: ReactNode;
   onEdit?: () => void;
+  onDelete?: () => void;
 }
 
 export interface IAddress {
