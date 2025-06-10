@@ -44,8 +44,10 @@ export const passwordFields: IEditField<IPasswordFormFields>[] = [
     placeholder: 'Confirm new password',
     rules: {
       required: 'Please confirm your new password',
-      validate: (value: string, formValues?: IPasswordFormFields) =>
-        value === formValues?.newPassword || 'Passwords do not match',
+      validate: {
+        matchesPassword: (_, allValues) =>
+          allValues?.newPassword === allValues?.confirmPassword || 'Passwords do not match',
+      },
     },
   },
 ];
