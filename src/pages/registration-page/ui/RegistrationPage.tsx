@@ -1,18 +1,17 @@
 import type { JSX } from 'react';
 import { useState } from 'react';
-import { Link, useNavigate, Navigate  } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import DynamicForm from '../../../components/forms/DynamicForm.tsx';
 import type { IFormData } from '../../../types/interfaces.ts';
 import { registrationFields } from '../../../components/forms/registration/fieldsConfig.ts';
 import { handleRegistration } from '../../../api/authorithation/handleRegistration.ts';
 import { useAuth } from '../../../api/authorithation/AuthToken.tsx';
-// import NotFoundPage from '../../404/404.tsx';
 
 import './_registration-page.scss';
 
 function RegistrationPage(): JSX.Element {
   const navigate = useNavigate();
-  const { token, setToken } = useAuth();
+  const { isAnonymous, setToken } = useAuth();
 
   const [status, setStatus] = useState<'initial' | 'submitting'>('initial');
 
@@ -22,10 +21,7 @@ function RegistrationPage(): JSX.Element {
     setStatus('initial');
   };
 
-  // if (token) {
-  //   return <NotFoundPage />;
-  // }
-  if (token) {
+  if (!isAnonymous) {
     return <Navigate to="/" replace />;
   }
 

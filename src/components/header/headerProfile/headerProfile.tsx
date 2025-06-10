@@ -5,22 +5,12 @@ import closeMobileMenu from '../../../utils/closeMobileNavigation/closeMobileNav
 import { useAuth } from '../../../api/authorithation/AuthToken';
 
 function HeaderProfile() {
-  // const [openProfileAccesBlock, setOpenProfileAccesBlock] = useState(false);
-
-  // const toggleProfileAccessBlock = () => {
-  //   setOpenProfileAccesBlock((prev) => !prev);
-  // };
-
-  // useEffect(() => {
-  //   const profileAccessBlock = document.querySelector('.profile-access-block');
-  //   console.log(profileAccessBlock);
-  // }, [openProfileAccesBlock]);
-  const { token } = useAuth();
+  const { isAnonymous } = useAuth();
 
   return (
     <div className="header__profile-block">
       <Link
-        to={token ? '/profile-info' : '/profile-access-block'}
+        to={!isAnonymous ? '/profile-info' : '/profile-access-block'}
         onClick={() => {
           if (window.innerWidth <= 768) {
             closeMobileMenu();

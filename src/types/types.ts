@@ -9,3 +9,5 @@ export type NotificationType = 'success' | 'error' | 'info';
 export type RegistrationErrorType = 'EMAIL_EXISTS' | 'VALIDATION_FAILED' | 'INTERNAL_ERROR';
 
 export type JsonResponseBody = IJsonSuccessResponse | IJsonErrorResponse;
+
+export type FieldType = 'text' | 'date' | 'email' | 'password' | 'select' | 'checkbox';

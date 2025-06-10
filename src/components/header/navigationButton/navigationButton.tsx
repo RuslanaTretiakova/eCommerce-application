@@ -9,24 +9,29 @@ function NavigationButton() {
   };
 
   useEffect(() => {
-    let navigationOpen = document.querySelector('.navigation-open');
-    const body = document.querySelector('body') as HTMLBodyElement;
+    const navigation = document.querySelector('.navigation');
     const button = document.querySelector('.navigation-button') as HTMLElement;
+    const body = document.querySelector('body') as HTMLBodyElement;
 
-    if (!navigationOpen) {
-      const navigation = document.querySelector('.navigation');
-      navigation?.classList.add('navigation-open');
+    if (!navigation || !button) return;
+
+    if (menuOpen) {
+      navigation.classList.add('navigation-open');
       button.classList.add('navigation-button_clicked');
       button.children[0].classList.add('first-line__open');
       button.children[1].classList.add('second-line__open');
       body.classList.add('no-scroll');
     } else {
-      navigationOpen?.classList.remove('navigation-open');
-      body.classList.remove('no-scroll');
+      navigation.classList.remove('navigation-open');
+      button.classList.remove('navigation-button_clicked');
       button.children[0].classList.remove('first-line__open');
       button.children[1].classList.remove('second-line__open');
-      button.classList.remove('navigation-button_clicked');
+      body.classList.remove('no-scroll');
     }
+
+    return () => {
+      body.classList.remove('no-scroll');
+    };
   }, [menuOpen]);
 
   return (

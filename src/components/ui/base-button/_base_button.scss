@@ -7,22 +7,33 @@
   cursor: pointer;
 
   &--login {
-    // background-color: var(--button-primary);
     color: white;
     padding: 5px 10px;
     width: 100%;
   }
 
-  &--submit {
-    width: 100%;
-    // background-color: var(--button-primary);
-    color: white;
+  &--cart {
+    border: solid 1px #ffa909;
+    background-color: transparent;
+    color: var(--text-color);
+  }
 
-    @media (hover: hover) and (pointer: fine) {
+  &--save {
+    border: solid 1px #000000;
+    background-color: transparent;
+    color: var(--text-color);
+
+    @media (hover: hover) {
       &:hover {
-        // background-color: var(--button-primary-hover);
+        color: white;
+        background-color: #000000;
       }
     }
+  }
+
+  &--submit {
+    width: 100%;
+    color: white;
 
     &:disabled {
       opacity: 0.6;

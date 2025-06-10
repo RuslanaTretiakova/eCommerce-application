@@ -1,0 +1,50 @@
+.product-card {
+  width: 300px;
+  height: 500px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 10px;
+  border-bottom: solid 1px rgba(130, 130, 130, 0.121);
+
+  @media (max-width: 480px) {
+    & {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__image {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  &__title {
+    font-size: medium;
+  }
+
+  &__description {
+    text-align: left;
+  }
+
+  &__price {
+    font-weight: 900;
+  }
+
+  &__price_cross {
+    text-decoration: line-through;
+    font-weight: 900;
+  }
+
+  &__price_discount {
+    background-color: orange;
+    color: red;
+    font-weight: 900;
+    padding: 0 3px;
+    background: linear-gradient(to left, orange 100%);
+    background-size: 200% 100%;
+    color: black;
+  }
+}

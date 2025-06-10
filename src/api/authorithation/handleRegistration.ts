@@ -2,13 +2,13 @@ import type { IFormData } from '../../types/interfaces';
 import { transformFormData } from '../../utils/formUtils/transformFormData';
 import type { NavigateFunction } from 'react-router-dom';
 import { showNotification } from '../../utils/toastify/showNotification';
-import { fetchCustomerToken } from '../sdkClient';
+import { fetchToken } from '../../utils/token/tokenType';
 import { getRegistrationErrorMessage } from '../../utils/errors/getRegistrationErrorMessage';
 
 export const handleRegistration = async (
   formData: IFormData,
   navigate: NavigateFunction,
-  setToken: (token: string) => void,
+  setToken: (token: string, scope: string) => void,
 ): Promise<void> => {
   const customerDraft = transformFormData(formData);
 
@@ -26,8 +26,13 @@ export const handleRegistration = async (
       case 201:
         showNotification({ text: 'Registration successful!', type: 'success' });
 
-        const token = await fetchCustomerToken(formData.email, formData.password);
-        setToken(token);
+        const tokenResponse = await fetchToken('customer', {
+          email: formData.email,
+          password: formData.password,
+        });
+        setToken(tokenResponse.token, tokenResponse.scope);
+        console.log('Received token:', tokenResponse.token);
+        console.log('Received scope:', tokenResponse.scope);
 
         navigate('/', { replace: true });
         break;

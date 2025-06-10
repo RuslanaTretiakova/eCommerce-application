@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 import DynamicForm from '../../components/forms/DynamicForm';
 import { authenticationFields } from '../../components/forms/registration/fieldsConfig';
 import type { IFormDataAuth } from '../../types/interfaces';
-import { fetchCustomerToken } from '../../api/sdkClient';
+import { fetchToken } from '../../utils/token/tokenType';
 import { showNotification } from '../../utils/toastify/showNotification';
 import type { IRegistrationError } from '../../types/interfaces';
 import { useAuth } from '../../api/authorithation/AuthToken';
@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
 function AuthenticationPage(): JSX.Element {
-  const { token, setToken } = useAuth();
+  const { isAnonymous, setToken } = useAuth();
 
   const navigate = useNavigate();
 
@@ -19,13 +19,16 @@ function AuthenticationPage(): JSX.Element {
     console.log('Login:', data);
     // logic
     try {
-      const token = await fetchCustomerToken(data.email, data.password);
-      setToken(token);
+      const { token, scope } = await fetchToken('customer', {
+        email: data.email,
+        password: data.password,
+      });
+      setToken(token, scope);
       showNotification({
         text: 'Authentication successful!',
         type: 'success',
       });
-      console.log('Token received (not stored):', token);
+      console.log('Token and scope received (not stored):', token, scope);
       // navigate('/');
     } catch (error) {
       console.error(error);
@@ -40,11 +43,10 @@ function AuthenticationPage(): JSX.Element {
   };
 
   useEffect(() => {
-    debugger;
-    if (token) {
+    if (!isAnonymous) {
       navigate('/');
     }
-  }, [token, navigate]);
+  }, [isAnonymous, navigate]);
 
   return (
     <div className="registration-page registration-page--auth">

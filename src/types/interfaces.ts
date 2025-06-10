@@ -1,6 +1,7 @@
-import type { ButtonType, NotificationType, RegistrationErrorType } from './types';
-import type { ChangeEventHandler, FocusEventHandler } from 'react';
-import type { ChangeHandler, FieldValues, Path } from 'react-hook-form';
+import type { ButtonType, InputType, NotificationType, RegistrationErrorType } from './types';
+import type { ChangeEventHandler, FocusEventHandler, ReactNode } from 'react';
+import type { ChangeHandler, DefaultValues, FieldValues, Path } from 'react-hook-form';
+import type { RegisterOptions } from 'react-hook-form';
 
 // Form
 export interface IFormData {
@@ -43,7 +44,7 @@ export interface IBaseInputProps<TFormData extends FieldValues = FieldValues> {
   type: string;
   placeholder?: string;
   onChange: ChangeHandler;
-  onBlur: ChangeHandler;
+  onBlur?: ChangeHandler;
   error?: string;
 }
 
@@ -99,4 +100,88 @@ export interface IRegistrationError extends Error {
     message: string;
     errors?: ICommercetoolsErrorDetail[];
   };
+}
+
+export interface IEditableCard {
+  title: string;
+  children: ReactNode;
+  onEdit?: () => void;
+  onDelete?: () => void;
+}
+
+export interface IAddress {
+  id: string;
+  streetName: string;
+  city: string;
+  postalCode: string;
+  country: string;
+  isDefaultBillingAddress?: boolean;
+  isDefaultShippingAddress?: boolean;
+}
+
+export interface IAddressFormFields {
+  streetName: string;
+  city: string;
+  postalCode: string;
+  country: string;
+  isDefaultBillingAddress: boolean;
+  isDefaultShippingAddress: boolean;
+}
+
+export interface IUserProfile {
+  id: string;
+  version: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  addresses: IAddress[];
+  defaultBillingAddressId?: string;
+  defaultShippingAddressId?: string;
+}
+
+export interface IRawAddress {
+  id: string;
+  streetName?: string;
+  city?: string;
+  postalCode?: string;
+  country?: string;
+}
+
+export interface ICustomerMeResponse {
+  firstName: string;
+  lastName: string;
+  dateOfBirth?: string;
+  defaultBillingAddressId?: string;
+  defaultBillingAddressIds?: string[];
+  defaultShippingAddressId?: string;
+  defaultShippingAddressIds?: string[];
+  addresses?: IRawAddress[];
+  [key: string]: unknown;
+}
+
+//ProductCard
+export interface IProductCard {
+  id?: string;
+  name: string;
+  description: string;
+  price: string;
+  imageUrl: string;
+  discount?: string;
+}
+
+//Edit
+export interface IEditField<T> {
+  key: keyof T;
+  label: string;
+  type: InputType;
+  placeholder?: string;
+  options?: { label: string; value: string }[];
+  rules?: RegisterOptions;
+}
+
+export interface IEditFormProps<T extends FieldValues> {
+  fields: IEditField<T>[];
+  initialValues: DefaultValues<T>;
+  onChange: (updated: T) => void;
 }

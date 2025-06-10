@@ -1,0 +1,35 @@
+.main-swiper,
+.main-swiper .swiper-slide {
+  max-height: 639px;
+}
+
+.product-slider {
+  margin-right: 40px;
+}
+.product-button {
+  border: none;
+  background-color: transparent;
+}
+.product-image {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-thumbs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  img {
+    width: 100%;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+    background-size: cover;
+  }
+}
+
+.swiper-slide-thumb-active {
+  img {
+    border: 2px solid black;
+  }
+}
