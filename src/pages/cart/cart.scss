@@ -1,4 +1,7 @@
 .cart-container {
+  p {
+    margin: 0;
+  }
   display: grid;
   grid-template-columns: 65% 33%;
   column-gap: 2%;
@@ -125,6 +128,9 @@
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #ccc;
   font-weight: 600;
+  p {
+    color: black;
+  }
 }
 
 @media (max-width: 800px) {

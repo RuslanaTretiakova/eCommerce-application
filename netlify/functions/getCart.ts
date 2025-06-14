@@ -1,6 +1,5 @@
 import type { Handler } from '@netlify/functions';
 
-
 import { CTP_PROJECT_KEY, CTP_API_URL } from '../../src/types/constants';
 
 // const CART_ID = 'c5deb8b8-5910-4c9e-837b-519a8fd506ef';

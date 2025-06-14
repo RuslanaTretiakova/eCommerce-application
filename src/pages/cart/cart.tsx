@@ -61,6 +61,8 @@ function Cart() {
   }
 
   if (cart) {
+    const totalPrice = (cart.totalPrice.centAmount / 100).toFixed(2);
+
     const items = cart.lineItems.map((item) => {
       const price = item.price;
       return {
@@ -120,12 +122,12 @@ function Cart() {
           <div className="cart-summary">
             <h3 className="summary-title">Summury</h3>
             <div className="summary-row">
-              <span>Total: </span>
-              <span>498 EURO</span>
+              <p>Total with TAX: </p>
+              <p>{`${totalPrice} EURO`}</p>
             </div>
             <div className="summary-row summary-total">
-              <span>Final total with discount: </span>
-              <span>498 EURO</span>
+              <p>Total with promocode: </p>
+              <p>400 EURO</p>
             </div>
             <button className="checkout-btn" type="button">
               Check in
