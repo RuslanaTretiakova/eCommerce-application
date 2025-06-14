@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import type { Cart, ParsedCartItem } from '../../types/cartTypes';
 import { useAuth } from '../../api/authorithation/AuthToken';
 
 import './cart.scss';
 
 function Cart() {
-  // const { cart, loading } = useCart();
+  const { cartId } = useParams<{ cartId: string }>();
   const { token } = useAuth();
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
@@ -20,11 +21,10 @@ function Cart() {
 
   useEffect(() => {
     async function fetchCart() {
-      debugger;
       try {
         setLoading(true);
         setError(null);
-        const res = await fetch(`/.netlify/functions/getCart`, {
+        const res = await fetch(`/.netlify/functions/getCart?cartId=${cartId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -50,8 +50,9 @@ function Cart() {
     if (token) {
       fetchCart();
     }
-  }, [token]);
+  }, [cartId, token]);
 
+  console.log('cartId:', cartId);
   console.log('Cart:', cart);
   console.log('Line Items:', cart?.lineItems);
 
@@ -97,7 +98,12 @@ function Cart() {
                       <button className="quantity-btn" type="button">
                         -
                       </button>
-                      <input type="text" className="quantity-input" value={item.quantity} />
+                      <input
+                        type="text"
+                        className="quantity-input"
+                        value={item.quantity}
+                        aria-label="Quantity"
+                      />
                       <button className="quantity-btn" type="button">
                         +
                       </button>
