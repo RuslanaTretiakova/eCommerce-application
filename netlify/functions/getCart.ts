@@ -2,6 +2,8 @@ import type { Handler } from '@netlify/functions';
 
 import { CTP_PROJECT_KEY, CTP_API_URL } from '../../src/types/constants';
 
+const CART_ID = 'c5deb8b8-5910-4c9e-837b-519a8fd506ef';
+
 const handler: Handler = async (event) => {
   try {
     const authHeader = event.headers.authorization || event.headers.Authorization;
@@ -21,7 +23,7 @@ const handler: Handler = async (event) => {
     }
 
     //TODO: cart id from url
-    const CART_ID = 'c5deb8b8-5910-4c9e-837b-519a8fd506ef';
+
 
     const res = await fetch(`${CTP_API_URL}/${CTP_PROJECT_KEY}/carts/${CART_ID}`, {
       headers: {
@@ -42,6 +44,12 @@ const handler: Handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+        'Surrogate-Control': 'no-store',
+      },
       body: JSON.stringify(cartData),
     };
   } catch (error: unknown) {

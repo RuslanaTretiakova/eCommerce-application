@@ -12,8 +12,9 @@ function Cart() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  if (loading) return <p>Loading card...</p>
+  // if (loading) return <p>Loading card...</p>;
   if (error) {
+    if (loading) return <p>Loading card...</p>;
     return <p className="error-message">{error}</p>;
   }
 
@@ -89,8 +90,8 @@ function Cart() {
                 <img src={item.img} alt="product" className="cart-product__image" />
                 <div className="cart-product__details">
                   <h3>{item.name}</h3>
-                  <p className="cart-product__discounted">{`${item.originalPrice} EURO`}</p>
                   <p className="cart-product__price">{`${item.discountedPrice} EURO`}</p>
+                  <p className="cart-product__original">{`${item.originalPrice} EURO`}</p>
                   <div className="cart-product__actions">
                     <div className="quantity-control">
                       <button className="quantity-btn" type="button">
