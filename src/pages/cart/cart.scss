@@ -121,18 +121,6 @@
       border: 1px solid orange;
     }
   }
-  // .continue-shopping {
-  //   background-color: white;
-  //   border: 1px solid #ccc;
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
-  //   &:hover {
-  //     background-color: white;
-  //     color: orange;
-  //     border: 1px solid orange;
-  //   }
-  // }
 
 .summary-total {
   display: flex;
@@ -184,4 +172,8 @@
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
+}
+
+.empty-cart-text {
+  margin-bottom: 50px;
 }
