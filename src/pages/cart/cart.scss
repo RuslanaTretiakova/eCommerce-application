@@ -53,24 +53,37 @@
       padding: 0;
       text-align: center;
     }
+    .quantity-btn {
+      width: 25px;
+      height: 25px;
+      line-height: 1;
+    }
   }
 }
-.remove-btn, .remove-all-btn {
+.remove-btn, .remove-all-btn, .continue-shopping {
     border-radius: 30px;
-    padding: 5px 15px;
+    padding: 10px 15px;
     background-color: black;
     color: white;
-    font-size: 0.75rem;
     border: none;
+    line-height: 1.6;
+    transition: background-color 0.5s ease-in-out;
     &:hover {
       background-color: orange;
       color: black;
     }
   }
-
+.continue-shopping {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.remove-btn {
+  font-size: .75rem;
+  padding: 5px 15px;
+}
 .remove-all-btn {
-  padding: 10px 15px;
-  font-size: 1rem;
+  margin-bottom: 20px;
 }
 
 .cart-summary {
@@ -94,30 +107,32 @@
   border-radius: 4px;
   font-weight: 600;
   border-radius: 30px;
+  font-size: 1rem;
 }
   .checkout-btn {
     background-color: orange;
     color: white;
     border: none;
     margin: 10px 0;
+    transition: background-color 0.5s ease-in-out;
     &:hover {
       background-color: white;
       color: orange;
       border: 1px solid orange;
     }
   }
-  .continue-shopping {
-    background-color: white;
-    border: 1px solid #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    &:hover {
-      background-color: white;
-      color: orange;
-      border: 1px solid orange;
-    }
-  }
+  // .continue-shopping {
+  //   background-color: white;
+  //   border: 1px solid #ccc;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   &:hover {
+  //     background-color: white;
+  //     color: orange;
+  //     border: 1px solid orange;
+  //   }
+  // }
 
 .summary-total {
   display: flex;
@@ -141,4 +156,32 @@
   .cart-summary {
     margin-bottom: 10px;
   }
+}
+
+
+//empty card
+.empty-cart {
+  display: flex;
+  height: 92vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  h2, p {
+    text-align: center;
+  }
+}
+.empty-cart-icon{
+  img {
+    width: 120px;
+    padding: 20px;
+    border-radius: 50%;
+    border: 3px solid black;
+    animation: pulse 2s ease-in-out;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }

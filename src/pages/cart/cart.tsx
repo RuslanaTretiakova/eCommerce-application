@@ -1,4 +1,8 @@
 import { Link } from 'react-router-dom';
+
+// import cart from '../../../assets/img/header/cart.svg';
+import cartIcon from '../../assets/img/header/cart.svg';
+
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import type { Cart, ParsedCartItem } from '../../types/cartTypes';
@@ -57,7 +61,16 @@ function Cart() {
   console.log('Line Items:', cart?.lineItems);
 
   if (!cart || !cart.lineItems || cart.lineItems.length === 0) {
-    return <p>Empty cart</p>;
+    return (
+      <div className="empty-cart">
+        <div className="empty-cart-icon">
+          <img src={cartIcon} alt="cart-image" />
+        </div>
+
+        <h2 className="empty-cart-title">Your cart is empty</h2>
+        <p className="empty-cart-text">Looks like you have not added anything to your cart yet</p>
+      </div>
+    );
   }
 
   if (cart) {
