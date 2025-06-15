@@ -168,14 +168,20 @@
     padding: 20px;
     border-radius: 50%;
     border: 3px solid black;
-    animation: pulse 2s ease-in-out;
+    animation: pulse 9s infinite ease-in-out;
   }
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0%, 100% {
+    transform: scale(1);
+  }
+  10%, 15% {
+    transform: scale(1.1);
+  }
+  15%, 20% {
+    transform: scale(1);
+  }
 }
 
 .empty-cart-text {
