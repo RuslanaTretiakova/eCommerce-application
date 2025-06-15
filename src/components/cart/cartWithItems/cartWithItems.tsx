@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import type { Cart, ParsedCartItem } from '../../../types/cartTypes';
-// import { handleClearCart } from '../../../pages/cart/cart';
+import ConfirmationPrompt from '../../cart/confirmationPrompt/confirmationPromt';
 
 interface CartWithItemsProps {
   cart: Cart;
@@ -26,12 +27,18 @@ function CartWithItems({ cart, handleClearCart }: CartWithItemsProps) {
     };
   });
 
+  const [showModal, setShowModal] = useState(false);
+  const confirmClear = () => {
+    handleClearCart();
+    setShowModal(false);
+  };
+
   return (
     <div className="temp">
       <h1>Cart page</h1>
       <div className="cart-container">
         <div className="cart-products">
-          <button type="button" className="remove-all-btn" onClick={handleClearCart}>
+          <button type="button" className="remove-all-btn" onClick={() => setShowModal(true)}>
             Remove all items
           </button>
 
@@ -71,6 +78,11 @@ function CartWithItems({ cart, handleClearCart }: CartWithItemsProps) {
               </div>
             </div>
           ))}
+
+          {/* confirmation mode */}
+          {showModal && (
+            <ConfirmationPrompt onConfirm={confirmClear} onCancel={() => setShowModal(false)} />
+          )}
         </div>
 
         <div className="cart-summary">
