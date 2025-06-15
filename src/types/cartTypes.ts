@@ -27,7 +27,7 @@ export type ParsedCartItem = {
   img: string;
   quantity: number;
   originalPrice: number;
-  discountedPrice: number;
+  discountedPrice: number | undefined;
   variant: {
     sku: string;
   };
