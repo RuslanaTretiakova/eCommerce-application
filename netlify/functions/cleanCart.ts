@@ -15,7 +15,7 @@ const handler: Handler = async (e) => {
   }
 
   const cartResponse = await fetch(`${CTP_API_URL}/${CTP_PROJECT_KEY}/carts/${cartId}`, {
-    headers: { Authorization: `Bearer ${token}`},
+    headers: { Authorization: `Bearer ${token}` },
   });
 
   if (!cartResponse.ok) {
@@ -28,7 +28,6 @@ const handler: Handler = async (e) => {
   const cartData = await cartResponse.json();
   const version = cartData.version;
   const lineItems = cartData.lineItems;
-
 
   const actions = lineItems.map((item: CartItem) => ({
     action: 'removeLineItem',
@@ -58,7 +57,6 @@ const handler: Handler = async (e) => {
     statusCode: updateCartResponse.status,
     body: JSON.stringify(updatedCart),
   };
-}
-
+};
 
 export { handler };
