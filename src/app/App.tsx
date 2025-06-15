@@ -16,6 +16,7 @@ import UserLoginProfile from '../pages/userLoginProfile/userLoginProfile';
 import ProductPage from '../pages/product/ProductPage';
 
 import { TokenProvider, useAuth } from '../api/authorithation/AuthToken';
+
 import { fetchToken } from '../utils/token/tokenType';
 import { useEffect, useState } from 'react';
 import ProductsCategory from '../pages/productsCategory/productsCategory';
@@ -57,7 +58,7 @@ function InnerApp() {
         <Route path="/login" element={<AuthenticationPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/profile-info" element={<UserLoginProfile />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart/:cartId" element={<Cart />} />
         <Route path="/products/:category/:id" element={<ProductPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
