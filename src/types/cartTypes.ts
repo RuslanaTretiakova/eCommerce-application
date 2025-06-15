@@ -1,0 +1,43 @@
+export type CartItem = {
+  id: string;
+  name: {
+    [locale: string]: string;
+  };
+  variant: {
+    images: {
+      url: string;
+    }[];
+    sku: string;
+  };
+  quantity: number;
+  price: {
+    value: {
+      centAmount: number;
+    };
+    discounted?: {
+      value: {
+        centAmount: number;
+      };
+    };
+  };
+};
+
+export type ParsedCartItem = {
+  name: string;
+  img: string;
+  quantity: number;
+  originalPrice: number;
+  discountedPrice: number;
+  variant: {
+    sku: string;
+  };
+};
+
+export type Cart = {
+  id: string;
+  lineItems: CartItem[];
+  totalPrice: {
+    centAmount: number;
+    currencyCode: string;
+  };
+};
