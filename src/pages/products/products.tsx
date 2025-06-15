@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
-import type {
-  ProductData,
-  Product
-} from '@commercetools/platform-sdk';
+import type { ProductData, Product } from '@commercetools/platform-sdk';
 import Load from '../load/load';
 import { Breadcrumbs } from '../../components/ui/breadcrumbs/Breadcrumbs';
 import { useNavigate } from 'react-router-dom';
