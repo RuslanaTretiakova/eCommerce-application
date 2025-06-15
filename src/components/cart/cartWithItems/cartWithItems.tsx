@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import type { Cart, ParsedCartItem } from '../../../types/cartTypes';
+import ConfirmationPrompt from '../../cart/confirmationPrompt/confirmationPromt';
 
 interface CartWithItemsProps {
   cart: Cart;
+  handleClearCart: () => void;
 }
 
-function CartWithItems({ cart }: CartWithItemsProps) {
+function CartWithItems({ cart, handleClearCart }: CartWithItemsProps) {
   const totalPrice = (cart.totalPrice.centAmount / 100).toFixed(2);
 
   const items = cart.lineItems.map((item) => {
@@ -24,12 +27,18 @@ function CartWithItems({ cart }: CartWithItemsProps) {
     };
   });
 
+  const [showModal, setShowModal] = useState(false);
+  const confirmClear = () => {
+    handleClearCart();
+    setShowModal(false);
+  };
+
   return (
     <div className="temp">
       <h1>Cart page</h1>
       <div className="cart-container">
         <div className="cart-products">
-          <button type="button" className="remove-all-btn">
+          <button type="button" className="remove-all-btn" onClick={() => setShowModal(true)}>
             Remove all items
           </button>
 
@@ -69,6 +78,11 @@ function CartWithItems({ cart }: CartWithItemsProps) {
               </div>
             </div>
           ))}
+
+          {/* confirmation mode */}
+          {showModal && (
+            <ConfirmationPrompt onConfirm={confirmClear} onCancel={() => setShowModal(false)} />
+          )}
         </div>
 
         <div className="cart-summary">

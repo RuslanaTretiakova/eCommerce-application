@@ -30,7 +30,6 @@ function Item() {
     }
     const fetchProduct = async () => {
       try {
-        debugger;
         const productInfo = await fetchProductById(id, token);
         console.log('Product fetched:', productInfo);
         setProduct(productInfo);
