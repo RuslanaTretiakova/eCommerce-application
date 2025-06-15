@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import type { Cart } from '../../types/cartTypes';
 import { useAuth } from '../../api/authorithation/AuthToken';
@@ -48,6 +48,25 @@ function Cart() {
     }
   }, [cartId, token]);
 
+  //clean cart
+  const handleClearCart = useCallback(async () => {
+    if (!token || !cart?.id) return;
+
+    try {
+      const res = await fetch(`/.netlify/functions/cleanCart?cartId=${cart.id}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const updatedCart = await res.json();
+      setCart(updatedCart);
+    } catch (error) {
+      console.error('Failed to clear cart:', error);
+    }
+  }, [token, cart?.id]);
+
   console.log('cartId:', cartId);
   console.log('Cart:', cart);
   console.log('Line Items:', cart?.lineItems);
@@ -55,7 +74,11 @@ function Cart() {
   if (loading) return <p>Loading cart...</p>;
   if (error) return <p className="error-message">{error}</p>;
   if (!cart) return <EmptyCart />;
-  return cart.lineItems?.length > 0 ? <CartWithItems cart={cart} /> : <EmptyCart />;
+  return cart.lineItems?.length > 0 ? (
+    <CartWithItems cart={cart} handleClearCart={handleClearCart} />
+  ) : (
+    <EmptyCart />
+  );
 }
 
 export default Cart;

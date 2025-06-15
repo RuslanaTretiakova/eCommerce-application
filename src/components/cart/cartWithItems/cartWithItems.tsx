@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import type { Cart, ParsedCartItem } from '../../../types/cartTypes';
+// import { handleClearCart } from '../../../pages/cart/cart';
 
 interface CartWithItemsProps {
   cart: Cart;
+  handleClearCart: () => void;
 }
 
-function CartWithItems({ cart }: CartWithItemsProps) {
+function CartWithItems({ cart, handleClearCart }: CartWithItemsProps) {
   const totalPrice = (cart.totalPrice.centAmount / 100).toFixed(2);
 
   const items = cart.lineItems.map((item) => {
@@ -29,7 +31,7 @@ function CartWithItems({ cart }: CartWithItemsProps) {
       <h1>Cart page</h1>
       <div className="cart-container">
         <div className="cart-products">
-          <button type="button" className="remove-all-btn">
+          <button type="button" className="remove-all-btn" onClick={handleClearCart}>
             Remove all items
           </button>
 
