@@ -30,7 +30,6 @@ interface ProductDataWithId extends ProductData {
 
 function Products(): JSX.Element {
   const { category } = useParams();
-  console.log(category);
   const handleAddToCart = (productId: string) => {
     console.log(`${productId}`);
   };
@@ -155,7 +154,6 @@ function Products(): JSX.Element {
   };
 
   const handleFilterByBrand = async (selectedBrands: string[]) => {
-    console.log(selectedBrands);
     const filterIsActive = selectedBrands.length > 0;
     setIsFilterActive(filterIsActive);
 
@@ -166,17 +164,14 @@ function Products(): JSX.Element {
           : await getSearchProductListByCategoryFromServer(category || '');
       setProducts(fallback.results);
       setVisibleProducts(fallback.results);
-      console.log(visibleProducts);
       return;
     }
 
     try {
       const productsObj = await getProductListFromServer();
-      console.log('All Products:', productsObj);
-
       let newVisibleProducts: Product[] = [];
 
-      const filteredProducts = productsObj.results.filter((product: Product) => {
+      productsObj.results.filter((product: Product) => {
         const masterAttributes = product.masterData.current.masterVariant.attributes ?? [];
 
         const hasBrandInMaster = selectedBrands.includes(masterAttributes?.[0].value.toUpperCase());
@@ -192,10 +187,8 @@ function Products(): JSX.Element {
         return hasBrandInMaster || hasBrandInVariants;
       });
 
-      console.log('Filtered Products:', filteredProducts);
       setProducts(newVisibleProducts);
       setVisibleProducts(newVisibleProducts);
-      console.log(visibleProducts);
     } catch (error) {
       console.error('Error filtering by brand:', error);
     }
@@ -313,17 +306,6 @@ function Products(): JSX.Element {
             />
           </>
         )}
-        {/* <FilterByType onChange={handleFilterChange} /> */}
-        {/* <FilterCheckbox
-          name="Type"
-          optionsCheckbox={optionsByTypeBikes}
-          onChange={handleFilterChange}
-        /> */}
-        {/* <FilterCheckbox
-          name="Brand"
-          optionsCheckbox={optionsByBrandBikes}
-          onChange={handleFilterByBrand}
-        /> */}
         <PriceRangeFilter onChange={handlePriceRangeChange} />
         <ButtonResetFilter onClick={handleResetFilter} />
       </div>
