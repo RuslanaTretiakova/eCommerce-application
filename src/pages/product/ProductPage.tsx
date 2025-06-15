@@ -30,7 +30,9 @@ function Item() {
     }
     const fetchProduct = async () => {
       try {
+        debugger;
         const productInfo = await fetchProductById(id, token);
+        console.log('Product fetched:', productInfo);
         setProduct(productInfo);
       } catch (err) {
         setError((err as Error).message);
@@ -43,8 +45,11 @@ function Item() {
   }, [id, token]);
 
   if (loading) return <p>Loading...</p>;
-  if (error || !product) {
+  if (error) {
     console.log(error);
+  }
+  if (!product) {
+    console.log('No product found');
   }
 
   if (product) {

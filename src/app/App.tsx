@@ -59,7 +59,7 @@ function InnerApp() {
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/profile-info" element={<UserLoginProfile />} />
         <Route path="/cart/:cartId" element={<Cart />} />
-        <Route path="/products/:category/:cartId" element={<ProductPage />} />
+        <Route path="/products/:category/:id" element={<ProductPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
