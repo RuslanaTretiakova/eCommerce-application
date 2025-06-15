@@ -11,13 +11,11 @@ function EmptyCart() {
 
       <h2 className="empty-cart-title">Your cart is empty</h2>
       <p className="empty-cart-text">Looks like you have not added anything to your cart yet</p>
-      <Link to="/products/all" className="continue-shopping">
+      <Link to="/products" className="continue-shopping">
         Continue shopping
       </Link>
     </div>
-  )
+  );
 }
 
 export default EmptyCart;
-
-

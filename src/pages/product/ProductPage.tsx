@@ -52,7 +52,6 @@ function Item() {
     console.log('No product found');
   }
 
-
   if (product) {
     return (
       <div>

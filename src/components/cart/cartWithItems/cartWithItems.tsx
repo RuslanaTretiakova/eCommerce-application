@@ -84,7 +84,7 @@ function CartWithItems({ cart }: CartWithItemsProps) {
           <button className="checkout-btn" type="button">
             Check in
           </button>
-          <Link to="/products/all" className="continue-shopping">
+          <Link to="/products" className="continue-shopping">
             Continue shopping
           </Link>
         </div>
