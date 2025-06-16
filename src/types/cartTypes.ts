@@ -40,4 +40,9 @@ export type Cart = {
     centAmount: number;
     currencyCode: string;
   };
+  discountOnTotalPrice?: {
+    discountedAmount: {
+      centAmount: number;
+    };
+  };
 };

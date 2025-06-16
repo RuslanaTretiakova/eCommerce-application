@@ -7,7 +7,6 @@ interface ModifyCartInput {
   actions: object[];
 }
 
-
 export async function modifyCart({ token, cartId, version, actions }: ModifyCartInput) {
   const response = await fetch(`${CTP_API_URL}/${CTP_PROJECT_KEY}/carts/${cartId}`, {
     method: 'POST',
