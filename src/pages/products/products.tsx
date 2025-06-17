@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
 import type { ProductData, Product } from '@commercetools/platform-sdk';
 import Load from '../load/load';
-
 import { Breadcrumbs } from '../../components/ui/breadcrumbs/Breadcrumbs';
-
 import { useNavigate } from 'react-router-dom';
-
 import type { JSX } from 'react';
 import BaseButton from '../../components/ui/base-button/BaseButton';
 import ProductCard from '../../components/ui/product-card/ProductCard';
@@ -17,7 +14,6 @@ import getSearchProductListByCategoryFromServer from '../../api/productListByCat
 import SortButton from '../../components/ui/sort-button/sort-button';
 import getSortedProductListFromServer from '../../api/getSortedProductListByCatgory';
 import getSortedProductListAllFromServer from '../../api/getSortdeProductListAll';
-import FilterByType from '../../components/ui/filter/filterByType';
 import getFilteredProducts from '../../api/getFilteredProductsByType';
 import PriceRangeFilter from '../../components/ui/filter/priceRange';
 import ButtonResetFilter from '../../components/ui/button-reset-filter/button-reset-filter';
@@ -26,6 +22,12 @@ import { getCartId } from '../../utils/cart/localStorage';
 import { useAuth } from '../../api/authorithation/AuthToken';
 import { useCart } from '../../components/cart/hooks/useCart';
 import { showNotification } from '../../utils/toastify/showNotification';
+import FilterCheckbox from '../../components/filterCheckbox/filterCheckbox';
+import {
+  optionsByBrandBikes,
+  optionsByBrandHelmets,
+  optionsByTypeBikes,
+} from '../../types/optionsFilter';
 
 interface ProductDataWithId extends ProductData {
   id: string;
@@ -201,6 +203,47 @@ function Products(): JSX.Element {
     }
   };
 
+  const handleFilterByBrand = async (selectedBrands: string[]) => {
+    const filterIsActive = selectedBrands.length > 0;
+    setIsFilterActive(filterIsActive);
+
+    if (!filterIsActive) {
+      const fallback =
+        category === 'all'
+          ? await getProductListFromServer()
+          : await getSearchProductListByCategoryFromServer(category || '');
+      setProducts(fallback.results);
+      setVisibleProducts(fallback.results);
+      return;
+    }
+
+    try {
+      const productsObj = await getProductListFromServer();
+      let newVisibleProducts: Product[] = [];
+
+      productsObj.results.filter((product: Product) => {
+        const masterAttributes = product.masterData.current.masterVariant.attributes ?? [];
+
+        const hasBrandInMaster = selectedBrands.includes(masterAttributes?.[0].value.toUpperCase());
+
+        const hasBrandInVariants = selectedBrands.includes(
+          masterAttributes?.[0].value.toUpperCase(),
+        );
+
+        if (hasBrandInMaster || hasBrandInVariants) {
+          newVisibleProducts.push(product);
+        }
+
+        return hasBrandInMaster || hasBrandInVariants;
+      });
+
+      setProducts(newVisibleProducts);
+      setVisibleProducts(newVisibleProducts);
+    } catch (error) {
+      console.error('Error filtering by brand:', error);
+    }
+  };
+
   const handlePriceRangeChange = (min: number | null, max: number | null) => {
     const range = { min: min ?? undefined, max: max ?? undefined };
 
@@ -272,7 +315,47 @@ function Products(): JSX.Element {
       <Breadcrumbs />
       <SearchProduct onSearchResults={handleSearchResults} />
       <div className="filter_container">
-        <FilterByType onChange={handleFilterChange} />
+        {category === 'b73e6212-590c-4dda-9f74-afc8bfc40529' && (
+          <>
+            <FilterCheckbox
+              name="Type Bikes"
+              optionsCheckbox={optionsByTypeBikes}
+              onChange={handleFilterChange}
+            />
+            <FilterCheckbox
+              name="Brand Bikes"
+              optionsCheckbox={optionsByBrandBikes}
+              onChange={handleFilterByBrand}
+            />
+          </>
+        )}
+        {category === '3ef0177d-a71d-4c42-98d9-2343d5890f87' && (
+          <FilterCheckbox
+            name="Brand Helmets"
+            optionsCheckbox={optionsByBrandHelmets}
+            onChange={handleFilterByBrand}
+          />
+        )}
+
+        {category === 'all' && (
+          <>
+            <FilterCheckbox
+              name="Type Bikes"
+              optionsCheckbox={optionsByTypeBikes}
+              onChange={handleFilterChange}
+            />
+            <FilterCheckbox
+              name="Brand Bikes"
+              optionsCheckbox={optionsByBrandBikes}
+              onChange={handleFilterByBrand}
+            />
+            <FilterCheckbox
+              name="Brand Helmets"
+              optionsCheckbox={optionsByBrandHelmets}
+              onChange={handleFilterByBrand}
+            />
+          </>
+        )}
         <PriceRangeFilter onChange={handlePriceRangeChange} />
         <ButtonResetFilter onClick={handleResetFilter} />
       </div>

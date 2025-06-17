@@ -1,0 +1,46 @@
+.cart-modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.cart-modal {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.cart-modal__buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  > button {
+    width: 100px;
+    border-radius: 30px;
+    padding: 0.5rem 1.2rem;
+    color: white;
+    border: none;
+    transition: background-color 0.5s ease-in-out;
+    &:hover {
+      background-color: black;
+    }
+  }
+  .confirm-btn {
+    background-color: #d9534f;
+  }
+  .cancel-btn {
+    background-color: orange;
+  }
+}
+
+
