@@ -2,7 +2,7 @@ export async function createCart(
   accessToken: string,
   isAnonymous: boolean,
   anonymousId?: string,
-): Promise<{ id: string } | null> {
+): Promise<{ id: string; version: number } | null> {
   try {
     const res = await fetch('/.netlify/functions/createCart', {
       method: 'POST',
@@ -19,7 +19,7 @@ export async function createCart(
       return null;
     }
 
-    return { id: data.id };
+    return { id: data.id, version: data.version };
   } catch (error) {
     console.error('Create cart failed:', error);
     return null;

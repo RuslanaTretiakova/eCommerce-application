@@ -28,8 +28,9 @@ export const useCart = () => {
     }
 
     const cart = await createCart(token, isAnonymous, anonymousId);
-    if (cart?.id) {
+    if (cart?.id && cart?.version !== undefined) {
       setCartId(cart.id);
+      localStorage.setItem('cartVersion', String(cart.version));
       return cart.id;
     }
 

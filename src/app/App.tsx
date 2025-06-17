@@ -36,8 +36,10 @@ function InnerApp() {
         } else {
           const anonymousId = getAnonymousId();
           const result = await createCart(token, isAnonymous, anonymousId ?? undefined);
-          if (result?.id) {
+
+          if (result?.id && result?.version !== undefined) {
             setCartId(result.id);
+            localStorage.setItem('cartVersion', String(result.version));
           }
         }
       } catch (error) {
