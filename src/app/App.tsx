@@ -20,23 +20,34 @@ import { fetchToken } from '../utils/token/tokenType';
 import { useEffect, useState } from 'react';
 import ProductsCategory from '../pages/productsCategory/productsCategory';
 
+import { createCart } from '../api/cart/cart';
+import { getAnonymousId, setCartId } from '../utils/cart/localStorage';
+
 function InnerApp() {
-  const { token, scope, setToken } = useAuth();
+  const { token, scope, setToken, isAnonymous } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!token) {
-      fetchToken('anonymous')
-        .then(({ token, scope }) => {
+    const init = async () => {
+      try {
+        if (!token) {
+          const { token, scope } = await fetchToken('anonymous');
           setToken(token, scope);
-        })
-        .catch((error) => {
-          console.error('Failed to fetch anonymous token', error);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
+        } else {
+          const anonymousId = getAnonymousId();
+          const result = await createCart(token, isAnonymous, anonymousId ?? undefined);
+          if (result?.id) {
+            setCartId(result.id);
+          }
+        }
+      } catch (error) {
+        console.error('Initialization error:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    init();
   }, [token]);
 
   console.log('Token:', token);
