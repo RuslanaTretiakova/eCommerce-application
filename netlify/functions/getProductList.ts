@@ -33,8 +33,8 @@ const handler: Handler = async () => {
   try {
     const response = await apiRoot
       .withProjectKey({ projectKey: CTP_PROJECT_KEY })
-      .products()
-      .get({ queryArgs: { limit: 500 } })
+      .productProjections()
+      .get()
       .execute();
 
     return {

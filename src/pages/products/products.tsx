@@ -23,6 +23,7 @@ import {
   optionsByBrandHelmets,
   optionsByTypeBikes,
 } from '../../types/optionsFilter';
+import Pagination from '../../components/pagination/pagination';
 
 interface ProductDataWithId extends ProductData {
   id: string;
@@ -38,6 +39,9 @@ function Products(): JSX.Element {
   const [visibleProducts, setVisibleProducts] = useState<Product[]>([]);
   const [isFilterActive, setIsFilterActive] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+
+  let limit = 6;
 
   useEffect(() => {
     async function fetchProducts() {
@@ -63,7 +67,6 @@ function Products(): JSX.Element {
     fetchProducts();
   }, [category]);
 
-  //to navigate to detailed product page
   const navigate = useNavigate();
   const handleCardClick = (productId: string) => {
     navigate(`/products/${category}/${productId}`);
@@ -248,6 +251,22 @@ function Products(): JSX.Element {
     }
   };
 
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const allVariantsWithProductData = visibleProducts.flatMap((product) => {
+    const productData = 'masterData' in product ? product.masterData.current : product;
+    const variants = [productData.masterVariant, ...productData.variants];
+
+    return variants.map((variant) => ({
+      variant,
+      productName: productData.name?.['en-US'] || 'Unnamed product',
+      productDescription: productData.description?.['en-US']?.split('.')[0] || '',
+    }));
+  });
+
+  const paginatedVariants = allVariantsWithProductData.slice(startIndex, endIndex);
+
   useEffect(() => {
     console.log('Updated products state:', products);
   }, [products]);
@@ -255,6 +274,10 @@ function Products(): JSX.Element {
   useEffect(() => {
     console.log('Updated products state:', visibleProducts);
   }, [visibleProducts]);
+
+  useEffect(() => {
+    console.log('Updated products page:', page);
+  }, [page]);
 
   if (loading) {
     return <Load />;
@@ -321,51 +344,48 @@ function Products(): JSX.Element {
         <SortButton attrSort=" price ↑" onClickF={(e) => handleSortButtonClick('price asc', e)} />
         <SortButton attrSort=" price ↓" onClickF={(e) => handleSortButtonClick('price desc', e)} />
       </div>
-
       <div className="product-list">
-        {visibleProducts.map((product) => {
-          const productData = 'masterData' in product ? product.masterData.current : product;
-          const variants = [productData.masterVariant, ...productData.variants];
+        {paginatedVariants.map(({ variant, productName, productDescription }) => {
+          const variantKey = variant.sku || String(variant.id);
+          const price = variant.prices?.[0]?.value.centAmount ?? 0;
+          const discount = variant.prices?.[0]?.discounted?.value.centAmount ?? 0;
+          const imageUrl = variant.images?.[0]?.url || '';
 
-          const productName = productData.name?.['en-US'] || 'Unnamed product';
-          const productDescription = productData.description?.['en-US']?.split('.')[0] || '';
-
-          return variants.map((variant) => {
-            const variantKey = variant.sku || String(variant.id);
-            const price = variant.prices?.[0]?.value.centAmount ?? 0;
-            const discount = variant.prices?.[0]?.discounted?.value.centAmount ?? 0;
-            const imageUrl = variant.images?.[0]?.url || '';
-
-            return (
-              <div
-                key={variantKey}
-                className="product-list__item"
-                data-id={variantKey}
-                onClick={() => handleCardClick(variantKey)}
-                aria-hidden="true"
+          return (
+            <div
+              key={variantKey}
+              className="product-list__item"
+              data-id={variantKey}
+              onClick={() => handleCardClick(variantKey)}
+              aria-hidden="true"
+            >
+              <ProductCard
+                id={variantKey}
+                name={productName}
+                description={productDescription}
+                price={`${(price / 100).toFixed(2)} EUR`}
+                imageUrl={imageUrl}
+                discount={discount ? `${(discount / 100).toFixed(2)} EUR` : undefined}
+              />
+              <BaseButton
+                title="Add to Cart"
+                type="button"
+                className="button button--cart"
+                onClick={() => handleAddToCart(variantKey)}
               >
-                <ProductCard
-                  id={variantKey}
-                  name={productName}
-                  description={productDescription}
-                  price={`${(price / 100).toFixed(2)} EUR`}
-                  imageUrl={imageUrl}
-                  discount={discount ? `${(discount / 100).toFixed(2)} EUR` : undefined}
-                />
-
-                <BaseButton
-                  title="Add to Cart"
-                  type="button"
-                  className="button button--cart"
-                  onClick={() => handleAddToCart(variantKey)}
-                >
-                  Add to Cart
-                </BaseButton>
-              </div>
-            );
-          });
+                Add to Cart
+              </BaseButton>
+            </div>
+          );
         })}
       </div>
+
+      <Pagination
+        arrayItems={allVariantsWithProductData}
+        limit={limit}
+        currentPage={page}
+        onPageChange={setPage}
+      />
     </div>
   );
 }
