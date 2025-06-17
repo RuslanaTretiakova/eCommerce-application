@@ -28,7 +28,9 @@ interface ProductDataWithId extends ProductData {
 
 function Products(): JSX.Element {
   const { category } = useParams();
-  const handleAddToCart = (productId: string) => {
+
+  const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>, productId: string) => {
+    e.stopPropagation();
     console.log(`${productId}`);
   };
 
@@ -274,7 +276,7 @@ function Products(): JSX.Element {
                   title="Add to Cart"
                   type="button"
                   className="button button--cart"
-                  onClick={() => handleAddToCart(variantKey)}
+                  onClick={(e) => handleAddToCart(e, variantKey)}
                 >
                   Add to Cart
                 </BaseButton>
