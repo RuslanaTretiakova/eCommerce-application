@@ -23,14 +23,14 @@ const handler: Handler = async (event) => {
   try {
     const { cartId, version, sku } = JSON.parse(event.body || '{}');
 
-    if (!cartId || version === undefined || !sku) {
+    if (!cartId || typeof version !== 'number' || !sku) {
       return {
         statusCode: 400,
         body: JSON.stringify({ error: 'Missing required fields' }),
       };
     }
 
-    const res = await fetch(`${CTP_API_URL}/${CTP_PROJECT_KEY}/me/carts/${cartId}`, {
+    const res = await fetch(`${CTP_API_URL}/${CTP_PROJECT_KEY}/carts/${cartId}`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -50,8 +50,18 @@ const handler: Handler = async (event) => {
 
     const data = await res.json();
 
+    if (!res.ok) {
+      return {
+        statusCode: res.status,
+        body: JSON.stringify({
+          error: 'Failed to add item to cart',
+          details: data,
+        }),
+      };
+    }
+
     return {
-      statusCode: res.status,
+      statusCode: 200,
       body: JSON.stringify(data),
     };
   } catch (err) {
