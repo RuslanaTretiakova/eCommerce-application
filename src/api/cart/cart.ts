@@ -1,8 +1,13 @@
+type CreateCartResponse = {
+  id: string;
+  version: number;
+};
+
 export async function createCart(
   accessToken: string,
   isAnonymous: boolean,
   anonymousId?: string,
-): Promise<{ id: string; version: number } | null> {
+): Promise<CreateCartResponse | null> {
   try {
     const res = await fetch('/.netlify/functions/createCart', {
       method: 'POST',
@@ -16,6 +21,11 @@ export async function createCart(
 
     if (!res.ok) {
       console.error('Create cart error:', data);
+      return null;
+    }
+
+    if (!data?.id || typeof data.version !== 'number') {
+      console.warn('Unexpected cart format:', data);
       return null;
     }
 
