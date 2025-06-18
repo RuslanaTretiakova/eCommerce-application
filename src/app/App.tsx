@@ -22,26 +22,37 @@ import { useEffect, useState } from 'react';
 import ProductsCategory from '../pages/productsCategory/productsCategory';
 
 import { createCart } from '../api/cart/cart';
-import { getAnonymousId, setCartId } from '../utils/cart/localStorage';
+import {
+  generateAnonymousId,
+  getAnonymousId,
+  setAnonymousId,
+  setCartId,
+} from '../utils/cart/localStorage';
+import Load from '../pages/load/load';
 
 function InnerApp() {
-  const { token, scope, setToken, isAnonymous } = useAuth();
+  const { token, setToken, isAnonymous } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const init = async () => {
       try {
         if (!token) {
-          const { token, scope } = await fetchToken('anonymous');
-          setToken(token, scope);
-        } else {
-          const anonymousId = getAnonymousId();
-          const result = await createCart(token, isAnonymous, anonymousId ?? undefined);
+          const { token: newToken, scope: newScope } = await fetchToken('anonymous');
+          setToken(newToken, newScope);
+          return;
+        }
 
-          if (result?.id && result?.version !== undefined) {
-            setCartId(result.id);
-            localStorage.setItem('cartVersion', String(result.version));
-          }
+        let anonId = getAnonymousId();
+        if (!anonId) {
+          anonId = generateAnonymousId();
+          setAnonymousId(anonId);
+        }
+
+        const result = await createCart(token, isAnonymous, anonId);
+        if (result?.id && typeof result.version === 'number') {
+          setCartId(result.id);
+          localStorage.setItem('cartVersion', String(result.version));
         }
       } catch (error) {
         console.error('Initialization error:', error);
@@ -51,13 +62,10 @@ function InnerApp() {
     };
 
     init();
-  }, [token]);
-
-  console.log('Token:', token);
-  console.log('Scope:', scope);
+  }, [token, isAnonymous, setToken]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Load />;
   }
 
   return (
@@ -71,7 +79,7 @@ function InnerApp() {
         <Route path="/login" element={<AuthenticationPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/profile-info" element={<UserLoginProfile />} />
-        <Route path="/cart/:cartId" element={<Cart />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/products/:category/:id" element={<ProductPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

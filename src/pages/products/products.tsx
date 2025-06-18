@@ -17,8 +17,6 @@ import getSortedProductListAllFromServer from '../../api/getSortdeProductListAll
 import getFilteredProducts from '../../api/getFilteredProductsByType';
 import PriceRangeFilter from '../../components/ui/filter/priceRange';
 import ButtonResetFilter from '../../components/ui/button-reset-filter/button-reset-filter';
-import { addToCart } from '../../api/cart/addToCart';
-import { getCartId } from '../../utils/cart/localStorage';
 import { useAuth } from '../../api/authorithation/AuthToken';
 import { useCart } from '../../components/cart/hooks/useCart';
 import { showNotification } from '../../utils/toastify/showNotification';
@@ -35,17 +33,8 @@ interface ProductDataWithId extends ProductData {
 
 function Products(): JSX.Element {
   const { category } = useParams();
-  const [, setCartVersion] = useState<number | null>(null);
-  useEffect(() => {
-    const versionStr = localStorage.getItem('cartVersion');
-    if (versionStr) {
-      setCartVersion(Number(versionStr));
-    }
-  }, []);
-
   const { token } = useAuth();
-
-  const { initCart } = useCart();
+  const { addToCart } = useCart();
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>, sku: string) => {
     e.stopPropagation();
@@ -53,30 +42,13 @@ function Products(): JSX.Element {
     try {
       if (!token) throw new Error('Token is missing');
 
-      let cartId = getCartId();
-      let versionStr = localStorage.getItem('cartVersion');
-
-      if (!cartId || !versionStr) {
-        const newCartId = await initCart();
-        if (!newCartId) throw new Error('Failed to initialize cart');
-        cartId = newCartId;
-        versionStr = localStorage.getItem('cartVersion');
-      }
-
-      const cartVersion = Number(versionStr);
-      if (isNaN(cartVersion)) throw new Error('Invalid cart version');
-
-      const updatedCart = await addToCart(token, cartId, cartVersion, sku);
-      setCartVersion(updatedCart.version);
-      localStorage.setItem('cartVersion', String(updatedCart.version));
-
+      await addToCart(sku);
       showNotification({
         text: 'Product added to cart',
         type: 'success',
       });
     } catch (error) {
       console.error('Add to cart failed:', error);
-
       showNotification({
         text: 'Failed to add product to cart',
         type: 'error',
