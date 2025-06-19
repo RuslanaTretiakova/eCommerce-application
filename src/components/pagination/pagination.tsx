@@ -17,7 +17,7 @@ function Pagination<T>({ arrayItems, limit, currentPage, onPageChange }: Paginat
         return (
           <button
             key={pageNumber}
-            type='button'
+            type="button"
             className={`button pagination-button ${currentPage === pageNumber ? 'pagination-button-active' : ''}`}
             onClick={() => onPageChange(pageNumber)}
           >
