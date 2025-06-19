@@ -20,18 +20,10 @@ import { TokenProvider, useAuth } from '../api/authorithation/AuthToken';
 import { fetchToken } from '../utils/token/tokenType';
 import { useEffect, useState } from 'react';
 import ProductsCategory from '../pages/productsCategory/productsCategory';
-
-import { createCart } from '../api/cart/cart';
-import {
-  generateAnonymousId,
-  getAnonymousId,
-  setAnonymousId,
-  setCartId,
-} from '../utils/cart/localStorage';
 import Load from '../pages/load/load';
 
 function InnerApp() {
-  const { token, setToken, isAnonymous } = useAuth();
+  const { token, setToken } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -40,29 +32,16 @@ function InnerApp() {
         if (!token) {
           const { token: newToken, scope: newScope } = await fetchToken('anonymous');
           setToken(newToken, newScope);
-          return;
-        }
-
-        let anonId = getAnonymousId();
-        if (!anonId) {
-          anonId = generateAnonymousId();
-          setAnonymousId(anonId);
-        }
-
-        const result = await createCart(token, isAnonymous, anonId);
-        if (result?.id && typeof result.version === 'number') {
-          setCartId(result.id);
-          localStorage.setItem('cartVersion', String(result.version));
         }
       } catch (error) {
-        console.error('Initialization error:', error);
+        console.error('Token init error:', error);
       } finally {
         setIsLoading(false);
       }
     };
 
     init();
-  }, [token, isAnonymous, setToken]);
+  }, [token, setToken]);
 
   if (isLoading) {
     return <Load />;

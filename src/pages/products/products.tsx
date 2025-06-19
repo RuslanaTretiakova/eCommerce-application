@@ -26,6 +26,15 @@ import {
   optionsByBrandHelmets,
   optionsByTypeBikes,
 } from '../../types/optionsFilter';
+import { fetchToken } from '../../utils/token/tokenType';
+import {
+  generateAnonymousId,
+  getAnonymousId,
+  setAnonymousId,
+  setCartId,
+} from '../../utils/cart/localStorage';
+import { createCart } from '../../api/cart/cart';
+import { fetchActiveAnonCart } from '../../api/cart/getActiveAnonCart';
 
 interface ProductDataWithId extends ProductData {
   id: string;
@@ -33,26 +42,58 @@ interface ProductDataWithId extends ProductData {
 
 function Products(): JSX.Element {
   const { category } = useParams();
-  const { token } = useAuth();
+  const { token, setToken, isAnonymous } = useAuth();
   const { addToCart } = useCart();
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>, sku: string) => {
     e.stopPropagation();
 
     try {
-      if (!token) throw new Error('Token is missing');
+      let currentToken = token;
+      if (!currentToken) {
+        const { token: newToken, scope } = await fetchToken('anonymous');
+        setToken(newToken, scope);
+        currentToken = newToken;
+      }
+
+      let cartId = localStorage.getItem('cartId');
+      let cartVersion = localStorage.getItem('cartVersion');
+
+      if (!cartId || !cartVersion) {
+        const existingCart = await fetchActiveAnonCart(currentToken);
+        if (existingCart?.id && existingCart.cartState === 'Active') {
+          cartId = existingCart.id;
+          cartVersion = String(existingCart.version);
+          setCartId(cartId!);
+          localStorage.setItem('cartVersion', cartVersion);
+          showNotification({ text: 'Existing cart reused', type: 'info' });
+        }
+      }
+
+      if (!cartId || !cartVersion) {
+        let anonId = getAnonymousId();
+        if (!anonId) {
+          anonId = generateAnonymousId();
+          setAnonymousId(anonId);
+        }
+
+        const newCart = await createCart(currentToken, isAnonymous, anonId);
+
+        if (!newCart?.id) throw new Error('Cart creation failed');
+
+        cartId = newCart.id;
+        cartVersion = String(newCart.version);
+        setCartId(cartId);
+        localStorage.setItem('cartVersion', cartVersion);
+
+        showNotification({ text: 'Cart created successfully', type: 'info' });
+      }
 
       await addToCart(sku);
-      showNotification({
-        text: 'Product added to cart',
-        type: 'success',
-      });
+      showNotification({ text: 'Product added to cart', type: 'success' });
     } catch (error) {
       console.error('Add to cart failed:', error);
-      showNotification({
-        text: 'Failed to add product to cart',
-        type: 'error',
-      });
+      showNotification({ text: 'Failed to add product to cart', type: 'error' });
     }
   };
 
