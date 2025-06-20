@@ -8,7 +8,7 @@
   border-radius: 10px;
 
   .member-icon {
-    height: 200px;
+    height: 210px;
     border-radius: 100%;
     margin: 20px;
     img {
@@ -43,5 +43,14 @@
 @media (max-width: 768px) {
   .member {
     flex-direction: column;
+    .member-icon {
+        margin-bottom: 0;
+    }
+    .member-description { 
+        padding-top: 0;
+        h2 {
+            text-align: center;
+        }
+    }
   }
 }
