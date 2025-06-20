@@ -35,6 +35,7 @@ export type ParsedCartItem = {
 
 export type Cart = {
   id: string;
+  version: number;
   lineItems: CartItem[];
   totalPrice: {
     centAmount: number;

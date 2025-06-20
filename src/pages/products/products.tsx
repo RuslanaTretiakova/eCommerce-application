@@ -17,12 +17,25 @@ import getSortedProductListAllFromServer from '../../api/getSortdeProductListAll
 import getFilteredProducts from '../../api/getFilteredProductsByType';
 import PriceRangeFilter from '../../components/ui/filter/priceRange';
 import ButtonResetFilter from '../../components/ui/button-reset-filter/button-reset-filter';
+import { useAuth } from '../../api/authorithation/AuthToken';
+import { useCart } from '../../components/cart/hooks/useCart';
+import { showNotification } from '../../utils/toastify/showNotification';
 import FilterCheckbox from '../../components/filterCheckbox/filterCheckbox';
 import {
   optionsByBrandBikes,
   optionsByBrandHelmets,
   optionsByTypeBikes,
 } from '../../types/optionsFilter';
+import { fetchToken } from '../../utils/token/tokenType';
+import {
+  generateAnonymousId,
+  getAnonymousId,
+  setAnonymousId,
+  setCartId,
+} from '../../utils/cart/localStorage';
+import { createCart } from '../../api/cart/cart';
+import { fetchActiveAnonCart } from '../../api/cart/getActiveAnonCart';
+import Pagination from '../../components/pagination/pagination';
 
 interface ProductDataWithId extends ProductData {
   id: string;
@@ -30,14 +43,68 @@ interface ProductDataWithId extends ProductData {
 
 function Products(): JSX.Element {
   const { category } = useParams();
-  const handleAddToCart = (productId: string) => {
-    console.log(`${productId}`);
+  const { token, setToken, isAnonymous } = useAuth();
+  const { addToCart, isProductInCart } = useCart();
+
+  const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>, sku: string) => {
+    e.stopPropagation();
+
+    try {
+      let currentToken = token;
+      if (!currentToken) {
+        const { token: newToken, scope } = await fetchToken('anonymous');
+        setToken(newToken, scope);
+        currentToken = newToken;
+      }
+
+      let cartId = localStorage.getItem('cartId');
+      let cartVersion = localStorage.getItem('cartVersion');
+
+      if (!cartId || !cartVersion) {
+        const existingCart = await fetchActiveAnonCart(currentToken);
+        if (existingCart?.id && existingCart.cartState === 'Active') {
+          cartId = existingCart.id;
+          cartVersion = String(existingCart.version);
+          setCartId(cartId!);
+          localStorage.setItem('cartVersion', cartVersion);
+          showNotification({ text: 'Existing cart reused', type: 'info' });
+        }
+      }
+
+      if (!cartId || !cartVersion) {
+        let anonId = getAnonymousId();
+        if (!anonId) {
+          anonId = generateAnonymousId();
+          setAnonymousId(anonId);
+        }
+
+        const newCart = await createCart(currentToken, isAnonymous, anonId);
+
+        if (!newCart?.id) throw new Error('Cart creation failed');
+
+        cartId = newCart.id;
+        cartVersion = String(newCart.version);
+        setCartId(cartId);
+        localStorage.setItem('cartVersion', cartVersion);
+
+        showNotification({ text: 'Cart created successfully', type: 'info' });
+      }
+
+      await addToCart(sku);
+      showNotification({ text: 'Product added to cart', type: 'success' });
+    } catch (error) {
+      console.error('Add to cart failed:', error);
+      showNotification({ text: 'Failed to add product to cart', type: 'error' });
+    }
   };
 
   const [products, setProducts] = useState<Product[]>([]);
   const [visibleProducts, setVisibleProducts] = useState<Product[]>([]);
   const [isFilterActive, setIsFilterActive] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+
+  let limit = 6;
 
   useEffect(() => {
     async function fetchProducts() {
@@ -63,7 +130,6 @@ function Products(): JSX.Element {
     fetchProducts();
   }, [category]);
 
-  //to navigate to detailed product page
   const navigate = useNavigate();
   const handleCardClick = (productId: string) => {
     navigate(`/products/${category}/${productId}`);
@@ -248,6 +314,22 @@ function Products(): JSX.Element {
     }
   };
 
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const allVariantsWithProductData = visibleProducts.flatMap((product) => {
+    const productData = 'masterData' in product ? product.masterData.current : product;
+    const variants = [productData.masterVariant, ...productData.variants];
+
+    return variants.map((variant) => ({
+      variant,
+      productName: productData.name?.['en-US'] || 'Unnamed product',
+      productDescription: productData.description?.['en-US']?.split('.')[0] || '',
+    }));
+  });
+
+  const paginatedVariants = allVariantsWithProductData.slice(startIndex, endIndex);
+
   useEffect(() => {
     console.log('Updated products state:', products);
   }, [products]);
@@ -255,6 +337,10 @@ function Products(): JSX.Element {
   useEffect(() => {
     console.log('Updated products state:', visibleProducts);
   }, [visibleProducts]);
+
+  useEffect(() => {
+    console.log('Updated products page:', page);
+  }, [page]);
 
   if (loading) {
     return <Load />;
@@ -321,51 +407,49 @@ function Products(): JSX.Element {
         <SortButton attrSort=" price ↑" onClickF={(e) => handleSortButtonClick('price asc', e)} />
         <SortButton attrSort=" price ↓" onClickF={(e) => handleSortButtonClick('price desc', e)} />
       </div>
-
       <div className="product-list">
-        {visibleProducts.map((product) => {
-          const productData = 'masterData' in product ? product.masterData.current : product;
-          const variants = [productData.masterVariant, ...productData.variants];
+        {paginatedVariants.map(({ variant, productName, productDescription }) => {
+          const variantKey = variant.sku || String(variant.id);
+          const price = variant.prices?.[0]?.value.centAmount ?? 0;
+          const discount = variant.prices?.[0]?.discounted?.value.centAmount ?? 0;
+          const imageUrl = variant.images?.[0]?.url || '';
 
-          const productName = productData.name?.['en-US'] || 'Unnamed product';
-          const productDescription = productData.description?.['en-US']?.split('.')[0] || '';
-
-          return variants.map((variant) => {
-            const variantKey = variant.sku || String(variant.id);
-            const price = variant.prices?.[0]?.value.centAmount ?? 0;
-            const discount = variant.prices?.[0]?.discounted?.value.centAmount ?? 0;
-            const imageUrl = variant.images?.[0]?.url || '';
-
-            return (
-              <div
-                key={variantKey}
-                className="product-list__item"
-                data-id={variantKey}
-                onClick={() => handleCardClick(variantKey)}
-                aria-hidden="true"
+          return (
+            <div
+              key={variantKey}
+              className="product-list__item"
+              data-id={variantKey}
+              onClick={() => handleCardClick(variantKey)}
+              aria-hidden="true"
+            >
+              <ProductCard
+                id={variantKey}
+                name={productName}
+                description={productDescription}
+                price={`${(price / 100).toFixed(2)} EUR`}
+                imageUrl={imageUrl}
+                discount={discount ? `${(discount / 100).toFixed(2)} EUR` : undefined}
+              />
+              <BaseButton
+                title={isProductInCart(variantKey) ? 'Already in Cart' : 'Add to Cart'}
+                type="button"
+                className="button button--cart"
+                disabled={isProductInCart(variantKey)}
+                onClick={(e) => handleAddToCart(e, variantKey)}
               >
-                <ProductCard
-                  id={variantKey}
-                  name={productName}
-                  description={productDescription}
-                  price={`${(price / 100).toFixed(2)} EUR`}
-                  imageUrl={imageUrl}
-                  discount={discount ? `${(discount / 100).toFixed(2)} EUR` : undefined}
-                />
-
-                <BaseButton
-                  title="Add to Cart"
-                  type="button"
-                  className="button button--cart"
-                  onClick={() => handleAddToCart(variantKey)}
-                >
-                  Add to Cart
-                </BaseButton>
-              </div>
-            );
-          });
+                {isProductInCart(variantKey) ? 'Already in Cart' : 'Add to Cart'}
+              </BaseButton>
+            </div>
+          );
         })}
       </div>
+
+      <Pagination
+        arrayItems={allVariantsWithProductData}
+        limit={limit}
+        currentPage={page}
+        onPageChange={setPage}
+      />
     </div>
   );
 }

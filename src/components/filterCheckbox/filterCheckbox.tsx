@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import '../ui/filter/filter-by-type.scss';
 
 export type Option = {
@@ -15,7 +15,7 @@ interface FilterCheckboxProps {
 function FilterCheckbox({ name, optionsCheckbox, onChange }: FilterCheckboxProps) {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
-  console.log(optionsCheckbox);
+  // console.log(optionsCheckbox);
 
   const handleToggleOption = (value: string) => {
     const newSelected = selectedValues.includes(value)
@@ -27,9 +27,9 @@ function FilterCheckbox({ name, optionsCheckbox, onChange }: FilterCheckboxProps
     onChange?.(newSelected);
   };
 
-  useEffect(() => {
-    console.log('Updated selectedValues:', selectedValues);
-  }, [selectedValues]);
+  // useEffect(() => {
+  //   console.log('Updated selectedValues:', selectedValues);
+  // }, [selectedValues]);
 
   return (
     <div className="filter-by-type">

@@ -1,11 +1,9 @@
 import { Handler } from '@netlify/functions';
 import fetch from 'node-fetch';
-
 import {
   CTP_CLIENT_ID,
   CTP_CLIENT_SECRET,
-  // CTP_PROJECT_KEY,
-  CTP_SCOPE,
+  CTP_PROJECT_KEY,
   CTP_AUTH_URL,
 } from '../../src/types/constants';
 
@@ -20,12 +18,21 @@ const handler: Handler = async () => {
       },
       body: new URLSearchParams({
         grant_type: 'client_credentials',
-        scope: CTP_SCOPE,
+        scope: `manage_project:${CTP_PROJECT_KEY}`,
       }),
     });
 
     const data = await response.json();
 
+    if (!response.ok) {
+      console.error('Token fetch failed:', data);
+      return {
+        statusCode: response.status,
+        body: JSON.stringify({ error: 'Token request failed', details: data }),
+      };
+    }
+
+    console.log('Token received');
     return {
       statusCode: response.status,
       body: JSON.stringify(data),
