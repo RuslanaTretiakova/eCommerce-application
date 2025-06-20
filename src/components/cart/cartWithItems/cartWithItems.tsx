@@ -10,6 +10,22 @@ interface CartWithItemsProps {
 
 function CartWithItems({ cart, handleClearCart }: CartWithItemsProps) {
   const totalPrice = (cart.totalPrice.centAmount / 100).toFixed(2);
+  const [quantityProducts, SetQuantityProducts] = useState(1);
+
+  const handleChangeQuantityProducts = (event:  React.MouseEvent<HTMLButtonElement>) => {
+    const clickedButton = event?.currentTarget;
+    console.log(clickedButton?.id)
+    console.log('change')
+    if(clickedButton.id === 'increaseQuantity'){
+      let quantity = quantityProducts;
+      SetQuantityProducts(quantity += 1)
+    } 
+
+    if(clickedButton.id === 'decreaseQuantity' && quantityProducts > 1){
+       let quantity = quantityProducts;
+      SetQuantityProducts(quantity -= 1)
+    }
+  }
 
   const items = cart.lineItems.map((item) => {
     const price = item.price;
@@ -57,17 +73,17 @@ function CartWithItems({ cart, handleClearCart }: CartWithItemsProps) {
                 )}
                 <div className="cart-product__actions">
                   <div className="quantity-control">
-                    <button className="quantity-btn" type="button" id="decreaseQuantity">
+                    <button className="quantity-btn" type="button" id="decreaseQuantity" onClick={handleChangeQuantityProducts}>
                       -
                     </button>
                     <input
                       type="text"
                       className="quantity-input"
-                      value={item.quantity}
+                      value={quantityProducts}
                       aria-label="Quantity"
                       readOnly
                     />
-                    <button className="quantity-btn" type="button" id="increaseQuantity">
+                    <button className="quantity-btn" type="button" id="increaseQuantity" onClick={handleChangeQuantityProducts}>
                       +
                     </button>
                   </div>
