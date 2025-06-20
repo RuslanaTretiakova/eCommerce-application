@@ -28,7 +28,6 @@ function PromoCode({ promoCode, setPromoCode, promoError, handleApplyPromoCode }
       </label>
 
       {promoError && <p className="error-message">{promoError}</p>}
-
     </form>
   );
 }
