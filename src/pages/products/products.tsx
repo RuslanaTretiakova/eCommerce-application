@@ -44,7 +44,7 @@ interface ProductDataWithId extends ProductData {
 function Products(): JSX.Element {
   const { category } = useParams();
   const { token, setToken, isAnonymous } = useAuth();
-  const { addToCart } = useCart();
+  const { addToCart, isProductInCart } = useCart();
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>, sku: string) => {
     e.stopPropagation();
@@ -431,12 +431,13 @@ function Products(): JSX.Element {
                 discount={discount ? `${(discount / 100).toFixed(2)} EUR` : undefined}
               />
               <BaseButton
-                title="Add to Cart"
+                title={isProductInCart(variantKey) ? 'Already in Cart' : 'Add to Cart'}
                 type="button"
                 className="button button--cart"
+                disabled={isProductInCart(variantKey)}
                 onClick={(e) => handleAddToCart(e, variantKey)}
               >
-                Add to Cart
+                {isProductInCart(variantKey) ? 'Already in Cart' : 'Add to Cart'}
               </BaseButton>
             </div>
           );

@@ -109,6 +109,14 @@ export const useCart = () => {
     }
   }, [token]);
 
+  const isProductInCart = useCallback(
+    (sku: string): boolean => {
+      if (!cart) return false;
+      return cart.lineItems.some((item) => item.variant.sku === sku);
+    },
+    [cart],
+  );
+
   useEffect(() => {
     if (token) {
       fetchCartData();
@@ -123,5 +131,6 @@ export const useCart = () => {
     addToCart: handleAddToCart,
     clearCart: handleClearCart,
     fetchCart: fetchCartData,
+    isProductInCart,
   };
 };
