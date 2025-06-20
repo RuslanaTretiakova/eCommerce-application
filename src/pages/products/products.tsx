@@ -17,12 +17,24 @@ import getSortedProductListAllFromServer from '../../api/getSortdeProductListAll
 import getFilteredProducts from '../../api/getFilteredProductsByType';
 import PriceRangeFilter from '../../components/ui/filter/priceRange';
 import ButtonResetFilter from '../../components/ui/button-reset-filter/button-reset-filter';
+import { useAuth } from '../../api/authorithation/AuthToken';
+import { useCart } from '../../components/cart/hooks/useCart';
+import { showNotification } from '../../utils/toastify/showNotification';
 import FilterCheckbox from '../../components/filterCheckbox/filterCheckbox';
 import {
   optionsByBrandBikes,
   optionsByBrandHelmets,
   optionsByTypeBikes,
 } from '../../types/optionsFilter';
+import { fetchToken } from '../../utils/token/tokenType';
+import {
+  generateAnonymousId,
+  getAnonymousId,
+  setAnonymousId,
+  setCartId,
+} from '../../utils/cart/localStorage';
+import { createCart } from '../../api/cart/cart';
+import { fetchActiveAnonCart } from '../../api/cart/getActiveAnonCart';
 import Pagination from '../../components/pagination/pagination';
 
 interface ProductDataWithId extends ProductData {
@@ -31,8 +43,59 @@ interface ProductDataWithId extends ProductData {
 
 function Products(): JSX.Element {
   const { category } = useParams();
-  const handleAddToCart = (productId: string) => {
-    console.log(`${productId}`);
+  const { token, setToken, isAnonymous } = useAuth();
+  const { addToCart, isProductInCart } = useCart();
+
+  const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>, sku: string) => {
+    e.stopPropagation();
+
+    try {
+      let currentToken = token;
+      if (!currentToken) {
+        const { token: newToken, scope } = await fetchToken('anonymous');
+        setToken(newToken, scope);
+        currentToken = newToken;
+      }
+
+      let cartId = localStorage.getItem('cartId');
+      let cartVersion = localStorage.getItem('cartVersion');
+
+      if (!cartId || !cartVersion) {
+        const existingCart = await fetchActiveAnonCart(currentToken);
+        if (existingCart?.id && existingCart.cartState === 'Active') {
+          cartId = existingCart.id;
+          cartVersion = String(existingCart.version);
+          setCartId(cartId!);
+          localStorage.setItem('cartVersion', cartVersion);
+          showNotification({ text: 'Existing cart reused', type: 'info' });
+        }
+      }
+
+      if (!cartId || !cartVersion) {
+        let anonId = getAnonymousId();
+        if (!anonId) {
+          anonId = generateAnonymousId();
+          setAnonymousId(anonId);
+        }
+
+        const newCart = await createCart(currentToken, isAnonymous, anonId);
+
+        if (!newCart?.id) throw new Error('Cart creation failed');
+
+        cartId = newCart.id;
+        cartVersion = String(newCart.version);
+        setCartId(cartId);
+        localStorage.setItem('cartVersion', cartVersion);
+
+        showNotification({ text: 'Cart created successfully', type: 'info' });
+      }
+
+      await addToCart(sku);
+      showNotification({ text: 'Product added to cart', type: 'success' });
+    } catch (error) {
+      console.error('Add to cart failed:', error);
+      showNotification({ text: 'Failed to add product to cart', type: 'error' });
+    }
   };
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -368,12 +431,13 @@ function Products(): JSX.Element {
                 discount={discount ? `${(discount / 100).toFixed(2)} EUR` : undefined}
               />
               <BaseButton
-                title="Add to Cart"
+                title={isProductInCart(variantKey) ? 'Already in Cart' : 'Add to Cart'}
                 type="button"
                 className="button button--cart"
-                onClick={() => handleAddToCart(variantKey)}
+                disabled={isProductInCart(variantKey)}
+                onClick={(e) => handleAddToCart(e, variantKey)}
               >
-                Add to Cart
+                {isProductInCart(variantKey) ? 'Already in Cart' : 'Add to Cart'}
               </BaseButton>
             </div>
           );

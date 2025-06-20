@@ -64,7 +64,7 @@ export interface IBaseButtonProps {
   className: string;
   title: string;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: (() => void) | React.MouseEventHandler<HTMLButtonElement>;
 }
 
 //Notification

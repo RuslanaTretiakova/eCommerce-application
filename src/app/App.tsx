@@ -20,31 +20,31 @@ import { TokenProvider, useAuth } from '../api/authorithation/AuthToken';
 import { fetchToken } from '../utils/token/tokenType';
 import { useEffect, useState } from 'react';
 import ProductsCategory from '../pages/productsCategory/productsCategory';
+import Load from '../pages/load/load';
 
 function InnerApp() {
-  const { token, scope, setToken } = useAuth();
+  const { token, setToken } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!token) {
-      fetchToken('anonymous')
-        .then(({ token, scope }) => {
-          setToken(token, scope);
-        })
-        .catch((error) => {
-          console.error('Failed to fetch anonymous token', error);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
-  }, [token]);
+    const init = async () => {
+      try {
+        if (!token) {
+          const { token: newToken, scope: newScope } = await fetchToken('anonymous');
+          setToken(newToken, newScope);
+        }
+      } catch (error) {
+        console.error('Token init error:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  console.log('Token:', token);
-  console.log('Scope:', scope);
+    init();
+  }, [token, setToken]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Load />;
   }
 
   return (
@@ -58,7 +58,7 @@ function InnerApp() {
         <Route path="/login" element={<AuthenticationPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/profile-info" element={<UserLoginProfile />} />
-        <Route path="/cart/:cartId" element={<Cart />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/products/:category/:id" element={<ProductPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
