@@ -2,6 +2,8 @@ import type { Handler } from '@netlify/functions';
 import { CartItem } from '../../src/types/cartTypes';
 import { CTP_PROJECT_KEY, CTP_API_URL } from '../../src/types/constants';
 
+import { modifyCart } from './modifyCart';
+
 const handler: Handler = async (e) => {
   const authHeader = e.headers.authorization || e.headers.Authorization;
   const token = authHeader?.split(' ')[1];
@@ -43,20 +45,7 @@ const handler: Handler = async (e) => {
   }
 
   //Might be replaced by created separately netlify function
-  const updateCartResponse = await fetch(`${CTP_API_URL}/${CTP_PROJECT_KEY}/carts/${cartId}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-type': 'application/json',
-    },
-    body: JSON.stringify({ version, actions }),
-  });
-
-  const updatedCart = await updateCartResponse.json();
-  return {
-    statusCode: updateCartResponse.status,
-    body: JSON.stringify(updatedCart),
-  };
+  return await modifyCart({ version, actions, token, cartId });
 };
 
 export { handler };

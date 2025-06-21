@@ -40,7 +40,7 @@ export default async function changeProductQuantityFromServer({
 
     return await response.json();
   } catch (error) {
-    console.error('changeQuantityMw error:', error.message);
-    throw err;
+    console.error('changeQuantityMw error:', error);
+    throw error;
   }
 }

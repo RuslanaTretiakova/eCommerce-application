@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import type { Cart, ParsedCartItem } from '../../../types/cartTypes';
+
+import PromoCode from '../promoCode/promocode';
 import ConfirmationPrompt from '../../cart/confirmationPrompt/confirmationPromt';
 import { useAuth } from '../../../api/authorithation/AuthToken';
 import changeProductQuantityFromServer from '../../../api/cart/changeProductQuantity';
@@ -8,9 +10,20 @@ import changeProductQuantityFromServer from '../../../api/cart/changeProductQuan
 interface CartWithItemsProps {
   cart: Cart;
   handleClearCart: () => void;
+  promoCode: string;
+  setPromoCode: (code: string) => void;
+  promoError: string | null;
+  handleApplyPromoCode: () => void;
 }
 
-function CartWithItems({ cart: InitialCart, handleClearCart }: CartWithItemsProps) {
+function CartWithItems({
+  cart: InitialCart,
+  handleClearCart,
+  promoCode,
+  setPromoCode,
+  promoError,
+  handleApplyPromoCode,
+}: CartWithItemsProps) {
   const [cart, setCart] = useState(InitialCart);
   const totalPrice = (cart.totalPrice.centAmount / 100).toFixed(2);
   const { token } = useAuth();
@@ -149,9 +162,42 @@ function CartWithItems({ cart: InitialCart, handleClearCart }: CartWithItemsProp
             <p>Total with TAX: </p>
             <p>{`${totalPrice} EURO`}</p>
           </div>
+
+          {/* {cart.discountOnTotalPrice && (
+            <div className="cart-discount-info">
+              <p>
+                Discount:
+                <strong>
+                  {(cart.discountOnTotalPrice.discountedAmount.centAmount / 100).toFixed(2)}
+                </strong>
+              </p>
+            </div>
+          )} */}
+
+          {/* <div className="cart-total-info">
+            <p>
+              Total after discount:
+              <strong>
+                {(
+                  (cart.totalPrice.centAmount -
+                    (cart.discountOnTotalPrice?.discountedAmount.centAmount ?? 0)) /
+                  100
+                ).toFixed(2)}
+                {cart.totalPrice.currencyCode}
+              </strong>
+            </p>
+          </div> */}
+
+          <PromoCode
+            promoCode={promoCode}
+            setPromoCode={setPromoCode}
+            promoError={promoError}
+            handleApplyPromoCode={handleApplyPromoCode}
+          />
+
           <div className="summary-row summary-total">
             <p>Total with promocode: </p>
-            <p>400 EURO</p>
+            <p>{`${totalPrice} EURO`}</p>
           </div>
           <button className="checkout-btn" type="button">
             Check in
