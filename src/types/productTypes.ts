@@ -15,3 +15,18 @@ export interface Image {
     h: number;
   };
 }
+
+export interface ProductVariant {
+  sku: string;
+  images?: Image[];
+  prices?: {
+    value: {
+      centAmount: number;
+    };
+    discounted?: {
+      value: {
+        centAmount: number;
+      };
+    };
+  }[];
+}

@@ -1,6 +1,6 @@
-import type { Product, Image } from '../../types/productTypes';
+import type { Product, Image, ProductVariant } from '../../types/productTypes';
 
-export const fetchProductById = async (sku: string, token: string | null): Promise<Product> => {
+export const fetchProductBySKU = async (sku: string, token: string | null): Promise<Product> => {
   const response = await fetch(`/.netlify/functions/productBySKU?sku=${encodeURIComponent(sku)}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -15,9 +15,14 @@ export const fetchProductById = async (sku: string, token: string | null): Promi
     throw new Error('Product not found');
   }
 
-  const images = product.masterVariant.images?.map((img: Image) => img.url) || [];
-  const price = product.masterVariant.prices?.[0]?.value.centAmount ?? 0;
-  const discountedPrice = product.masterVariant.prices?.[0]?.discounted?.value.centAmount ?? null;
+  const allVariants = [product.masterVariant, ...(product.variants || [])];
+  const variant = allVariants.find((v: ProductVariant) => v.sku === sku);
+
+  if (!variant) throw new Error('Variant with specified SKU not found');
+
+  const images = variant.images?.map((img: Image) => img.url) || [];
+  const price = variant.prices?.[0]?.value.centAmount ?? 0;
+  const discountedPrice = variant.prices?.[0]?.discounted?.value.centAmount ?? null;
 
   return {
     sku: product.masterVariant.sku,
