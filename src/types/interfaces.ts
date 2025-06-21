@@ -185,3 +185,8 @@ export interface IEditFormProps<T extends FieldValues> {
   initialValues: DefaultValues<T>;
   onChange: (updated: T) => void;
 }
+
+export interface IRemoveFromCartButtonProps {
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  title?: string;
+}
