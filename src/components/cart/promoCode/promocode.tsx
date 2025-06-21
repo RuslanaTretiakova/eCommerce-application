@@ -1,3 +1,5 @@
+import './promoCode.scss';
+
 interface PromoCodeProps {
   promoCode: string;
   setPromoCode: (code: string) => void;
@@ -15,11 +17,11 @@ function PromoCode({ promoCode, setPromoCode, promoError, handleApplyPromoCode }
       className="promo"
     >
       <label htmlFor="promo">
-        Promo code:
         <input
           id="promo"
           type="text"
           value={promoCode}
+          placeholder="Enter promocode"
           onChange={(e) => setPromoCode(e.target.value)}
         />
         <button type="submit" onClick={handleApplyPromoCode}>

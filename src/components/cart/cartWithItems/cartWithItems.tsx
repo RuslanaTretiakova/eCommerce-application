@@ -105,7 +105,7 @@ function CartWithItems({
             <p>{`${totalPrice} EURO`}</p>
           </div>
 
-          {cart.discountOnTotalPrice && (
+          {/* {cart.discountOnTotalPrice && (
             <div className="cart-discount-info">
               <p>
                 Discount:
@@ -114,9 +114,9 @@ function CartWithItems({
                 </strong>
               </p>
             </div>
-          )}
+          )} */}
 
-          <div className="cart-total-info">
+          {/* <div className="cart-total-info">
             <p>
               Total after discount:
               <strong>
@@ -128,7 +128,7 @@ function CartWithItems({
                 {cart.totalPrice.currencyCode}
               </strong>
             </p>
-          </div>
+          </div> */}
 
           <PromoCode
             promoCode={promoCode}
@@ -139,7 +139,7 @@ function CartWithItems({
 
           <div className="summary-row summary-total">
             <p>Total with promocode: </p>
-            <p>400 EURO</p>
+            <p>{`${totalPrice} EURO`}</p>
           </div>
           <button className="checkout-btn" type="button">
             Check in
