@@ -13,6 +13,7 @@ import { ProductGallery } from '../../components/product/productSlider/mainPic/p
 import { Breadcrumbs } from '../../components/ui/breadcrumbs/Breadcrumbs';
 
 import type { Swiper as SwiperType } from 'swiper/types';
+import { useAddToCartHandler } from '../../components/cart/hooks/useAddToCartHandler';
 
 import './product.scss';
 
@@ -23,6 +24,8 @@ function Item() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
+
+  const { handleAddToCart, isProductInCart } = useAddToCartHandler();
 
   useEffect(() => {
     if (!id) {
@@ -52,6 +55,8 @@ function Item() {
   }
 
   if (product) {
+    const sku = product.sku ?? '';
+
     return (
       <div>
         <Breadcrumbs />
@@ -71,13 +76,21 @@ function Item() {
             description={product.description ?? ''}
           />
           {/* <ProductSpecification specs={[{ frame: 'Al' }, { weight: '15.5kg' }]} /> */}
-          <BaseButton type="button" className="button--submit" title="title">
-            Add to cart
+          <BaseButton
+            type="button"
+            className="button--submit"
+            title={isProductInCart(sku) ? 'Already in Cart' : 'Add to Cart'}
+            disabled={isProductInCart(sku)}
+            onClick={(e) => handleAddToCart(e, sku)}
+          >
+            {isProductInCart(sku) ? 'Already in Cart' : 'Add to Cart'}
           </BaseButton>
         </div>
       </div>
     );
   }
+
+  return null;
 }
 
 export default Item;

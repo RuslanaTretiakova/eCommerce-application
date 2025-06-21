@@ -20,6 +20,7 @@ export const fetchProductById = async (sku: string, token: string | null): Promi
   const discountedPrice = product.masterVariant.prices?.[0]?.discounted?.value.centAmount ?? null;
 
   return {
+    sku: product.masterVariant.sku,
     title: product.name['en-US'],
     price: price / 100,
     discountedPrice: discountedPrice !== null ? discountedPrice / 100 : null,
