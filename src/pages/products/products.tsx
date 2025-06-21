@@ -25,6 +25,7 @@ import {
 } from '../../types/optionsFilter';
 import Pagination from '../../components/pagination/pagination';
 import { useAddToCartHandler } from '../../components/cart/hooks/useAddToCartHandler';
+import RemoveFromCartButton from '../../components/ui/remove-button/RemoveFromCartButton';
 
 interface ProductDataWithId extends ProductData {
   id: string;
@@ -32,7 +33,7 @@ interface ProductDataWithId extends ProductData {
 
 function Products(): JSX.Element {
   const { category } = useParams();
-  const { handleAddToCart, isProductInCart } = useAddToCartHandler();
+  const { handleAddToCart, isProductInCart, handleRemoveFromCart } = useAddToCartHandler();
 
   const [products, setProducts] = useState<Product[]>([]);
   const [visibleProducts, setVisibleProducts] = useState<Product[]>([]);
@@ -375,6 +376,9 @@ function Products(): JSX.Element {
               >
                 {isProductInCart(variantKey) ? 'Already in Cart' : 'Add to Cart'}
               </BaseButton>
+              {isProductInCart(variantKey) && (
+                <RemoveFromCartButton onClick={(e) => handleRemoveFromCart(e, variantKey)} />
+              )}
             </div>
           );
         })}

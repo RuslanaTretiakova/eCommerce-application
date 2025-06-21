@@ -25,7 +25,7 @@ function Item() {
   const [error, setError] = useState<string | null>(null);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
 
-  const { handleAddToCart, isProductInCart } = useAddToCartHandler();
+  const { handleAddToCart, isProductInCart, handleRemoveFromCart } = useAddToCartHandler();
 
   useEffect(() => {
     if (!id) {
@@ -76,15 +76,28 @@ function Item() {
             description={product.description ?? ''}
           />
           {/* <ProductSpecification specs={[{ frame: 'Al' }, { weight: '15.5kg' }]} /> */}
-          <BaseButton
-            type="button"
-            className="button--submit"
-            title={isProductInCart(sku) ? 'Already in Cart' : 'Add to Cart'}
-            disabled={isProductInCart(sku)}
-            onClick={(e) => handleAddToCart(e, sku)}
-          >
-            {isProductInCart(sku) ? 'Already in Cart' : 'Add to Cart'}
-          </BaseButton>
+          <div className={`button-group ${isProductInCart(sku) ? 'dual' : 'single'}`}>
+            <BaseButton
+              type="button"
+              className="button button--cart"
+              title={isProductInCart(sku) ? 'Already in Cart' : 'Add to Cart'}
+              disabled={isProductInCart(sku)}
+              onClick={(e) => handleAddToCart(e, sku)}
+            >
+              {isProductInCart(sku) ? 'Already in Cart' : 'Add to Cart'}
+            </BaseButton>
+
+            {isProductInCart(sku) && (
+              <BaseButton
+                type="button"
+                className="button--remove"
+                title="Remove from Cart"
+                onClick={(e) => handleRemoveFromCart(e, sku)}
+              >
+                Remove from Cart
+              </BaseButton>
+            )}
+          </div>
         </div>
       </div>
     );
