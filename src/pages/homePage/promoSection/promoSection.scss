@@ -1,0 +1,19 @@
+.promo-section {
+  background-color: rgba(255, 161, 0, 0.7019607843);
+  text-align: center;
+  margin-bottom: -20px;
+  padding: 5px;
+
+  div {
+    p {
+      color: black;
+      font-weight: 600;
+      margin: 0;
+      padding: 0;
+      &:last-child {
+        font-size: 0.75rem;
+        font-weight: 300;
+      }
+    }
+  }
+}

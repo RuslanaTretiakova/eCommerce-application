@@ -47,6 +47,7 @@ export const useCart = () => {
       setCartId(createdCart.id);
       localStorage.setItem('cartVersion', String(createdCart.version));
       setCartVersion(createdCart.version);
+      setCart(createdCart as Cart);
       return createdCart.id;
     }
 
@@ -125,6 +126,8 @@ export const useCart = () => {
 
   return {
     cart,
+    setCart,
+    token,
     loading,
     cartVersion,
     initCart,
