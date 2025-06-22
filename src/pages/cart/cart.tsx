@@ -60,7 +60,10 @@ function Cart() {
         setPromoError(null);
 
         const hasDiscount = updatedCart.lineItems.some(
-          (item: CartItem) => item.price.discounted || item.discountedPricePerQuantity?.length > 0,
+          (item: CartItem) =>
+            item.price.discounted ||
+            (Array.isArray(item.discountedPricePerQuantity) &&
+              item.discountedPricePerQuantity.length > 0),
         );
 
         if (!hasDiscount) {
