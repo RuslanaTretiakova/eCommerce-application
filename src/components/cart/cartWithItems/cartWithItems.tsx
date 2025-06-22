@@ -113,7 +113,6 @@ function CartWithItems({
 
   return (
     <div className="temp">
-      <h1>Cart page</h1>
       <div className="cart-container">
         <div className="cart-products">
           <button type="button" className="remove-all-btn" onClick={() => setShowModal(true)}>
