@@ -1,3 +1,13 @@
+export interface DiscountedPricePerQuantity {
+  quantity: number;
+  discountedPrice: {
+    value: {
+      centAmount: number;
+      currencyCode: string;
+    };
+  };
+}
+
 export type CartItem = {
   id: string;
   name: {
@@ -20,6 +30,7 @@ export type CartItem = {
       };
     };
   };
+  discountedPricePerQuantity?: DiscountedPricePerQuantity[];
 };
 
 export type ParsedCartItem = {

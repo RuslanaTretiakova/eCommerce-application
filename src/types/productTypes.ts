@@ -1,4 +1,5 @@
 export type Product = {
+  sku: string;
   title: string;
   price: number;
   discountedPrice?: number | null;

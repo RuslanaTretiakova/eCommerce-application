@@ -25,6 +25,7 @@ export const fetchProductBySKU = async (sku: string, token: string | null): Prom
   const discountedPrice = variant.prices?.[0]?.discounted?.value.centAmount ?? null;
 
   return {
+    sku: product.masterVariant.sku,
     title: product.name['en-US'],
     price: price / 100,
     discountedPrice: discountedPrice !== null ? discountedPrice / 100 : null,

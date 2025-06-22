@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import type { IBaseButtonProps } from '../../../types/interfaces';
 
-import './_base_button.scss'; // todo add all button states
+import './_base_button.scss';
 
 function BaseButton({
   type,
