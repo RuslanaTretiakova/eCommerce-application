@@ -11,6 +11,7 @@ import {
 import { fetchActiveAnonCart } from '../../../api/cart/getActiveAnonCart';
 import { createCart } from '../../../api/cart/cart';
 import { removeFromCartClient } from '../../../api/cart/removeFromCartClient';
+import type { Cart } from '../../../types/cartTypes';
 
 export const useAddToCartHandler = () => {
   const { addToCart, isProductInCart, cart, setCart } = useCart();
@@ -66,7 +67,7 @@ export const useAddToCartHandler = () => {
     }
   };
 
-  const handleRemoveFromCart = async (e: React.MouseEvent, sku: string) => {
+  const handleRemoveFromCart = async (e: React.MouseEvent, sku: string): Promise<Cart | void> => {
     e.stopPropagation();
 
     if (!token || !cart) return;
@@ -88,6 +89,8 @@ export const useAddToCartHandler = () => {
       setCart(updatedCart);
       localStorage.setItem('cartVersion', String(updatedCart.version));
       showNotification({ text: 'Product removed from cart', type: 'success' });
+
+      return updatedCart;
     } catch (error) {
       console.error('Remove from cart failed:', error);
       showNotification({ text: 'Failed to remove product from cart', type: 'error' });

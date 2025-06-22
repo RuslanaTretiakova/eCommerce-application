@@ -6,6 +6,7 @@ import PromoCode from '../promoCode/promocode';
 import ConfirmationPrompt from '../../cart/confirmationPrompt/confirmationPromt';
 import { useAuth } from '../../../api/authorithation/AuthToken';
 import changeProductQuantityFromServer from '../../../api/cart/changeProductQuantity';
+import { removeFromCartClient } from '../../../api/cart/removeFromCartClient';
 
 interface CartWithItemsProps {
   cart: Cart;
@@ -28,6 +29,7 @@ function CartWithItems({
   const totalPrice = (cart.totalPrice.centAmount / 100).toFixed(2);
   const { token } = useAuth();
   const [quantityMap, setQuantityMap] = useState<{ [sku: string]: number }>({});
+  const [showModal, setShowModal] = useState(false);
 
   const handleChangeQuantityProducts = async (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -66,6 +68,23 @@ function CartWithItems({
     }
   };
 
+  const handleRemoveProduct = async (sku: string) => {
+    const product = cart.lineItems.find((item) => item.variant.sku === sku);
+    if (!token || !product) return;
+
+    try {
+      const updatedCart = await removeFromCartClient({
+        token,
+        cartId: cart.id,
+        version: cart.version,
+        lineItemId: product.id,
+      });
+      setCart(updatedCart);
+    } catch (error) {
+      console.error('Failed to remove product:', error);
+    }
+  };
+
   const items = cart.lineItems.map((item) => {
     const price = item.price;
     return {
@@ -82,7 +101,6 @@ function CartWithItems({
     };
   });
 
-  const [showModal, setShowModal] = useState(false);
   const confirmClear = () => {
     handleClearCart();
     setShowModal(false);
@@ -142,7 +160,7 @@ function CartWithItems({
                         +
                       </button>
                     </div>
-                    <button id="remove-btn" type="button">
+                    <button id="remove-btn" type="button" onClick={() => handleRemoveProduct(sku)}>
                       Remove
                     </button>
                   </div>
