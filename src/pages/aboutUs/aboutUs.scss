@@ -1,0 +1,23 @@
+.about-us {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 20px 0;
+  .intoduction {
+    .introduction-text {
+      text-align: justify;
+      .logo-link {
+        display: inline-block;
+        width: 100px;
+        .rs-logo {
+          width: 15px;
+          margin: 0;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+  .contribution-point {
+    margin: 0;
+  }
+}
