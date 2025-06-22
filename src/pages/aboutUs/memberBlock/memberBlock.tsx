@@ -18,7 +18,7 @@ function Member({ imgSrc, name, roleMember, info, gitLink, gitName }: MemberI) {
       </div>
       <div className="member-description">
         <h2 className="member-role">{roleMember}</h2>
-        <h3 className='member-name'>{name}</h3>
+        <h3 className="member-name">{name}</h3>
         <p className="member-bio">{info}</p>
 
         <a href={gitLink}>
