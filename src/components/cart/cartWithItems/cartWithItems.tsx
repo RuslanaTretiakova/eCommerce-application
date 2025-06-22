@@ -7,6 +7,7 @@ import ConfirmationPrompt from '../../cart/confirmationPrompt/confirmationPromt'
 import { useAuth } from '../../../api/authorithation/AuthToken';
 import changeProductQuantityFromServer from '../../../api/cart/changeProductQuantity';
 import { removeFromCartClient } from '../../../api/cart/removeFromCartClient';
+import EmptyCart from '../emptyCart/emptyCart';
 
 interface CartWithItemsProps {
   cart: Cart;
@@ -105,6 +106,10 @@ function CartWithItems({
     handleClearCart();
     setShowModal(false);
   };
+
+  if (!cart || cart.lineItems.length === 0) {
+    return <EmptyCart />;
+  }
 
   return (
     <div className="temp">
