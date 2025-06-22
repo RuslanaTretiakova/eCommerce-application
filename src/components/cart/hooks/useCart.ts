@@ -125,6 +125,8 @@ export const useCart = () => {
 
   return {
     cart,
+    setCart,
+    token,
     loading,
     cartVersion,
     initCart,
