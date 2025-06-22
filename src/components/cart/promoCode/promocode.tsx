@@ -5,9 +5,16 @@ interface PromoCodeProps {
   setPromoCode: (code: string) => void;
   promoError: string | null;
   handleApplyPromoCode: () => void;
+  promoAttempted: boolean;
 }
 
-function PromoCode({ promoCode, setPromoCode, promoError, handleApplyPromoCode }: PromoCodeProps) {
+function PromoCode({
+  promoCode,
+  setPromoCode,
+  promoError,
+  handleApplyPromoCode,
+  promoAttempted,
+}: PromoCodeProps) {
   return (
     <form
       onSubmit={(e) => {
@@ -24,12 +31,10 @@ function PromoCode({ promoCode, setPromoCode, promoError, handleApplyPromoCode }
           placeholder="Enter promocode"
           onChange={(e) => setPromoCode(e.target.value)}
         />
-        <button type="submit" onClick={handleApplyPromoCode}>
-          Apply
-        </button>
+        <button type="submit">Apply</button>
       </label>
 
-      {promoError && <p className="error-message">{promoError}</p>}
+      {promoAttempted && promoError && <p className="error-message">{promoError}</p>}
     </form>
   );
 }

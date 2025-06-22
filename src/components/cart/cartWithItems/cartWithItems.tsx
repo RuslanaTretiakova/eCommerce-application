@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import type { Cart, ParsedCartItem } from '../../../types/cartTypes';
@@ -8,6 +9,8 @@ import { useAuth } from '../../../api/authorithation/AuthToken';
 import changeProductQuantityFromServer from '../../../api/cart/changeProductQuantity';
 import { removeFromCartClient } from '../../../api/cart/removeFromCartClient';
 import EmptyCart from '../emptyCart/emptyCart';
+
+import './cartWithItems.scss';
 
 interface CartWithItemsProps {
   cart: Cart;
@@ -27,10 +30,15 @@ function CartWithItems({
   handleApplyPromoCode,
 }: CartWithItemsProps) {
   const [cart, setCart] = useState(InitialCart);
-  const totalPrice = (cart.totalPrice.centAmount / 100).toFixed(2);
   const { token } = useAuth();
   const [quantityMap, setQuantityMap] = useState<{ [sku: string]: number }>({});
   const [showModal, setShowModal] = useState(false);
+  const [promoAttempted, setPromoAttempted] = useState(false);
+
+  const discountAmount = cart.discountOnTotalPrice?.discountedAmount.centAmount ?? 0;
+  const totalAfterDiscount = (cart.totalPrice.centAmount / 100).toFixed(2);
+  const totalBeforeDiscount = ((cart.totalPrice.centAmount + discountAmount) / 100).toFixed(2);
+  const totalPrice = (cart.totalPrice.centAmount / 100).toFixed(2);
 
   const handleChangeQuantityProducts = async (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -43,13 +51,8 @@ function CartWithItems({
     const currentQuantity = quantityMap[sku] ?? currentProduct.quantity;
     let newQuantity = currentQuantity;
 
-    if (clickedButton.id === 'increaseQuantity') {
-      newQuantity += 1;
-    }
-
-    if (clickedButton.id === 'decreaseQuantity' && currentQuantity > 1) {
-      newQuantity -= 1;
-    }
+    if (clickedButton.id === 'increaseQuantity') newQuantity += 1;
+    if (clickedButton.id === 'decreaseQuantity' && currentQuantity > 1) newQuantity -= 1;
 
     setQuantityMap((prev) => ({ ...prev, [sku]: newQuantity }));
 
@@ -86,6 +89,16 @@ function CartWithItems({
     }
   };
 
+  const confirmClear = () => {
+    handleClearCart();
+    setShowModal(false);
+  };
+
+  const onApplyPromoCode = async () => {
+    setPromoAttempted(true);
+    await handleApplyPromoCode();
+  };
+
   const items = cart.lineItems.map((item) => {
     const price = item.price;
     return {
@@ -102,14 +115,7 @@ function CartWithItems({
     };
   });
 
-  const confirmClear = () => {
-    handleClearCart();
-    setShowModal(false);
-  };
-
-  if (!cart || cart.lineItems.length === 0) {
-    return <EmptyCart />;
-  }
+  if (!cart || cart.lineItems.length === 0) return <EmptyCart />;
 
   return (
     <div className="temp">
@@ -120,9 +126,9 @@ function CartWithItems({
           </button>
 
           {items.map((item: ParsedCartItem) => {
-            let sku = item.variant.sku;
+            const sku = item.variant.sku;
             return (
-              <div className="cart-product" data-sku={item.variant.sku} key={item.variant.sku}>
+              <div className="cart-product" data-sku={sku} key={sku}>
                 <img src={item.img} alt="product" className="cart-product__image" />
                 <div className="cart-product__details">
                   <h3>{item.name}</h3>
@@ -140,9 +146,7 @@ function CartWithItems({
                         className="quantity-btn"
                         type="button"
                         id="decreaseQuantity"
-                        onClick={(e) => {
-                          handleChangeQuantityProducts(e, sku);
-                        }}
+                        onClick={(e) => handleChangeQuantityProducts(e, sku)}
                       >
                         -
                       </button>
@@ -157,9 +161,7 @@ function CartWithItems({
                         className="quantity-btn"
                         type="button"
                         id="increaseQuantity"
-                        onClick={(e) => {
-                          handleChangeQuantityProducts(e, sku);
-                        }}
+                        onClick={(e) => handleChangeQuantityProducts(e, sku)}
                       >
                         +
                       </button>
@@ -179,48 +181,30 @@ function CartWithItems({
         </div>
 
         <div className="cart-summary">
-          <h3 className="summary-title">Summury</h3>
-          <div className="summary-row">
-            <p>Total with TAX: </p>
-            <p>{`${totalPrice} EURO`}</p>
-          </div>
-
-          {/* {cart.discountOnTotalPrice && (
-            <div className="cart-discount-info">
-              <p>
-                Discount:
-                <strong>
-                  {(cart.discountOnTotalPrice.discountedAmount.centAmount / 100).toFixed(2)}
-                </strong>
-              </p>
+          <h3 className="summary-title">Summary</h3>
+          {discountAmount > 0 ? (
+            <div className="summary-row summary-total">
+              <p>Total with promocode:</p>
+              <div>
+                <p className="original-total">{totalBeforeDiscount} EURO</p>
+                <p className="discounted-total">{totalAfterDiscount} EURO</p>
+              </div>
             </div>
-          )} */}
-
-          {/* <div className="cart-total-info">
-            <p>
-              Total after discount:
-              <strong>
-                {(
-                  (cart.totalPrice.centAmount -
-                    (cart.discountOnTotalPrice?.discountedAmount.centAmount ?? 0)) /
-                  100
-                ).toFixed(2)}
-                {cart.totalPrice.currencyCode}
-              </strong>
-            </p>
-          </div> */}
+          ) : (
+            <div className="summary-row summary-total">
+              <p>Total:</p>
+              <p>{totalPrice} EURO</p>
+            </div>
+          )}
 
           <PromoCode
             promoCode={promoCode}
             setPromoCode={setPromoCode}
             promoError={promoError}
-            handleApplyPromoCode={handleApplyPromoCode}
+            handleApplyPromoCode={onApplyPromoCode}
+            promoAttempted={promoAttempted}
           />
 
-          <div className="summary-row summary-total">
-            <p>Total with promocode: </p>
-            <p>{`${totalPrice} EURO`}</p>
-          </div>
           <button className="checkout-btn" type="button">
             Check in
           </button>

@@ -1,0 +1,19 @@
+.original-total {
+  text-decoration: line-through;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0;
+}
+.summary-row .original-total {
+  color: rgb(136, 136, 136);
+}
+
+.discounted-total {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-top: 2px;
+}
+
+.summary-row .discounted-total {
+  color: red;
+}

@@ -267,18 +267,6 @@ function Products(): JSX.Element {
 
   const paginatedVariants = allVariantsWithProductData.slice(startIndex, endIndex);
 
-  useEffect(() => {
-    console.log('Updated products state:', products);
-  }, [products]);
-
-  useEffect(() => {
-    console.log('Updated products state:', visibleProducts);
-  }, [visibleProducts]);
-
-  useEffect(() => {
-    console.log('Updated products page:', page);
-  }, [page]);
-
   if (loading) {
     return <Load />;
   }

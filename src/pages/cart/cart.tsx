@@ -18,7 +18,6 @@ function Cart() {
     }
   }, [token, fetchCart]);
 
-  //clean cart
   const handleClearCart = useCallback(async () => {
     if (!token || !cart?.id) return;
 
@@ -36,7 +35,6 @@ function Cart() {
     }
   }, [token, cart?.id, fetchCart]);
 
-  //promocode
   const [promoCode, setPromoCode] = useState('');
   const [promoError, setPromoError] = useState<string | null>(null);
 
@@ -77,10 +75,6 @@ function Cart() {
       setPromoError('Failed to apply promo code');
     }
   };
-
-  console.log('cartId:', cart?.id);
-  console.log('Cart:', cart);
-  console.log('Line Items:', cart?.lineItems);
 
   if (loading) return <Load />;
 
