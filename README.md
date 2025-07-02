@@ -1,87 +1,135 @@
-# About the project 📄
+# 🛒 eCommerce Application
 
-This project is a collaborative team application developed as part of the final task for the Rolling Scopes School course by Reactive team. It represents an e-commerce platform designed to provide users with a smooth shopping experience, including features such as product browsing, search, filtering, detailed product views, a shopping cart, and a checkout process.
+## 📄 About this repository
 
-The purpose of this project is to apply and demonstrate the skills we have gained during the course, including teamwork, frontend development, API integration, and version control. This project simulates a real-world development environment where team members work together to build a functional, user-friendly web application.
+This repository is a **personal copy (fork)** of the **team project** developed during the **final task of the Rolling Scopes School JS/FE Course EN 2024Q4 by our **Reactive team**.
 
-### Project Purposes 💡
+The **original project repository**, which was created and maintained collaboratively by all team members, is available here:  
+👉 [Original Team Repository - DzmitryAliakseyeu/online-store](https://github.com/DzmitryAliakseyeu/online-store)
 
-✅ To demonstrate the ability to work effectively in a team on a shared codebase.
-✅ To apply modern frontend development practices learned during the course.
-✅ To build an interactive, responsive e-commerce web app that showcases a complete user journey, from browsing products to placing an order.
-✅ To practice using GitHub, and pull requests in a collaborative workflow.
-✅ To gain experience working with external APIs or mock data, ensuring smooth data handling and dynamic rendering.
+This personal repository serves as part of my **portfolio**, where I highlight my **individual contribution** and **learning progress**.
 
-# React + TypeScript + Vite 🛠️
+My forked repository:  
+👉 [My Repository - RuslanaTretiakova/eCommerce-application](https://github.com/RuslanaTretiakova/eCommerce-application)
 
-## Technology Stack 🛠️
-✅ Frontend: HTML, CSS, TypeScript
-✅ Framework: React
-✅ Build Tools: Vite
-✅ Linting & Style Guide: ESLint with Airbnb Style Guide
-✅ Formatter: Prettier
-✅ Testing: Vitest
-✅ Git Hooks: Husky
+---
+
+## 💡 Project Overview
+
+This project is an **e-commerce web application**, designed to provide users with a smooth shopping experience.  
+Key features include:
+
+- Product browsing
+- Search and filtering
+- Detailed product views
+- Shopping cart functionality
+- Checkout process
+
+The project simulates a **real-world team development environment**, where each team member was responsible for specific tasks.
+
+---
+
+## 💼 My Personal Contribution
+
+✅ **User Registration Flow:**
+
+- Full implementation of user registration
+- Form validation
+- Authentication integration
+- Automatic login
+- Address selection
+
+✅ **User Profile Page:**
+
+- Editable user information
+- Email and password management
+- Address management
+
+✅ **Shopping Cart Functionality:**
+
+- Add/remove item logic
+- Integration with the backend API for cart management
+
+
+## 💻 Technology Stack
+
+- **Frontend:** HTML, CSS, TypeScript
+- **Framework:** React
+- **Build Tool:** Vite
+- **Linting & Style Guide:** ESLint with Airbnb Style Guide
+- **Formatter:** Prettier
+- **Testing:** Vitest
+- **Git Hooks:** Husky
+
+---
 
 ## 🚀 Getting Started
-### 1. Prerequisites
-Make sure you have the following installed on your machine:
-- **[Node.js](https://nodejs.org/)** – Recommended version: **18 or higher**
-- **[npm](https://www.npmjs.com/)** – Comes bundled with Node.js
-- **[Git](https://git-scm.com/)** – Required for cloning the repository
 
-### 2. Clone the repository:
-   ```bash
-   git clone https://github.com/DzmitryAliakseyeu/online-store
+### Prerequisites
+
+Make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (version 18 or higher)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
+- [Git](https://git-scm.com/)
+
+---
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/RuslanaTretiakova/eCommerce-application.git
 ```
-### 3. Navigate to the project directory: **cd online-store**
 
-### 4. Install dependencies:
+2. Navigate to the project directory:
+
+```bash
+cd eCommerce-application
+```
+
+3. Install dependencies:
+
 ```bash
 npm install
 ```
-If you encounter dependency errors, try installing with:
+
+If you encounter dependency errors:
+
 ```bash
 npm install --legacy-peer-deps
 ```
 
-### 5. Run Scripts:
-📜 Available Scripts
+---
 
-- `npm run dev` — **Runs the app in development mode.**
-- `npm run build` — Builds the app for production.
-- `npm run preview` — Serves the production build locally.
-- `npm run lint` — Checks code with ESLint.
-- `npm run lint:fix` — Fixes linting errors automatically.
-- `npm run format` — Formats code with Prettier.
-- `npm run prepare` — Initializes Husky Git hooks. Runs automatically after installing packages.
-- `npm run test` — Runs unit tests with Vitest.
-- `npm run test:coverage` — Runs tests with code coverage reporting.
-- `npm run test:ui` — Opens Vitest UI for interactive test debugging (includes coverage).
+### Available Scripts
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- `npm run dev` – Runs the app in development mode.
+- `npm run build` – Builds the app for production.
+- `npm run preview` – Serves the production build locally.
+- `npm run lint` – Runs ESLint for code checks.
+- `npm run lint:fix` – Automatically fixes lint errors.
+- `npm run format` – Formats code with Prettier.
+- `npm run prepare` – Sets up Husky Git hooks.
+- `npm run test` – Runs unit tests with Vitest.
+- `npm run test:coverage` – Runs tests with code coverage.
+- `npm run test:ui` – Opens the Vitest UI for interactive test debugging.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ ESLint Configuration Tips
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+To enable type-aware lint rules for production apps, update ESLint config:
 
 ```js
 export default tseslint.config({
   extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
     ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
     ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
     ...tseslint.configs.stylisticTypeChecked,
   ],
   languageOptions: {
-    // other options...
     parserOptions: {
       project: ['./tsconfig.node.json', './tsconfig.app.json'],
       tsconfigRootDir: import.meta.dirname,
@@ -90,24 +138,18 @@ export default tseslint.config({
 });
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+You can also add React-specific rules:
 
 ```js
-// eslint.config.js
 import reactX from 'eslint-plugin-react-x';
 import reactDom from 'eslint-plugin-react-dom';
 
 export default tseslint.config({
   plugins: {
-    // Add the react-x and react-dom plugins
     'react-x': reactX,
     'react-dom': reactDom,
   },
   rules: {
-    // other rules...
-    // Enable its recommended typescript rules
     ...reactX.configs['recommended-typescript'].rules,
     ...reactDom.configs.recommended.rules,
   },
-});
-```
