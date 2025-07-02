@@ -64,7 +64,7 @@ export interface IBaseButtonProps {
   className: string;
   title: string;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: (() => void) | React.MouseEventHandler<HTMLButtonElement>;
 }
 
 //Notification
@@ -184,4 +184,9 @@ export interface IEditFormProps<T extends FieldValues> {
   fields: IEditField<T>[];
   initialValues: DefaultValues<T>;
   onChange: (updated: T) => void;
+}
+
+export interface IRemoveFromCartButtonProps {
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  title?: string;
 }

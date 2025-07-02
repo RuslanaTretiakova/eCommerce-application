@@ -1,4 +1,5 @@
 export type Product = {
+  sku: string;
   title: string;
   price: number;
   discountedPrice?: number | null;
@@ -13,4 +14,19 @@ export interface Image {
     w: number;
     h: number;
   };
+}
+
+export interface ProductVariant {
+  sku: string;
+  images?: Image[];
+  prices?: {
+    value: {
+      centAmount: number;
+    };
+    discounted?: {
+      value: {
+        centAmount: number;
+      };
+    };
+  }[];
 }
